@@ -1,3 +1,3 @@
 # COS301 Team Gamma
-<http://www.teamgamma.ga>
+<https://www.teamgamma.ga>
 
