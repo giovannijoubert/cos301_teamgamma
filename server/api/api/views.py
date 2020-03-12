@@ -21,7 +21,7 @@ def validateJSON(request):
             data_test = hashlib.md5(request.POST.get("sounddata", None).encode())
             if data_test == request.POST.get("checksum", None):
                 # Send data to neural network
-		jsonObj = request.POST.get("sounddata", None)
+                jsonObj = request.POST.get("sounddata", None)
                 return JsonResponse({'result': 'Ok'})
             else:
                 return JsonResponse({'result': 'Invalid Checksum'})
@@ -31,7 +31,8 @@ def validateJSON(request):
         return JsonResponse({'result': 'Bad Request'})
 
 def postJSON():
-	f = open("spectrograph.json","w+")
-	for i in range(#don't know what to put in here):
-		f.write("Appended line %d\r\n" % (i+1))
-	f.close() 
+    f = open("spectrograph.json","w+")
+    for i in range(0,1):
+        # todo: Loop through json object and write correctly to file
+        f.write("Appended line %d\r\n" % (i+1))
+        f.close() 
