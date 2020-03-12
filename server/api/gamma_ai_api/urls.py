@@ -21,5 +21,5 @@ urlpatterns = [
     #path('admin/', admin.site.urls),
     path('robots.txt', views.robots_txt, name="robotsTxt"),
     path('api/echo/<str:user_txt>/', views.echo_api, name="echoAPI"),
-    path('api/training/', views.training_api, name="trainingAPI"),
+    path('api/training/', views.check_api, name="checkApi"),
 ]
