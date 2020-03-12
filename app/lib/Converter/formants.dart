@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-class Formants {
+class Formants extends Conversion {
   //Temporarily set to <int, int> for unit test purposes
   HashMap<int, int> formantTable = new HashMap<int, int>();
 
