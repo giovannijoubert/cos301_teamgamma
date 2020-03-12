@@ -1,0 +1,146 @@
+/* global styles */
+
+body{
+    font-family: "helvetica", sans-serif;
+    overflow-x: hidden !important;
+    width: 100vw !important;
+}
+
+#navbar{
+    background-color: #fff !important;
+    border-bottom: 1px solid #eee;
+}
+
+#mp-nav{
+    /* border: 1px solid red; */
+}
+
+#user-preferences-section{
+    width: 30vw;
+    min-height: 300px;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    z-index: 3;
+    background-color: #fff;
+    box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.22);
+}
+
+#user-preferences-section h4 a,#user-prefs a{
+    color: #fff !important;
+    display: flex;
+    background-color: #777;
+    width: 35px !important;
+    height: 35px;
+    align-content: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.3em;
+}
+
+#user-preferences-section div.user-prefs-header{
+    width: 100%;
+    border-bottom: 2px solid #777;
+}
+
+.preference-option{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+}
+.preference-option>div:nth-child(1){
+    grid-column: 1/4;
+}
+.preference-option>div:nth-child(2){
+    grid-column: 4/5;
+}
+.preference-option>div:nth-child(2) button{
+    border-radius: 40px;
+}
+
+/* upload.html styles */
+
+#current-mouth-packs{
+    border-right: 2px solid #777;
+}
+
+#mouth-pack-list>div.col-4>div{
+    background: #ccc;
+    width: 100%;
+    min-height: 74px;
+}
+
+.mouth-drop-target{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 100px;
+    border: 1px dashed #777;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background-size: cover !important;
+    background-position: center center !important;
+}
+div.mouth-drop-target *{
+    pointer-events: none;
+}
+div.mouth-drop-target h4{
+    text-align: center;
+    margin: 0px auto;
+    align-self: center;
+    justify-self: center;
+    font-weight: 600;
+    background: rgba(250, 250, 250, 0.5);
+}
+
+#upload-mouths{
+    border: 1px dashed #777;
+    min-height: 80px;
+    display: flex;
+    flex-direction: row;
+}
+#upload-mouths span{
+    margin: 0px auto;
+    align-self: center;
+    justify-self: center;
+}
+
+#mouths-preview{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    column-gap: 8px;
+}
+#mouths-preview img{
+    width: 100%;
+    border: 1px solid #ccc;
+    margin-bottom: 8px;
+}
+#upload-mouths-btns button{
+    border-radius: 40px;
+}
+
+@media (max-width: 992px){
+    #user-preferences-section{
+        width: 50vw;
+        border:1px solid red;
+    }
+}
+@media (max-width: 768px){
+    #mouths-preview{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    #user-preferences-section{
+        width: 70vw;
+    }
+}
+@media (max-width: 576px){
+    #mouths-preview{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (min-width: 576px){
+    #mp-nav{
+        padding-left: 30px;
+    }
+}
