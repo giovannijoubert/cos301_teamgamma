@@ -7,4 +7,5 @@ def robots_txt(request):
 
 # GAMMA API
 def echo_api(request, user_txt):
-    return JsonResponse({'user_input': user_txt, 'request': request.method})
+    # docs: https://docs.djangoproject.com/en/3.0/ref/request-response/
+    return JsonResponse({'user_input': user_txt, 'request': request.method, 'server': request.META.get("SERVER_NAME"), 'ip': request.META.get("REMOTE_ADDR")})
