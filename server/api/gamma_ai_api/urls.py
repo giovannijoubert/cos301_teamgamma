@@ -21,6 +21,5 @@ urlpatterns = [
     #path('admin/', admin.site.urls),
     path('robots.txt', views.robots_txt, name="robotsTxt"),
     path('api/echo/<str:user_txt>/', views.echo_api, name="echoAPI"),
-    #path('api/training/<str:user_id>/', views.training, name="resetPasswordToken"),
-    #path('api/diskUsage/', views.disk_usage, name="diskUsage"),
+    path('api/training/', views.training_api, name="trainingAPI"),
 ]
