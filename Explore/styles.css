@@ -1,0 +1,48 @@
+.header {
+    background-color:#4d4d4d;
+    padding: 1.5%;
+    text-align: center;
+}
+
+.div1 {
+    background-color:#292726;
+    padding: 3%;
+    text-align: center;
+}
+
+.searchB {
+    border-radius: 25px;
+    padding: 25px;
+    text-align: center;
+}
+
+input[type=text] {
+    width: 250px;
+    height:50px;
+    border-radius: 25px;
+    border: black;
+    padding: 5px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+    width: 80%;
+}
+
+.center-block {
+    margin: auto;
+    display: block;
+}
+
+.form-inline {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+
+.p1 {
+    color: aliceblue;
+}
+
+
