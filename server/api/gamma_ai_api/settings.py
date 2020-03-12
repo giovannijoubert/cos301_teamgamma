@@ -25,7 +25,7 @@ SECRET_KEY = '*6=nq2m^##f&f9^y_)&se7ccm*)xx)*@*_z_0qbyhu6@hcs$d)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ai.teamgamma.ga']
 
 
 # Application definition
