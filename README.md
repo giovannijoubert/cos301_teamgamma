@@ -48,3 +48,22 @@
 |**Position** |Final year BSc Computer Science|
 |**Interests** |Web Development, UX/UI (Web Design), Reading|
 |**Skills**|C++, Java, Web Development: HTML, CSS, Bootstrap, VueJS, JavaScript, PHP, SQL, Mongo DB|
+
+|Team Member | Details | 
+| :---         | :---         |   
+|**Premodial Zhou**|    **u18169814**   |
+|**Profile** |[Github](https://github.com/lamboughs)|
+|**Overview**|I am a self motivated and hardworking computer science student with a longtime passion for technology. |
+|**Position** |Final year BSc Computer Science|
+|**Interests** |Web Development, Android development|
+|**Skills**|C++, Java, Web Development: HTML, CSS, JavaScript, PHP, SQL
+
+
+|Team Member | Details | 
+| :---         | :---         |   
+|**Thamsanqa Dineka**|    **u18179640**   |
+|**Profile** |[Github](https://github.com/lamboughs)|
+|**Overview**|I am a passionate, hard working and dependable person. I love experimenting with code and trying out new amazing things I can do especially with JavaScript. |
+|**Position** |Final year BSc Computer Science|
+|**Interests** |Web Development, Android development|
+|**Skills**|C++, Java, Web Development: HTML, CSS, JavaScript, PHP, SQL
