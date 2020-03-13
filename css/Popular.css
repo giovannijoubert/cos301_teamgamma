@@ -169,7 +169,12 @@ img {
   /*padding: 25px 50px 75px 100px;*/
 }
 
-#top_mouths header  h2 {
+#top_mouths1 header  h2 {
+  font-size: 1.75em;
+  color: #ffffff;
+   padding-top: 80px;
+}
+ #top_mouths2 header  h2 {
   font-size: 1.75em;
   color: #ffffff;
    padding-top: 80px;
