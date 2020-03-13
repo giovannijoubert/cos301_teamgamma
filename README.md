@@ -47,4 +47,4 @@
 |**Overview**|I am a passionate, hard working and dependable person. I love experimenting with code and trying out new amazing things I can do especially with JavaScript. |
 |**Position** |Final year BSc Computer Science|
 |**Interests** |Web Development, UX/UI (Web Design), Reading|
-|**Skills**|C++, Java, Web Development: HTML, CSS, Bootstrap, VueJS, JavaScript, PHP, NodeJS, SQL, Mongo DB, Neo4J|
+|**Skills**|C++, Java, Web Development: HTML, CSS, Bootstrap, VueJS, JavaScript, PHP, SQL, Mongo DB|
