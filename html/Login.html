@@ -14,6 +14,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="../js/Login.js" defer></script>
 <style>
   #top_name{
     color: #585858;
@@ -90,7 +91,7 @@ html, body
                     <input  style="font-size: 12px;" class="form-control" id="lpassword"  name="password" type="password" placeholder="Password">
                 </div>
                 <div  class="form-group">
-                    <h6><a   style="margin-bottom:20px;" id="bottomnextup3" class="loginBut btn" href="Explore.html" >Log in</a></h6>
+                    <h6><a   style="margin-bottom:20px;" id="bottomnextup3" class="loginBut btn" onclick="validation()">Log in</a></h6>
                     <hr>
                     <h6><span style='margin-bottom:10px' class='pull-right'><a   data-toggle="modal" id="bottomnextup4" data-target="#newUserModal" class="pull-left" href="#"><i class="fa fa-plus" aria-hidden="true"> </i> New User</a></span></h6>
                 </div>
