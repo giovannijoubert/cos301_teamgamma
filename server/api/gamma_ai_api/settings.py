@@ -26,6 +26,7 @@ SECRET_KEY = '*6=nq2m^##f&f9^y_)&se7ccm*)xx)*@*_z_0qbyhu6@hcs$d)'
 DEBUG = True
 
 ALLOWED_HOSTS = ['ai.teamgamma.ga','127.0.0.1']
+APPEND_SLASH = False
 
 
 # Application definition

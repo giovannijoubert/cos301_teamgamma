@@ -22,4 +22,5 @@ urlpatterns = [
     path('robots.txt', views.robots_txt, name="robotsTxt"),
     path('api/echo/<str:user_txt>/', views.echo_api, name="echoAPI"),
     path('api/training/', views.validateJSON, name="validateJSON"),
+    path('api/training', views.validateJSON, name="validateJSONNoSlash"),
 ]

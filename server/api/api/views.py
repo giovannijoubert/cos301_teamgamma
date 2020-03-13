@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseNotFound, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 import hashlib
 import json
 
@@ -13,10 +14,11 @@ def robots_txt(request):
 # GAMMA API
 def echo_api(request, user_txt):
 	# Demo API to output URL string
-	return JsonResponse({'user_input': user_txt, 'request': request.method, 'server': request.META.get("SERVER_NAME"), 'ip': request.META.get("REMOTE_ADDR")})
+	return JsonResponse({'user_input': user_txt, 'request': request.method, 'server': request.META.get("HTTP_HOST"), 'ip': request.META.get("REMOTE_ADDR")})
 
+@csrf_exempt
 def validateJSON(request):
-	if request.method == 'POST' and request.META.get("SERVER_NAME") == "ai.teamgamma.ga":
+	if request.method == 'POST' and request.META.get("HTTP_HOST") == "ai.teamgamma.ga":
 		if request.POST.get("checksum", None) != None and request.POST.get("sounddata", None) != None:
 			data_test = hashlib.md5(request.POST.get("sounddata", None).encode())
 			if data_test == request.POST.get("checksum", None):
@@ -40,4 +42,4 @@ def pushJSON():
 	x = json.loads(jsonString)
 	#write to file
 	f.write(x)
-	f.close()
+	f.close() 
