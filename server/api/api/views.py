@@ -31,7 +31,7 @@ def validateJSON(request):
 		return JsonResponse({'result': 'Bad Request'})
 
 #Send data to neural network
-def postJSON():
+def pushJSON():
 	#Create new json file
 	f = open("spectrograph.json","w+")
 #convert json to string
