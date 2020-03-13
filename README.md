@@ -6,6 +6,9 @@
 **Documentation**
 * See documentaion folder in master branch
 
+**Project Managment Board**
+https://app.clickup.com/2502552/v/l/6-15286536-1
+
 **Requirement Overview**
 * We are required to design and implement the frontend website for the mouthpiece application. The website needs to be easy to navigate as well as being visually appealing. The website will interact thorugh API calls with the user manangement module, to validate that users exist as well as confirm the relevant security information. 
 
