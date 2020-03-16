@@ -44,4 +44,8 @@ public class NeuralNetwork
 	  public static String evaluateModel() {
 		  return "trained";
 	  }
+	  
+	  public static void exportModel() {
+		  return "model exported";
+	  }
 }

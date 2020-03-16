@@ -21,5 +21,7 @@ urlpatterns = [
     #path('admin/', admin.site.urls),
     path('robots.txt', views.robots_txt, name="robotsTxt"),
     path('api/echo/<str:user_txt>/', views.echo_api, name="echoAPI"),
-    path('api/training/', views.training_api, name="trainingAPI"),
+    path('api/echo/<str:user_txt>', views.echo_api, name="echoAPINoSlash"),
+    path('api/training/', views.validateJSON, name="validateJSON"),
+    path('api/training', views.validateJSON, name="validateJSONNoSlash"),
 ]
