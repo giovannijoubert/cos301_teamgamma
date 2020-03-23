@@ -3,7 +3,7 @@ import java.util.*;
 
 public class NeuralNetwork
 {
-	int channels = 2;
+	int channels = 1;
 	static long seed = 123;
 	static Random rand = new Random(seed);
 	int height = 100;
