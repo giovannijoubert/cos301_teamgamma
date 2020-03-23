@@ -97,7 +97,7 @@ public class NeuralNetwork
 				.list()
 				//Large 11x11 window to capture objects
 				//Stride of 4 to reduce size
-				//Channels = 2 due to grey-scale
+				//Channels = 1 due to grey-scale, 3 if rbg
 				//96 =
 				.layer(convInit("cnn1", channels, 96, new int[]{11, 11}, new int[]{4, 4}, new int[]{3, 3}, 0))
 				.layer(new LocalResponseNormalization.Builder().name("lrn1").build())
@@ -123,7 +123,7 @@ public class NeuralNetwork
 				//Output layer
 				.layer(new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
 						.name("output")
-						.nOut(numLabels)
+						.nOut(12) //12 Mouth Shapes
 						.activation(Activation.SOFTMAX)
 						.build())
 				.setInputType(InputType.convolutional(height, width, channels))
