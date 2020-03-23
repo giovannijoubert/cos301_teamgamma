@@ -97,33 +97,33 @@ public class NeuralNetwork
 				.list()
 				//Large 11x11 window to capture objects
 				//Stride of 4 to reduce size
-				//Channels = 1 due to grey-scale, 3 if rbg
-				//96 =
+				//Channels = 1 due to grey-scale
+				//96 = ?
 				.layer(convInit("cnn1", channels, 96, new int[]{11, 11}, new int[]{4, 4}, new int[]{3, 3}, 0))
 				.layer(new LocalResponseNormalization.Builder().name("lrn1").build())
 				.layer(maxPool("maxpool1", new int[]{3,3}))
 				//Make the convolutional window smaller
 				//Set padding to 2 for consistent height/width
-				//256 =
+				//256 = ?
 				.layer(conv5x5("cnn2", 256, new int[] {1,1}, new int[] {2,2}, bias))
 				.layer(new LocalResponseNormalization.Builder().name("lrn2").build())
 				.layer(maxPool("maxpool2", new int[]{3,3}))
 				//Use three successive convolutional layers and a smaller convolution window
-				//384 =
-				//256 =
+				//384 = ?
+				//256 = ?
 				.layer(conv3x3("cnn3", 384, 0))
 				.layer(conv3x3("cnn4", 384, bias))
 				.layer(conv3x3("cnn5", 256, bias))
 				//Reduce dimentionality
 				.layer(maxPool("maxpool3", new int[]{3,3}))
 				//Expensice dense layer
-				//4096 =
+				//4096 = ?
 				.layer(fullyConnected("ffn1", 4096, bias, dropOut, new NormalDistribution(0, 0.005)))
 				.layer(fullyConnected("ffn2", 4096, bias, dropOut, new NormalDistribution(0, 0.005)))
 				//Output layer
 				.layer(new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
 						.name("output")
-						.nOut(12) //12 Mouth Shapes
+						.nOut(numLabels) //12 Mouth Shapes
 						.activation(Activation.SOFTMAX)
 						.build())
 				.setInputType(InputType.convolutional(height, width, channels))
