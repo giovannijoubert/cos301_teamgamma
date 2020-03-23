@@ -68,6 +68,11 @@ public class NeuralNetwork
 		return new ConvolutionLayer.Builder(new int[]{3,3}, new int[] {1,1}, new int[] {1,1}).name(name).nOut(out).biasInit(bias).build();
 	}
 
+	@SuppressWarnings("SameParameterValue")
+	private ConvolutionLayer conv5x5(String name, int out, int[] stride, int[] pad, double bias) {
+		return new ConvolutionLayer.Builder(new int[]{5,5}, stride, pad).name(name).nOut(out).biasInit(bias).build();
+	}
+
 	private SubsamplingLayer maxPool(String name,  int[] kernel) {
 		return new SubsamplingLayer.Builder(kernel, new int[]{2,2}).name(name).build();
 	}
@@ -88,22 +93,31 @@ public class NeuralNetwork
 				.activation(Activation.RELU)
 				.updater(new AdaDelta())
 				.gradientNormalization(GradientNormalization.RenormalizeL2PerLayer)
-				.l2(5 * 1e-4) // 0.0005
+				.l2(0.0005) //5 * 1e-4
 				.list()
+				//Large 11x11 window to capture objects
+				//Stride of 4 to reduce size
+				//Channels = 2 due to grey-scale
+				//96 =
 				.layer(convInit("cnn1", channels, 96, new int[]{11, 11}, new int[]{4, 4}, new int[]{3, 3}, 0))
 				.layer(new LocalResponseNormalization.Builder().name("lrn1").build())
 				.layer(maxPool("maxpool1", new int[]{3,3}))
-				//Make the convolutional window smaller and set padding to 2 for consistent height/width
+				//Make the convolutional window smaller
+				//Set padding to 2 for consistent height/width
+				//256 =
 				.layer(conv5x5("cnn2", 256, new int[] {1,1}, new int[] {2,2}, bias))
 				.layer(new LocalResponseNormalization.Builder().name("lrn2").build())
 				.layer(maxPool("maxpool2", new int[]{3,3}))
 				//Use three successive convolutional layers and a smaller convolution window
+				//384 =
+				//256 =
 				.layer(conv3x3("cnn3", 384, 0))
 				.layer(conv3x3("cnn4", 384, bias))
 				.layer(conv3x3("cnn5", 256, bias))
 				//Reduce dimentionality
 				.layer(maxPool("maxpool3", new int[]{3,3}))
 				//Expensice dense layer
+				//4096 =
 				.layer(fullyConnected("ffn1", 4096, bias, dropOut, new NormalDistribution(0, 0.005)))
 				.layer(fullyConnected("ffn2", 4096, bias, dropOut, new NormalDistribution(0, 0.005)))
 				//Output layer
