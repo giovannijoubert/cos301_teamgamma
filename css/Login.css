@@ -1,0 +1,121 @@
+@font-face {
+    font-family: 'arciform_sansregular';
+    src: url('arciform-webfont.woff2') format('woff2'),
+         url('arciform-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+.mouthImage {
+  margin-left: 160px;
+  margin-top: 200px;
+  max-width: 600px;
+
+
+}
+
+#images {
+  max-width: 700px !important;
+  border-style : hidden;
+  height: 450px;
+  float: left;
+}
+
+.mouth {
+    width:100px;
+    padding-left: 5px;
+    height:80px;
+}
+
+body {
+    background-color: white;
+}
+
+.logo {
+    background-repeat: no-repeat;
+    margin-left:200px;
+    max-width: 400px;
+
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: white;
+    font-family: 'arciform_sansregular';
+    font-size: 20px;
+    
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color:lightgrey;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+   
+  }
+
+
+  
+  .active {
+    text-decoration: underline;
+    text-decoration-color: #F2929c;
+    color: #303030;
+  }
+
+  .loginPage {
+      margin-top:100px;
+      width: 1300px;
+      height: 400px;
+      border-style: hidden;
+  }
+
+
+  .loginContainer {
+ 
+      background-color: white;
+      color: #303030;
+      width:300px;
+      height:400px;
+      margin-right:150px;
+      float: right;
+      border-style: solid;
+      border-radius: 10px;
+      border-color: grey;
+      padding: 10px;
+      font-family: 'arciform_sansregular';
+  
+
+  }
+
+  .username {
+    margin-top: 5px;
+    padding-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .password {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+  }
+
+  #input {
+      margin-left: 70px;
+      margin-top: 10px;
+  }
+
+  body {
+    background-image: url('../images/wave.svg');
+    background-repeat: no-repeat;
+    background-position: center ;
+    
+  }
