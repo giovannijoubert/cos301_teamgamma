@@ -30,25 +30,30 @@ public class NeuralNetwork
 	}
 
 	@SuppressWarnings("SameParameterValue")
-	private ConvolutionLayer convInit(String name, int in, int out, int[] kernel, int[] stride, int[] pad, double bias) {
+	private ConvolutionLayer convInit(String name, int in, int out, int[] kernel, int[] stride, int[] pad, double bias)
+	{
 		return new ConvolutionLayer.Builder(kernel, stride, pad).name(name).nIn(in).nOut(out).biasInit(bias).build();
 	}
 
-	private ConvolutionLayer conv3x3(String name, int out, double bias) {
+	private ConvolutionLayer conv3x3(String name, int out, double bias)
+	{
 		return new ConvolutionLayer.Builder(new int[]{3,3}, new int[] {1,1}, new int[] {1,1}).name(name).nOut(out).biasInit(bias).build();
 	}
 
 	@SuppressWarnings("SameParameterValue")
-	private ConvolutionLayer conv5x5(String name, int out, int[] stride, int[] pad, double bias) {
+	private ConvolutionLayer conv5x5(String name, int out, int[] stride, int[] pad, double bias)
+	{
 		return new ConvolutionLayer.Builder(new int[]{5,5}, stride, pad).name(name).nOut(out).biasInit(bias).build();
 	}
 
-	private SubsamplingLayer maxPool(String name, int[] kernel) {
+	private SubsamplingLayer maxPool(String name, int[] kernel)
+	{
 		return new SubsamplingLayer.Builder(kernel, new int[]{2,2}).name(name).build();
 	}
 
 	@SuppressWarnings("SameParameterValue")
-	private DenseLayer fullyConnected(String name, int out, double bias, double dropOut, Distribution dist) {
+	private DenseLayer fullyConnected(String name, int out, double bias, double dropOut, Distribution dist)
+	{
 		return new DenseLayer.Builder().name(name).nOut(out).biasInit(bias).dropOut(dropOut).weightInit(new WeightInitDistribution(dist)).build();
 	}
 
@@ -103,50 +108,61 @@ public class NeuralNetwork
 	}
 
 
-/**
- * //under review
-	public static boolean convertDataToTestCSV() {
+/*
+	//under review
+	public static boolean convertDataToTestCSV()
+ 	{
 		return true;
 	}
 
-	public static String normalizeTestCSV() {
+	public static String normalizeTestCSV()
+ 	{
 		return "success";
 	}
 
 	//with data we get from conversion team in JSON obj, we take 2/3 of the data and put it into TrainingCSV
-	public static boolean convertDataToTrainingCSV() {
+	public static boolean convertDataToTrainingCSV()
+ 	{
 		return true;
 	}
 
-	public static String normalizeTrainingCSV() {
+	public static String normalizeTrainingCSV()
+ 	{
 		return "success";
 	}
 
-	public static boolean recordReaderTraining() {
+	public static boolean recordReaderTraining()
+ 	{
 		return true;
 	}
 
-	public static boolean recordReaderTest() {
+	public static boolean recordReaderTest()
+	{
 		return true;
 	}
 
-	public static boolean dataSetIteratorTraining() {
+	public static boolean dataSetIteratorTraining()
+	{
 		return true;
 	}
 
-	public static boolean dataSetIteratorTest() {
+	public static boolean dataSetIteratorTest()
+	{
 		return true;
 	}
 
-	public static String multilayer() {
+	public static String multilayer()
+	{
 		return "created";
 	}
 
-	public static String trainingModel() {
+	public static String trainingModel()
+	{
 		return "accurate";
 	}
 
-	public static String evaluateModel() {
+	public static String evaluateModel()
+	{
 		return "trained";
 	}
 */

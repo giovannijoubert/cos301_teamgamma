@@ -13,4 +13,5 @@ public class NeuralNetworksApplication
 		SpringApplication.run(NeuralNetworksApplication.class, args);
 	}
 
+
 }

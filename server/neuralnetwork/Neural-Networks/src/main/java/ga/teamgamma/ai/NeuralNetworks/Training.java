@@ -39,26 +39,33 @@ public class Training {
                 BATCH_SIZE = 64,//batch size for each epoch
                 RNG_SEED = 123,
                 NUM_EPOCHS = 15;//number of epochs to perform
+
     private  double RATE= 0.0015;//learning rate
+
     DataSetIterator trainingIter;
+
     private Random rng = new Random(RNG_SEED);
-    public Training(){
 
-    }
+    public Training(){ }
 
-    public MultiLayerNetwork train(boolean pretrain, MultiLayerNetwork model){
-        try{
-            return pretrain ?
-                    train(model, new MnistDataSetIterator(BATCH_SIZE,true, RNG_SEED))
+    public MultiLayerNetwork train(boolean pretrain, MultiLayerNetwork model)
+    {
+        try
+        {
+            return pretrain ? train(model, new MnistDataSetIterator(BATCH_SIZE,true, RNG_SEED))
                     : train(model,getDataSetIteratorFromFile());
 
-        }catch(Exception e){
+        }
+        catch(Exception e)
+        {
             System.err.println("Error Training: "+e.getMessage());
         }
+
         return null;
     }
 
-    private DataSetIterator getDataSetIteratorFromFile() throws IOException {
+    private DataSetIterator getDataSetIteratorFromFile() throws IOException
+    {
         File parentPath = new File(System.getProperty("user.dir"), "/pathToTrainingDataFolder/");
         ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
         FileSplit fileSplit = new FileSplit(parentPath, NativeImageLoader.ALLOWED_FORMATS, rng);
@@ -69,18 +76,19 @@ public class Training {
         return new RecordReaderDataSetIterator(recordReader,batchSize,1,outputNum);
     }
 
-    private MultiLayerNetwork train(MultiLayerNetwork model, DataSetIterator data) throws IOException{
+    private MultiLayerNetwork train(MultiLayerNetwork model, DataSetIterator data) throws IOException
+    {
         model.init();
         model.setListeners(new ScoreIterationListener(5));//print the score
 
-
-        if(new File("../NeuralNetworkConfiguration").exists()){
-            model = ModelSerializer
-                    .restoreMultiLayerNetwork(
-                            new File("../NeuralNetworkConfiguration")
-                    );
-        }else{
-            for (int i = 0; i < NUM_EPOCHS; i++){
+        if(new File("../NeuralNetworkConfiguration").exists())
+        {
+            model = ModelSerializer.restoreMultiLayerNetwork(new File("../NeuralNetworkConfiguration"));
+        }
+        else
+        {
+            for (int i = 0; i < NUM_EPOCHS; i++)
+            {
                 model.fit(data);
                 ModelSerializer
                         .writeModel(
