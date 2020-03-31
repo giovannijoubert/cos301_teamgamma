@@ -133,7 +133,7 @@ public class NeuralNetworksApplication {
     }
     
     @GetMapping("/api/neuralNetwork")
-     public String apiGetNN(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return String.format("Hello %s!", name);
+     public File apiGetNN() {
+        return NeuralNetwork.exportModel();
     }
 }
