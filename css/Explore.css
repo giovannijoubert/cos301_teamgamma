@@ -44,3 +44,7 @@ input[type=text]:focus {
 .p1 {
     color: aliceblue;
 }
+
+.checked {
+    color: orange;
+}
