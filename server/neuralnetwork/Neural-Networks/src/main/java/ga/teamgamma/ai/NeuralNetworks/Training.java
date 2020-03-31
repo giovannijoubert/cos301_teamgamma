@@ -65,11 +65,8 @@ public class Training
         /**Configure where the network information (gradients, score vs. time etc) is to be stored. Here: store in memory*/
         statsStorage = new InMemoryStatsStorage(); //Alternative: new FileStatsStorage(File), for saving and loading later.
 
-        /**Attach the StatsStorage instance to the UI: this allows the contents of the StatsStorage to be visualized*/
-        uiServer.attach(statsStorage);
 
-        /**Then add the StatsListener to collect this infromation from the network, as it trains*/
-        model.setListeners()
+
     }
 
     public MultiLayerNetwork train(boolean pretrain, MultiLayerNetwork model)
@@ -106,7 +103,16 @@ public class Training
         model.setListeners(new ScoreIterationListener(5));//print the score
 
         /**Then add the StatsListener to collect this information from the network, as it trains*/
-        model.setListeners(new StatsListener(statsStorage));
+        model.setListeners(
+                            new StatsListener(
+                                    statsStorage,
+                                    1
+                            )
+        );
+
+        /**Attach the StatsStorage instance to the UI: this allows the contents of the StatsStorage to be visualized*/
+        uiServer.attach(statsStorage);
+
         if(new File("../NeuralNetworkConfiguration").exists())
         {
             model = ModelSerializer.restoreMultiLayerNetwork(new File("../NeuralNetworkConfiguration"));
