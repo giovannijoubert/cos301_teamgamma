@@ -1,5 +1,4 @@
 package ga.teamgamma.ai.NeuralNetworks;
-
 import org.datavec.api.io.filters.BalancedPathFilter;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
 import org.datavec.api.split.FileSplit;
@@ -29,9 +28,10 @@ public class Training
     /**
      * Deeplearning4j-UI
      */
-    /
+
     private UIServer uiServer;
-    StatsStorage statsStorage
+    private StatsStorage statsStorage;
+
     /**
      * TRAINING
      * */
@@ -64,9 +64,6 @@ public class Training
 
         /**Configure where the network information (gradients, score vs. time etc) is to be stored. Here: store in memory*/
         statsStorage = new InMemoryStatsStorage(); //Alternative: new FileStatsStorage(File), for saving and loading later.
-
-
-
     }
 
     public MultiLayerNetwork train(boolean pretrain, MultiLayerNetwork model)

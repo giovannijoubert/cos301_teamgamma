@@ -31,10 +31,23 @@ public class NeuralNetwork
 	/**
 	 * PARAMETERS:
 	 * ==============================
-	 * 1.) Bias    - Allows you to shift the activation function to the left or right, allowing better fit to data.
-	 * 2.) Padding -
-	 * 3.) Stride  -
-	 * 4.)
+	 * 1.) Bias
+	 * 			- Allows you to shift the activation function to the left or right, allowing better fit to data.
+	 * 			-Typically important in first layer, but it plays less of a role in fully connected layers towards the end.
+	 * 			-For images, it may actually be better not to use a bias at all.
+	 * 2.) Padding
+	 * 				-
+	 * 3.) Stride
+	 * 				-
+	 * 4.) Number of nodes
+	 * 			- Start with a minimum number of hideen nodes, increase the hidden nodes number until you get a good performance.
+	 * 			- Too few nodes 	-> high error as the predictive factors might be too complex for a small number of nodes to capture.
+	 * 			- Too many nodes 	-> will overfit to your training data and not generalize well.
+	 * 			- The number of hidden nodes you should have is based on a complex relationship between
+	 * 				1.) Number of input and output nodes
+	 * 				2.) Amount of training data available
+	 * 				3.) Complexity of the function that is trying to be learning
+	 * 				4.) The training algorithm
 	 * */
 	@SuppressWarnings("SameParameterValue")
 	private ConvolutionLayer convInit(String name, int in, int out, int[] kernel, int[] stride, int[] pad, double bias)
