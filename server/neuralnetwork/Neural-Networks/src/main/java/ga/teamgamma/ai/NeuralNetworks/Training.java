@@ -9,6 +9,7 @@ import org.deeplearning4j.datasets.datavec.RecordReaderDataSetIterator;
 import org.deeplearning4j.datasets.iterator.impl.MnistDataSetIterator;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
+import org.deeplearning4j.optimize.listeners.CollectScoresIterationListener;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
 import org.deeplearning4j.ui.api.UIServer;
 import org.deeplearning4j.ui.stats.StatsListener;
@@ -19,11 +20,16 @@ import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Random;
 
 public class Training
 {
+
+
+
     private MultiLayerNetwork model = null;
+
 
     /**
      * Deeplearning4j-UI
@@ -31,6 +37,11 @@ public class Training
 
     private UIServer uiServer;
     private StatsStorage statsStorage;
+
+    /**
+     *
+     * */
+    private boolean PRETRAINING = true;
 
     /**
      * TRAINING
@@ -44,6 +55,7 @@ public class Training
     /**
      * PRE-TRAINING
      */
+
     private int NUM_ROWS = 28,
                 NUM_COLUMNS = 28,
                 OUTPUT_NUMS = 12,//number of output classes
@@ -68,10 +80,27 @@ public class Training
 
     public MultiLayerNetwork train(boolean pretrain, MultiLayerNetwork model)
     {
+        this.PRETRAINING = pretrain;
         try
         {
-            return pretrain ? train(model, new MnistDataSetIterator(BATCH_SIZE,true, RNG_SEED))
-                    : train(model,getDataSetIteratorFromFile());
+            return pretrain
+                    ?
+                        train(
+                                model,                          //model to train
+                                new MnistDataSetIterator(
+                                        BATCH_SIZE,             //batch size
+                                        1200,       //number examples to load
+                                        false,          //binarize
+                                        true,             //train or test
+                                        true,            //whether examples should be shuffled
+                                        RNG_SEED                //random number generator seed to use when shuffling examples
+                                )
+                        )
+                    :
+                        train(
+                                model,                          //model to train
+                                getDataSetIteratorFromFile()
+                        );
 
         }
         catch(Exception e)
@@ -88,7 +117,6 @@ public class Training
         ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
         FileSplit fileSplit = new FileSplit(parentPath, NativeImageLoader.ALLOWED_FORMATS, rng);
         BalancedPathFilter pathFilter = new BalancedPathFilter(rng, labelMaker, numSamples, outputNum, batchSize);
-
         ImageRecordReader recordReader = new ImageRecordReader(numRows,numCols,outputNum,labelMaker);
         recordReader.initialize(fileSplit);
         return new RecordReaderDataSetIterator(recordReader,batchSize,1,outputNum);
@@ -97,7 +125,19 @@ public class Training
     private MultiLayerNetwork train(MultiLayerNetwork model, DataSetIterator data) throws IOException
     {
         model.init();
-        model.setListeners(new ScoreIterationListener(5));//print the score
+
+        /**Score
+         * -----------------------------------------------------------
+         * This collects information, such as the loss, from the neural network and outputs them after a certain number of iterations.
+         * */
+        model.setListeners(
+                            new ScoreIterationListener(5)
+                            );
+
+
+        model.setListeners(
+                            new CollectScoresIterationListener(1)
+                            );
 
         /**Then add the StatsListener to collect this information from the network, as it trains*/
         model.setListeners(
@@ -126,6 +166,12 @@ public class Training
                                 true
                         );
             }
+        }
+
+        if(PRETRAINING){
+
+        }else{
+
         }
 
         return model;
