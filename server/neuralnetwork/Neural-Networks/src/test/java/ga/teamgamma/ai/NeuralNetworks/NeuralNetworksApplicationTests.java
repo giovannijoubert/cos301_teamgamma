@@ -4,17 +4,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NeuralNetworksApplicationTests
-{
-	@Test
-	public void contextLoads()
-	{
-		//return null;
-	}
+class NeuralNetworksApplicationTests {
 
-	@Test
-	public void accuracyPercentage()
-	{
-		//return percentage(%)
-	}
+    @Test
+    public void contextLoads() {
+        //return null;
+    }
+
+    @Test
+    public void accuracyPercentage() {
+        //return percentage(%)
+    }
 }

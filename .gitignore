@@ -32,3 +32,4 @@ build/
 .vscode/
 
 out
+/server/neuralnetwork/Neural-Networks/nbproject/
