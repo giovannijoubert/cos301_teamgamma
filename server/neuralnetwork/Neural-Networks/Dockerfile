@@ -22,4 +22,6 @@ VOLUME ["/data"]
 
 EXPOSE 8080
 
+EXPOSE 9000
+
 ENTRYPOINT ["java","-jar","/usr/local/lib/gamma-ai.jar"]
