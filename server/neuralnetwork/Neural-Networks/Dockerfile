@@ -14,7 +14,7 @@ RUN mvn -f /home/app/pom.xml clean package
 #
 FROM openjdk:11-jre-slim
 
-COPY --from=build /home/app/target/Neural-Networks-0.0.1-SNAPSHOT.jar /usr/local/lib/gamma-ai.jar
+COPY --from=build /home/app/target/Neural-Networks-0.0.2-SNAPSHOT.jar /usr/local/lib/gamma-ai.jar
 
 EXPOSE 8080
 
