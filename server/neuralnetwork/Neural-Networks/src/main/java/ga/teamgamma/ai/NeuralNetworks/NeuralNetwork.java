@@ -139,7 +139,7 @@ public class NeuralNetwork
 								0.0,
 								0.01
 						)
-				) //add weights to all the nodes
+				)
 				.activation(
 						Activation.RELU									//activation function is RELU
 				)
