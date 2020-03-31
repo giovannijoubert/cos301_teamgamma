@@ -1,4 +1,13 @@
 /* global styles */
+@font-face {
+    font-family: 'arciform_sansregular';
+    src: url('arciform-webfont.woff2') format('woff2'),
+         url('arciform-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 html{
     overflow-x: hidden !important;
     max-width: 100vw !important;
@@ -12,11 +21,20 @@ body{
 #navbar{
     background-color: #fff !important;
     border-bottom: 1px solid #eee;
+    font-family: 'arciform_sansregular';
 }
 
-#mp-nav{
-    /* border: 1px solid red; */
-}
+.header {
+    background-color:grey !important;
+    padding: 1.5%;
+    text-align: center;
+  }
+  
+  #breadcrumb{
+      background-color: #303030 !important;
+      color: aliceblue !important;
+      font-family: 'arciform_sansregular';
+  }
 
 #user-preferences-section{
     width: 30vw;
