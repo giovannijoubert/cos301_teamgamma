@@ -1,281 +1,224 @@
 <!DOCTYPE html>
 <html lang="en-za">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Mouth Pack</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/Upload.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" defer></script>
+    <script src="../vendor/jquery/jquery.min.js" defer></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js" defer></script>
+    <script src="../js/ui.js" defer></script>
     <script src="../js/Upload.js" defer></script>
 </head>
-
 <body>
+    <!-- NAVBAR CODE BEGIN HERE -->
+    <nav class="navbar navbar-expand-sm navbar-light bg-light" id="navbar">
+        <div class="container-fluid">
+            <a href="explore.html" class="navbar-brand">
+                <img src="../Assets/Logo/logo.png" alt="Mouth Piece Logo" class="img-responsive" style="height: 30px;">
+            </a>
+            <div class="nav navbar-nav ml-auto mr-2 user-prefs" id="user-prefs-1">
+                <a href="javascript: void(0)" data-toggle="collapse" data-target="#user-preferences-section" class="nav-item nav-link"><i class="fa fa-user"></i></a>
+            </div>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#mp-nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse flex-row" id="mp-nav">
+                <div class="nav navbar-nav">
+                    <a href="explore.html" class="nav-item nav-link text-dark">Explore</a>
+                    <a href="upload.html" class="nav-item nav-link text-dark">Upload</a>
+                    <a href="popular.html" class="nav-item nav-link text-dark">Popular</a>
+                    <a href="collection.html" class="nav-item nav-link text-dark">Collection</a>
+                </div>
+            </div>
+            <div class="nav navbar-nav ml-auto user-prefs" id="user-prefs-2">
+                <a href="javascript: void(0)" data-toggle="collapse" data-target="#user-preferences-section" class="nav-item nav-link"><i class="fa fa-user"></i></a>
+            </div>
+        </div>
+    </nav>
+    <section class="row collapse" id="user-preferences-section">
+        <div class="container py-3 mt-4">
+            <div class="col-12 flex-row mb-3">
+                <h4>
+                    Account Settings
+                    <a href="javascript: void(0)" class="text-dark float-right"><i class="fa fa-user"></i></a>
+                </h4>
+            </div>
+            <div class="col-12 flex-row">
+                <div class="text-muted user-prefs-header pb-1">Account Preferences</div>
+                <div class="preference-option m-2">
+                    <div>
+                        <h5 class="mb-0">Username</h5>
+                        <p class="small text-muted">Lindo Mlambo</p>
+                    </div>
+                    <div>
+                        <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdateUsername()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+                    </div>
+                </div>
+                <div class="preference-option m-2">
+                    <div>
+                        <h5 class="mb-0">Email Address</h5>
+                        <p class="small text-muted">mlambolindo6@gmail.com</p>
+                    </div>
+                    <div>
+                        <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdateEmail()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+                    </div>
+                </div>
+                <div class="preference-option m-2">
+                    <div>
+                        <h5 class="mb-0">Password</h5>
+                        <p class="small text-muted">Change your password</p>
+                    </div>
+                    <div>
+                        <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdatePassword()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+                    </div>
+                </div>
+                <div class="text-muted user-prefs-header pb-1">Theme Preferences</div>
+                <div class="preference-option m-2">
+                    <div>
+                        <h5 class="mb-0">Dark Mode</h5>
+                        <p class="small text-muted">Coming Soon</p>
+                    </div>
+                    <div>
+                        <div class="custom-control custom-switch float-right">
+                            <input type="checkbox" class="custom-control-input" id="switch-theme">
+                            <label class="custom-control-label" for="switch-theme"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3 mb-1 text-center">
+                    <button class="mx-auto btn btn-outline-secondary bg-white text-dark" onclick="logout()" style="border-radius: 40px"><i class="fa fa-sign-out"></i> Logout</button><br>
+
+                    <button class="btn btn-link text-secondary mt-2"  data-toggle="collapse" data-target="#user-preferences-section">&times; close</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- NAVBAR CODE ENDS HERE -->
     <div class="container-fluid">
-        <nav class="navbar navbar-expand-sm navbar-light bg-light" id="navbar">
-            <div class="container-fluid">
-                <a href="#index.html" class="navbar-brand">
-                    <img src="../images/logo.png" alt="Mouth Piece Logo" class="img-responsive" style="height: 30px;">
-                </a>
-                <button class="navbar-toggler" data-toggle="collapse" data-target="#mp-nav"><span
-                        class="navbar-toggler-icon"></span></button>
-                <div class="navbar-collapse collapse flex-row" id="mp-nav">
-                    <div class="nav navbar-nav">
-                        <a href="Explore.html" class="nav-item nav-link text-dark">Explore</a>
-                        <a href="Upload.html" class="nav-item nav-link text-dark">Upload</a>
-                   <a href="Collections.html" class="nav-item nav-link text-dark">Collections</a>
-                    </div>
-                    <div class="nav navbar-nav ml-auto" id="user-prefs">
-                        <a href="javascript: void(0)" data-toggle="collapse" data-target="#user-preferences-section" class="nav-item nav-link"><i class="fa fa-user"></i></a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <section class="row collapse" id="user-preferences-section">
-            <div class="container py-3 mt-4">
-                <div class="col-12 flex-row mb-3">
-                    <h4>
-                        Account Settings
-                        <a href="javascript: void(0)" class="text-dark float-right"><i class="fa fa-user"></i></a>
-                    </h4>
-                </div>
-                <div class="col-12 flex-row">
-                    <div class="text-muted user-prefs-header pb-1">Account Preferences</div>
-                    <div class="preference-option m-2">
-                        <div>
-                            <h5 class="mb-0">Full Names</h5>
-                            <p class="small text-muted">Lindo Mlambo</p>
-                        </div>
-                        <div>
-                            <button class="btn btn-outline-secondary bg-white text-dark">Change</button>
-                        </div>
-                    </div>
-                    <div class="preference-option m-2">
-                        <div>
-                            <h5 class="mb-0">Email Address</h5>
-                            <p class="small text-muted">mlambolindo6@gmail.com</p>
-                        </div>
-                        <div>
-                            <button class="btn btn-outline-secondary bg-white text-dark">Change</button>
-                        </div>
-                    </div>
-                    <div class="preference-option m-2">
-                        <div>
-                            <h5 class="mb-0">Password</h5>
-                            <p class="small text-muted">Change your password</p>
-                        </div>
-                        <div>
-                            <button class="btn btn-outline-secondary bg-white text-dark">Change</button>
-                        </div>
-                    </div>
-                    <div class="text-muted user-prefs-header pb-1">Theme Preferences</div>
-                    <div class="preference-option m-2">
-                        <div>
-                            <h5 class="mb-0">Dark Mode</h5>
-                            <p class="small text-muted">Coming Soon</p>
-                        </div>
-                        <div>
-                            <div class="custom-control custom-switch float-right">
-                                <input type="checkbox" class="custom-control-input" id="switch-theme">
-                                <label class="custom-control-label" for="switch-theme"></label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-3 mb-1 text-center">
-                        <button class="mx-auto btn btn-outline-secondary bg-white text-dark" style="border-radius: 40px"><i class="fa fa-sign-out"></i> Logout</button><br>
-
-                        <button class="btn btn-link text-secondary mt-2"  data-toggle="collapse" data-target="#user-preferences-section">&times; close</button>
-                    </div>
-                </div>
-            </div>
-        </section>
         <section class="row bg-dark text-center text-white" id="breadcrumb">
             <div class="col-12 p-2">
                 <h4>Upload Mouth Pack</h4>
             </div>
         </section>
-        <section class="row px-3 pt-3">
-            <div class="col-lg-3 col-sm-12" id="current-mouth-packs">
-                <strong>Please select main Mouth Pack: </strong>
-                <div class="row p-3" id="mouth-pack-list">
-                    <!-- <div class="col-4 p-1">
-                    <div></div>
-                </div>
-                <div class="col-4 p-1">
-                    <div></div>
-                </div>
-                <div class="col-4 p-1">
-                    <div></div>
-                </div> -->
-                    <div class="col-4 p-1">
-                        <div></div>
-                    </div>
-                    <div class="col-4 p-1">
-                        <div></div>
-                    </div>
-                    <div class="col-4 p-1">
-                        <div></div>
-                    </div>
-                    <div class="col-4 p-1">
-                        <div></div>
-                    </div>
-                    <div class="col-4 p-1">
-                        <div></div>
-                    </div>
-                    <div class="col-4 p-1">
-                        <div></div>
-                    </div>
-                    <div class="col-4 p-1">
-                        <div></div>
-                    </div>
-                    <div class="col-4 p-1">
-                        <div></div>
-                    </div>
-                    <div class="col-4 p-1">
-                        <div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-8  col-sm-12" id="on-drop-upload-container">
-                <div class="row px-3 py-0" id="on-drop-list">
-                    <div class="col-6 col-sm-2">
-                        <div class="mouth-drop-target" data-alphabets="oei">
-                            <input type="file" id="inp-oei" style="opacity: 0; position:absolute;">
-                            <h4>o e i</h4>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-2">
-                        <div class="mouth-drop-target" data-alphabets="l">
-                            <input type="file" id="inp-l" style="opacity: 0; position:absolute;">
-                            <h4>l</h4>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-2">
-                        <div class="mouth-drop-target" data-alphabets="o">
-                            <input type="file" id="inp-o" style="opacity: 0; position:absolute;">
-                            <h4>o</h4>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-2">
-                        <div class="mouth-drop-target" data-alphabets="r">
-                            <input type="file" id="inp-r" style="opacity: 0; position:absolute;">
-                            <h4>r</h4>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-2">
-                        <div class="mouth-drop-target" data-alphabets="cdgknstxyz">
-                            <input type="file" id="inp-cdgknstxyz" style="opacity: 0; position:absolute;">
-                            <h4>c d g k n s t x y z</h4>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-2">
-                        <div class="mouth-drop-target" data-alphabets="fv">
-                            <input type="file" id="inp-fv" style="opacity: 0; position:absolute;">
-                            <h4>fv</h4>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-2">
-                        <div class="mouth-drop-target" data-target="qw">
-                            <input type="file" id="inp-qw" style="opacity: 0; position:absolute;">
-                            <h4>qw</h4>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-2">
-                        <div class="mouth-drop-target" data-alphabets="th">
-                            <input type="file" id="inp-th" style="opacity: 0; position:absolute;">
-                            <h4>th</h4>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-2">
-                        <div class="mouth-drop-target" data-alphabets="bmp">
-                            <input type="file" id="inp-bmp" style="opacity: 0; position:absolute;">
-                            <h4>b m p</h4>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-2">
-                        <div class="mouth-drop-target" data-alphabets="u">
-                            <input type="file" id="inp-u" style="opacity: 0; position:absolute;">
-                            <h4>u</h4>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-2">
-                        <div class="mouth-drop-target" data-alphabets="ee">
-                            <input type="file" id="inp-ee" style="opacity: 0; position:absolute;">
-                            <h4>ee</h4>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-2">
-                        <div class="mouth-drop-target" data-alphabets="chjsh">
-                            <input type="file" id="inp-chjsh" style="opacity: 0; position:absolute;">
-                            <h4>ch j sh</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
         <section class="row p-3 mb-4">
-            <div class="col-sm-12 col-md-8 mx-auto">
-                <div class="text-center"><strong>Drag mouth into position to match the corresponding sound</strong>
-                </div><br>
-                <div class="col-12 col-md-10 mx-auto p-0 text-center" id="upload-mouths">
-                    <input type="file" id="inp-12-mouths" accept="img/jpg, img/png" multiple
-                        style="width: 100%; height: 80px; opacity: 0; position: absolute;">
-                    <div>
-                        <h4><i class="fa fa-upload"></i></h4>
-                        Upload 12 mouths<br>
-                        <span class="small" id="upload-report"></span>
-                    </div>
-                </div>
-                <div id="mouths-preview" class="p-3"></div>
-                <div class="bg-light mt-3">
-                    <div class="card">
-                        <div class="card-header"></div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group">
-                                        <label for="mouth-pack-title"><strong>Title:</strong></label>
-                                        <input type="text" id="mouth-pack-title" class="form-control">
+            <div class="col-sm-12 col-md-10 mx-auto">
+                <div class="mt-3">
+                    <form id="upload-form">
+                        <div id="instructions" style="border-radius: 4px;" class=" bg-light p-3 m-0 mb-2">
+                            <p class="mb-1 text-primary small"><strong>Upload mouthpack in 3 easy steps:</strong></p>
+                            <ol class="text-primary small">
+                                <li>Add 12 images to the corresponding sounds</li>
+                                <li>Fill in the title and select the category for the mouthpack</li>
+                                <li>Click upload</li>
+                            </ol>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="upload-form-container">
+                                    <div class="mouth-drop-target" id="div-oei">
+                                        <input type="file" name="oei" id="inp-oei" style="opacity: 0; position:absolute;" required>
+                                        <h4>o e i</h4>
+                                    </div>
+                                    <div class="mouth-drop-target" id="div-l">
+                                        <input type="file" name="l" id="inp-l" style="opacity: 0; position:absolute;" required>
+                                        <h4>l</h4>
+                                    </div>
+                                    <div class="mouth-drop-target" id="div-o">
+                                        <input type="file" name="o" id="inp-o" style="opacity: 0; position:absolute;" required>
+                                        <h4>o</h4>
+                                    </div>
+                                    <div class="mouth-drop-target" id="div-r">
+                                        <input type="file" name="r" id="inp-r" style="opacity: 0; position:absolute;" required>
+                                        <h4>r</h4>
+                                    </div>
+                                    <div class="mouth-drop-target" id="div-cdgknstxyz">
+                                        <input type="file" name="cdgknstxyz" id="inp-cdgknstxyz" style="opacity: 0; position:absolute;" required>
+                                        <h4>c d g k n s t x y z</h4>
+                                    </div>
+                                    <div class="mouth-drop-target" id="div-fv">
+                                        <input type="file" name="fv" id="inp-fv" style="opacity: 0; position:absolute;" required>
+                                        <h4>f v</h4>
+                                    </div>
+                                    <div class="mouth-drop-target" id="div-qw">
+                                        <input type="file" name="qw" id="inp-qw" style="opacity: 0; position:absolute;" required>
+                                        <h4>q w</h4>
+                                    </div>
+                                    <div class="mouth-drop-target" id="div-th">
+                                        <input type="file" name="th" id="inp-th" style="opacity: 0; position:absolute;" required>
+                                        <h4>th</h4>
+                                    </div>
+                                    <div class="mouth-drop-target" id="div-bmp">
+                                        <input type="file" name="bmp" id="inp-bmp" style="opacity: 0; position:absolute;" required>
+                                        <h4>b m p</h4>
+                                    </div>
+                                    <div class="mouth-drop-target" id="div-u">
+                                        <input type="file" name="u" id="inp-u" style="opacity: 0; position:absolute;" required>
+                                        <h4>u</h4>
+                                    </div>
+                                    <div class="mouth-drop-target" id="div-ee">
+                                        <input type="file" name="ee" id="inp-ee" style="opacity: 0; position:absolute;" required>
+                                        <h4>ee</h4>
+                                    </div>
+                                    <div class="mouth-drop-target" id="div-chjsh">
+                                        <input type="file" name="chjsh" id="inp-chjsh" style="opacity: 0; position:absolute;" required>
+                                        <h4>ch j sh</h4>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group">
-                                        <label for="mouth-pack-title"><strong>Category:</strong></label>
-                                        <select id="mouth-pack-category" class="form-control">
-                                            <option value="" selected disabled>Select the category</option>
-                                            <option value="cat1">Category One</option>
-                                            <option value="cat1">Category Two</option>
-                                            <option value="cat1">Category Three</option>
-                                            <option value="cat1">Category Four</option>
-                                        </select>
+                                <div class="row mt-3">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="mouth-pack-title"><strong>Title:</strong></label>
+                                            <input type="text" id="mouth-pack-title" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="mouth-pack-title"><strong>Category:</strong></label>
+                                            <select id="mouth-pack-category" class="form-control" required>
+                                                <option value="" selected disabled>Select the category</option>
+                                                <option value="cat1">Category One</option>
+                                                <option value="cat1">Category Two</option>
+                                                <option value="cat1">Category Three</option>
+                                                <option value="cat1">Category Four</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="mt-4 text-center">
                     <div class="col-sm-12 col-md-10 mx-auto">
                         <div class="row" id="upload-mouths-btns">
-                            <div class="col-12 col-md-4 my-2">
-                                <button class="btn btn-default btn-block bg-dark text-white">Cancel</button>
+                            <div class="col-12 col-md-6 my-2">
+                                <button onclick="resetUpload()" class="btn btn-outline-secondary btn-default btn-block bg-white text-dark">Clear Form</button>
                             </div>
-                            <div class="col-12 col-md-4 my-2">
-                                <button class="btn btn-default btn-block bg-dark text-white">Clear All</button>
-                            </div>
-                            <div class="col-12 col-md-4 my-2">
-                                <button class="btn btn-default btn-block bg-dark text-white">Upload Mouth Pack</button>
+                            <div class="col-12 col-md-6 my-2">
+                                <button type="submit" form="upload-form" class="btn btn-default btn-block bg-dark text-white">Upload Mouth Pack</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+        <div class="modal fade" v-if="updateForm !== null" id="update-user-prefs">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Update field</h4>
+                        <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- html elements injected via javascript-->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
-
 </html>
