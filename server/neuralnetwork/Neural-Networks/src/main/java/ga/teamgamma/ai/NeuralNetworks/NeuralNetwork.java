@@ -194,7 +194,7 @@ public class NeuralNetwork
 						conv3x3(
 								"cnn4",
 								384,							//output size/number of outputs of the layers -
-								bias								//bias -
+								bias								//bias - 1
 						)
 				)
 				/**====================================================================*/
@@ -203,7 +203,7 @@ public class NeuralNetwork
 						conv3x3(
 								"cnn5",
 								256,							//output size/number of outputs of the layers -
-								bias								//bias -
+								bias								//bias - 1
 						)
 				)
 				//Reduce dimentionality
@@ -219,8 +219,8 @@ public class NeuralNetwork
 						fullyConnected(
 								"ffn1",
 								4096,							//output size/number of outputs of the layers
-								bias,								//bias
-								dropOut,							//drop out
+								bias,								//bias - 1
+								dropOut,							//drop out - 0.5, anything <= 0.5 gets dropped out
 								new NormalDistribution(
 										0,
 										0.005
@@ -233,7 +233,7 @@ public class NeuralNetwork
 						fullyConnected(
 								"ffn2",
 								4096,							//output size/number of outputs of the layers
-								bias,								//bias -
+								bias,								//bias - 1
 								dropOut,							//drop out -
 								new NormalDistribution(
 										0,
@@ -248,19 +248,21 @@ public class NeuralNetwork
 						new OutputLayer
 										.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
 										.name("output")
-										.nOut(numLabels) //12 Mouth Shapes
-										.activation(Activation.SOFTMAX)
+										.nOut(numLabels)			 //12 Mouth Shapes
+										.activation(
+												Activation.SOFTMAX	//activation function - softmax
+										)
 										.build())
 				/**====================================================================*/
 				.setInputType(
 								InputType.convolutional(
-										height,
-										width,
-										channels
+										height,						//height   - 100
+										width,						//width    - 100
+										channels					//channels - 12
 								)
 				)
 				.build();
-
+				/**====================================================================*/
 		return new MultiLayerNetwork(conf);
 	}
 }
