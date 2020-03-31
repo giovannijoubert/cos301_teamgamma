@@ -83,8 +83,8 @@ ul {
  
       background-color: white;
       color: #303030;
-      width:300px;
-      height:400px;
+      width:250px;
+      height:450px;
       margin-right:150px;
       float: right;
       border-style: solid;
@@ -109,8 +109,7 @@ ul {
   }
 
   #input {
-      margin-left: 70px;
-      margin-top: 10px;
+      text-align: center;
   }
 
   body {
