@@ -2,42 +2,109 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <title>Explore</title>
     <link rel="stylesheet" href="../css/Explore.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/Upload.css">
+    <script src="../vendor/jquery/jquery.min.js" defer></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js" defer></script>
+    <script src="../js/ui.js" defer></script>
+    <script src="../js/Upload.js" defer></script>
 
 </head>
 <body>
 
 <div class="header"></div>
-<nav class="navbar navbar-expand-sm bg-light navbar-light sticky-top">
-    <!-- Brand -->
-
-    <a href="/"class="navbar-brand d-flex w-20 mr-20">
-        <img src = "../images/logo.png" width = "35%" height = "35%" alt="Image Missing!"></a>
-
-    <!-- Links -->
-
-    <ul class="navbar-nav justify-content-center">
-        <li class="nav-item active">
-            <a class="nav-link" href="Explore.html">Explore  <span class="sr-only">Home</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="Upload.html">Upload</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="Collections.html">Collections</a>
-        </li>
-    </ul>
-
-    <ul class="navbar-nav w-20 ml-auto">
-        <li class="nav-item">
-            <a class="nav-link" href="Login.html">Signup/Login</a>
-        </li>
-    </ul>
-
-
+<nav class="navbar navbar-expand-sm navbar-light bg-light" id="navbar">
+    <div class="container-fluid">
+        <a href="explore.html" class="navbar-brand">
+            <img src="../Assets/Logo/logo.png" alt="Mouth Piece Logo" class="img-responsive" style="height: 30px;">
+        </a>
+        <div class="nav navbar-nav ml-auto mr-2 user-prefs" id="user-prefs-1">
+            <a href="javascript: void(0)" data-toggle="collapse" data-target="#user-preferences-section" class="nav-item nav-link"><i class="fa fa-user"></i></a>
+        </div>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#mp-nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse flex-row" id="mp-nav">
+            <div class="nav navbar-nav">
+                <a href="explore.html" class="nav-item nav-link text-dark">Explore</a>
+                <a href="upload.html" class="nav-item nav-link text-dark">Upload</a>
+                <a href="popular.html" class="nav-item nav-link text-dark">Popular</a>
+                <a href="collection.html" class="nav-item nav-link text-dark">Collection</a>
+            </div>
+        </div>
+        <div class="nav navbar-nav ml-auto user-prefs" id="user-prefs-2">
+            <a href="javascript: void(0)" data-toggle="collapse" data-target="#user-preferences-section" class="nav-item nav-link"><i class="fa fa-user"></i></a>
+        </div>
+    </div>
 </nav>
+<section class="row collapse" id="user-preferences-section">
+    <div class="container py-3 mt-4">
+        <div class="col-12 flex-row mb-3">
+            <h4>
+                Account Settings
+                <a href="javascript: void(0)" class="text-dark float-right"><i class="fa fa-user"></i></a>
+            </h4>
+        </div>
+        <div class="col-12 flex-row">
+            <div class="text-muted user-prefs-header pb-1">Account Preferences</div>
+            <div class="preference-option m-2">
+                <div>
+                    <h5 class="mb-0">Username</h5>
+                    <p class="small text-muted">Lindo Mlambo</p>
+                </div>
+                <div>
+                    <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdateUsername()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+                </div>
+            </div>
+            <div class="preference-option m-2">
+                <div>
+                    <h5 class="mb-0">Email Address</h5>
+                    <p class="small text-muted">mlambolindo6@gmail.com</p>
+                </div>
+                <div>
+                    <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdateEmail()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+                </div>
+            </div>
+            <div class="preference-option m-2">
+                <div>
+                    <h5 class="mb-0">Password</h5>
+                    <p class="small text-muted">Change your password</p>
+                </div>
+                <div>
+                    <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdatePassword()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+                </div>
+            </div>
+            <div class="text-muted user-prefs-header pb-1">Theme Preferences</div>
+            <div class="preference-option m-2">
+                <div>
+                    <h5 class="mb-0">Dark Mode</h5>
+                    <p class="small text-muted">Coming Soon</p>
+                </div>
+                <div>
+                    <div class="custom-control custom-switch float-right">
+                        <input type="checkbox" class="custom-control-input" id="switch-theme">
+                        <label class="custom-control-label" for="switch-theme"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3 mb-1 text-center">
+                <button class="mx-auto btn btn-outline-secondary bg-white text-dark" onclick="logout()" style="border-radius: 40px"><i class="fa fa-sign-out"></i> Logout</button><br>
+
+                <button class="btn btn-link text-secondary mt-2"  data-toggle="collapse" data-target="#user-preferences-section">&times; close</button>
+            </div>
+        </div>
+    </div>
+</section>
 <div class="div1" >
 <form>
     <input type="text" name="search" placeholder="Search for a user or image pack...">
@@ -45,10 +112,21 @@
     <br>
     <p class="p1"> Popular: #vampire, #funny, #funky, #caricature, #smiles...</p>
 </div>
+<br>
+<div class="container">
+    <div class="dropdown">
+        <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown">
+            Filter
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" >Popular</a>
+            <a class="dropdown-item" href="#">New</a>
+            <a class="dropdown-item" href="#">Top Rated</a>
+       </div>
+    </div>
+</div>
 
 <div class="container">
-
-
 
     <hr class="mt-2 mb-5">
 
@@ -57,47 +135,95 @@
         <div class="col-lg-3 col-md-4 col-6">
             <a href="SpecificMouth.html" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth1.bmp.png" alt="">
+                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </figcaption>
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth2.bmp.png" alt="">
+                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </figcaption>
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth3.jpg" alt="">
+                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </figcaption>
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth4.jpg" alt="">
+                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </figcaption>
             </a>
         </div>
                 <div class="col-lg-3 col-md-4 col-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth8.jpg" alt="">
+                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </figcaption>
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth6.jpg" alt="">
+                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </figcaption>
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth7.jpg" alt="">
+                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </figcaption>
             </a>
         </div>
         <div class="col-lg-3 col-md-4 col-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth8.jpg" alt="">
+                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </figcaption>
             </a>
         </div>
         </div>
-
 </div>
 
 
 </body>
 </html>
+
