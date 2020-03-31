@@ -57,7 +57,7 @@ public class NeuralNetwork
 		return new DenseLayer.Builder().name(name).nOut(out).biasInit(bias).dropOut(dropOut).weightInit(new WeightInitDistribution(dist)).build();
 	}
 
-	private MultiLayerNetwork alexnetModel()
+	public MultiLayerNetwork alexnetModel()
 	{
 		double bias = 1;
 		double dropOut = 0.5;
