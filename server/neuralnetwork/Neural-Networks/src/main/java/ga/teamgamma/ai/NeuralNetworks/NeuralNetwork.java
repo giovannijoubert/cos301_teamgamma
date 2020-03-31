@@ -98,7 +98,7 @@ public class NeuralNetwork
 							.build();
 	}
 
-	private MultiLayerNetwork alexnetModel()
+	public MultiLayerNetwork alexnetModel()
 	{
 		/**
 		 * THINGS WE CAN CHANGE:
