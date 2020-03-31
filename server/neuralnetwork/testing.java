@@ -8,6 +8,7 @@ import org.junit.internal.runners.statements.Fail;
 public class testing
 {
 	String currentTest;
+
 	@Test
 	public void testingConvertDataToTestCSV()
 	{
@@ -90,6 +91,8 @@ public class testing
 	public void success()
 	{
 		if(currentTest != null)
+		{
 			System.out.println("Test:'" + currentTest + "' completed");
+		}
 	}
 }

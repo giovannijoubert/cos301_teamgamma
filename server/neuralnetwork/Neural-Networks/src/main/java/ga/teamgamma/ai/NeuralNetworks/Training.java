@@ -18,17 +18,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-public class Training {
+public class Training
+{
     private MultiLayerNetwork model = null;
 
     /**
      * TRAINING
      * */
     private int numRows = 100,
-            numCols = 100,
-            outputNum = 12,
-            numSamples = 36,//3 samples per formant, 12 formants
-            batchSize = 100;
+                numCols = 100,
+                outputNum = 12,
+                numSamples = 36,//3 samples per formant, 12 formants
+                batchSize = 100;
 
     /**
      * PRE-TRAINING
@@ -40,13 +41,16 @@ public class Training {
                 RNG_SEED = 123,
                 NUM_EPOCHS = 15;//number of epochs to perform
 
-    private  double RATE= 0.0015;//learning rate
+    private  double RATE = 0.0015;//learning rate
 
     DataSetIterator trainingIter;
 
     private Random rng = new Random(RNG_SEED);
 
-    public Training(){ }
+    public Training()
+    {
+
+    }
 
     public MultiLayerNetwork train(boolean pretrain, MultiLayerNetwork model)
     {

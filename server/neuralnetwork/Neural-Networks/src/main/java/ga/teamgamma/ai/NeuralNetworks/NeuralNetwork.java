@@ -107,7 +107,6 @@ public class NeuralNetwork
 		return new MultiLayerNetwork(conf);
 	}
 
-
 /*
 	//under review
 	public static boolean convertDataToTestCSV()
