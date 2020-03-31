@@ -7,6 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class NeuralNetworkTest {
 
     @Test
+    void exportModel() {
+        assertNotNull(new NeuralNetwork().exportModel());
+    }
+
+    @Test
     void alexnetModel() {
+        assertNotNull(new NeuralNetwork().alexnetModel());
     }
 }
