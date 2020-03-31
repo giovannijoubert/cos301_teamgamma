@@ -1,5 +1,6 @@
 package ga.teamgamma.ai.NeuralNetworks;
 
+import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.*;
@@ -21,6 +22,12 @@ public class NeuralNetworksApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(NeuralNetworksApplication.class, args);
+
+        MultiLayerNetwork alex = (new NeuralNetwork()).alexnetModel();
+
+        Training t = new Training();
+
+        t.train(true, alex);
     }
 
     

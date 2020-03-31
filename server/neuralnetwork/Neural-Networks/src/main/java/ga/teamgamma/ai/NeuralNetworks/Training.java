@@ -9,7 +9,9 @@ import org.deeplearning4j.datasets.datavec.RecordReaderDataSetIterator;
 import org.deeplearning4j.datasets.iterator.impl.MnistDataSetIterator;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
+import org.deeplearning4j.optimize.api.InvocationType;
 import org.deeplearning4j.optimize.listeners.CollectScoresIterationListener;
+import org.deeplearning4j.optimize.listeners.EvaluativeListener;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
 import org.deeplearning4j.ui.api.UIServer;
 import org.deeplearning4j.ui.stats.StatsListener;
@@ -25,11 +27,7 @@ import java.util.Random;
 
 public class Training
 {
-
-
-
     private MultiLayerNetwork model = null;
-
 
     /**
      * Deeplearning4j-UI
@@ -134,9 +132,9 @@ public class Training
                             new ScoreIterationListener(5)
                             );
 
-
+        /**Then add the EvaluativeListener to print out the accuracy after each iteration*/
         model.setListeners(
-                            new CollectScoresIterationListener(1)
+                            new EvaluativeListener(data, 1, InvocationType.EPOCH_END)
                             );
 
         /**Then add the StatsListener to collect this information from the network, as it trains*/
@@ -166,12 +164,6 @@ public class Training
                                 true
                         );
             }
-        }
-
-        if(PRETRAINING){
-
-        }else{
-
         }
 
         return model;
