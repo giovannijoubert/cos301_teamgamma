@@ -150,9 +150,9 @@ public class Training
         /**Attach the StatsStorage instance to the UI: this allows the contents of the StatsStorage to be visualized*/
         uiServer.attach(statsStorage);
 
-        if(new File("../NeuralNetworkConfiguration").exists())
+        if(new File("../NeuralNetworkConfiguration.zip").exists())
         {
-            model = ModelSerializer.restoreMultiLayerNetwork(new File("../NeuralNetworkConfiguration"));
+            model = ModelSerializer.restoreMultiLayerNetwork(new File("../NeuralNetworkConfiguration.zip"));
         }
         else
         {
@@ -162,7 +162,7 @@ public class Training
                 ModelSerializer
                         .writeModel(
                                 model,
-                                new File( "../NeuralNetworkConfiguration"),
+                                new File( "../NeuralNetworkConfiguration.zip"),
                                 true
                         );
             }

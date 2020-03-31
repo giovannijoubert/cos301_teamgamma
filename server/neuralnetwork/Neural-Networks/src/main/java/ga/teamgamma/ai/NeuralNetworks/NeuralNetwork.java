@@ -9,6 +9,7 @@ import org.deeplearning4j.nn.conf.inputs.InputType;
 import org.deeplearning4j.nn.conf.layers.*;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInitDistribution;
+import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.learning.config.AdaDelta;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
@@ -25,9 +26,10 @@ public class NeuralNetwork
 	int width = 100;
 	int numLabels = 12;
 
-	public static String exportModel() {
-	  return "model exported";
+	public static File exportModel() {
+		return new File("../NeuralNetworkConfiguration.zip");
 	}
+
 	/**
 	 * PARAMETERS:
 	 * ==============================
