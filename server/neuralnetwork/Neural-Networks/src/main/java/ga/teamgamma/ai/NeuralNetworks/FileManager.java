@@ -20,7 +20,7 @@ public class FileManager {
      * @throws IOException 
      */
     public void addFile(MultipartFile inputFile, String sound) throws IOException {
-        File myFile = new File("/home/aaron/Documents/cos301/uploads/"+ sound +"/"+ inputFile.getOriginalFilename());
+        File myFile = new File("/uploads/"+ sound +"/"+ inputFile.getOriginalFilename());
         myFile.createNewFile();
         FileOutputStream output = new FileOutputStream(myFile);
         output.write(inputFile.getBytes());

@@ -11,8 +11,4 @@ class NeuralNetworksApplicationTests {
         //return null;
     }
 
-    @Test
-    public void accuracyPercentage() {
-        //return percentage(%)
-    }
 }

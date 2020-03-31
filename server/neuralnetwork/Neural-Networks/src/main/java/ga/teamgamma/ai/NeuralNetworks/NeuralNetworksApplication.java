@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,7 +64,7 @@ public class NeuralNetworksApplication {
      * @return HttpStatus 200 OK if successful.
      * @throws IOException 
      */
-    @PostMapping("/api")
+    @PostMapping("/api/upload")
     public ResponseEntity<Object> apiUpload(@RequestParam("mouth0_0") MultipartFile mouth0_0, @RequestParam("mouth0_1") MultipartFile mouth0_1, @RequestParam("mouth0_2") MultipartFile mouth0_2,
             @RequestParam("mouth1_0") MultipartFile mouth1_0, @RequestParam("mouth1_1") MultipartFile mouth1_1, @RequestParam("mouth1_2") MultipartFile mouth1_2,
             @RequestParam("mouth2_0") MultipartFile mouth2_0, @RequestParam("mouth2_1") MultipartFile mouth2_1, @RequestParam("mouth2_2") MultipartFile mouth2_2,
@@ -130,5 +131,9 @@ public class NeuralNetworksApplication {
         
         return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
     }
-
+    
+    @GetMapping("/api/neuralNetwork")
+     public String apiGetNN(@RequestParam(value = "name", defaultValue = "World") String name) {
+        return String.format("Hello %s!", name);
+    }
 }
