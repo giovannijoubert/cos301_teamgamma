@@ -5,9 +5,12 @@ import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.internal.runners.statements.Fail;
 
+@RunsWith(NeuralNetwork.class)
 public class testing
 {
 	String currentTest;
+
+	private NeuralNetwork nnService = new NeuralNetwork();
 
 	@Test
 	public void testingConvertDataToTestCSV()
@@ -68,7 +71,9 @@ public class testing
 	@Test
 	public void testingMultilayer()
 	{
-		assertEquals("created", NeuralNetwork.multilayer());
+		final MultiLayerNetwork nn = nnService.alexnetModel();
+		//assertEquals("created", NeuralNetwork.multilayer());
+		assertThat(nn).isNotEmpty();
 		currentTest = "multilayer";
 	}
 	
