@@ -28,20 +28,27 @@ public class NeuralNetwork
 	public static String exportModel() {
 	  return "model exported";
 	}
-
+	/**
+	 * PARAMETERS:
+	 * ==============================
+	 * 1.) Bias    - Allows you to shift the activation function to the left or right, allowing better fit to data.
+	 * 2.) Padding -
+	 * 3.) Stride  -
+	 * 4.)
+	 * */
 	@SuppressWarnings("SameParameterValue")
 	private ConvolutionLayer convInit(String name, int in, int out, int[] kernel, int[] stride, int[] pad, double bias)
 	{
 		return new ConvolutionLayer
 									.Builder(
-												kernel,	//kernel size
-												stride,	//stride
-												pad		//padding		-
+												kernel,			//kernel size
+												stride,			//stride
+												pad				//padding		-
 											)
-									.name(name)			//name of the layer
-									.nIn(in)			//number of inputs to the layer (input size)
-									.nOut(out)			//number of outputs of the layer(output size)
-									.biasInit(bias)		//bias
+									.name(name)					//name of the layer
+									.nIn(in)					//number of inputs to the layer (input size)
+									.nOut(out)					//number of outputs of the layer(output size)
+									.biasInit(bias)				//bias
 									.build();
 	}
 
