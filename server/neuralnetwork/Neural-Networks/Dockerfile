@@ -16,6 +16,10 @@ FROM openjdk:11-jre-slim
 
 COPY --from=build /home/app/target/Neural-Networks-0.0.2-SNAPSHOT.jar /usr/local/lib/gamma-ai.jar
 
+RUN mkdir -p /data
+
+VOLUME ["/data"]
+
 EXPOSE 8080
 
 ENTRYPOINT ["java","-jar","/usr/local/lib/gamma-ai.jar"]
