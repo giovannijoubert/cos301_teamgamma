@@ -5,11 +5,15 @@ import org.datavec.api.io.labels.ParentPathLabelGenerator;
 import org.datavec.api.split.FileSplit;
 import org.datavec.image.loader.NativeImageLoader;
 import org.datavec.image.recordreader.ImageRecordReader;
+import org.deeplearning4j.api.storage.StatsStorage;
 import org.deeplearning4j.datasets.datavec.RecordReaderDataSetIterator;
 import org.deeplearning4j.datasets.iterator.impl.MnistDataSetIterator;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
+import org.deeplearning4j.ui.api.UIServer;
+import org.deeplearning4j.ui.stats.StatsListener;
+import org.deeplearning4j.ui.storage.InMemoryStatsStorage;
 import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.dataset.DataSet;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
@@ -18,17 +22,24 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-public class Training {
+public class Training
+{
     private MultiLayerNetwork model = null;
 
+    /**
+     * Deeplearning4j-UI
+     */
+    /
+    private UIServer uiServer;
+    StatsStorage statsStorage
     /**
      * TRAINING
      * */
     private int numRows = 100,
-            numCols = 100,
-            outputNum = 12,
-            numSamples = 36,//3 samples per formant, 12 formants
-            batchSize = 100;
+                numCols = 100,
+                outputNum = 12,
+                numSamples = 36,//3 samples per formant, 12 formants
+                batchSize = 100;
 
     /**
      * PRE-TRAINING
@@ -40,13 +51,23 @@ public class Training {
                 RNG_SEED = 123,
                 NUM_EPOCHS = 15;//number of epochs to perform
 
-    private  double RATE= 0.0015;//learning rate
+    private  double RATE = 0.0015;//learning rate
 
     DataSetIterator trainingIter;
 
     private Random rng = new Random(RNG_SEED);
 
-    public Training(){ }
+    public Training()
+    {
+        /**Initialize the user interface backend*/
+        uiServer = UIServer.getInstance();
+
+        /**Configure where the network information (gradients, score vs. time etc) is to be stored. Here: store in memory*/
+        statsStorage = new InMemoryStatsStorage(); //Alternative: new FileStatsStorage(File), for saving and loading later.
+
+
+
+    }
 
     public MultiLayerNetwork train(boolean pretrain, MultiLayerNetwork model)
     {
@@ -80,6 +101,17 @@ public class Training {
     {
         model.init();
         model.setListeners(new ScoreIterationListener(5));//print the score
+
+        /**Then add the StatsListener to collect this information from the network, as it trains*/
+        model.setListeners(
+                            new StatsListener(
+                                    statsStorage,
+                                    1
+                            )
+        );
+
+        /**Attach the StatsStorage instance to the UI: this allows the contents of the StatsStorage to be visualized*/
+        uiServer.attach(statsStorage);
 
         if(new File("../NeuralNetworkConfiguration").exists())
         {
