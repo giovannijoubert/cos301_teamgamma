@@ -27,10 +27,6 @@ target/
 /.nb-gradle/
 build/
 
-### Training Data ###
-*.jpg
-*.jpeg
-
 ### VS Code ###
 .vscode/
 

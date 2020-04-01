@@ -4,9 +4,6 @@ import org.datavec.api.io.labels.ParentPathLabelGenerator;
 import org.datavec.api.split.FileSplit;
 import org.datavec.image.loader.NativeImageLoader;
 import org.datavec.image.recordreader.ImageRecordReader;
-import org.datavec.image.transform.FlipImageTransform;
-import org.datavec.image.transform.ImageTransform;
-import org.datavec.image.transform.WarpImageTransform;
 import org.deeplearning4j.api.storage.StatsStorage;
 import org.deeplearning4j.datasets.datavec.RecordReaderDataSetIterator;
 import org.deeplearning4j.datasets.iterator.impl.MnistDataSetIterator;
@@ -20,17 +17,12 @@ import org.deeplearning4j.ui.api.UIServer;
 import org.deeplearning4j.ui.stats.StatsListener;
 import org.deeplearning4j.ui.storage.InMemoryStatsStorage;
 import org.deeplearning4j.util.ModelSerializer;
-import org.nd4j.evaluation.classification.Evaluation;
 import org.nd4j.linalg.dataset.DataSet;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
-import org.nd4j.linalg.dataset.api.preprocessor.DataNormalization;
-import org.nd4j.linalg.dataset.api.preprocessor.ImagePreProcessingScaler;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 public class Training
@@ -62,12 +54,12 @@ public class Training
      * PRE-TRAINING
      */
 
-    private int NUM_ROWS = 100,
-                NUM_COLUMNS = 100,
+    private int NUM_ROWS = 28,
+                NUM_COLUMNS = 28,
                 OUTPUT_NUMS = 12,//number of output classes
-                BATCH_SIZE = 10,//batch size for each epoch
+                BATCH_SIZE = 64,//batch size for each epoch
                 RNG_SEED = 123,
-                NUM_EPOCHS = 10;//number of epochs to perform
+                NUM_EPOCHS = 15;//number of epochs to perform
 
     private  double RATE = 0.0015;//learning rate
 
@@ -86,9 +78,27 @@ public class Training
 
     public MultiLayerNetwork train(boolean pretrain, MultiLayerNetwork model)
     {
+        this.PRETRAINING = pretrain;
         try
         {
-            return train(model, getTrainingDataSetIterator(pretrain));
+            return pretrain
+                    ?
+                        train(
+                                model,                          //model to train
+                                new MnistDataSetIterator(
+                                        BATCH_SIZE,             //batch size
+                                        1200,       //number examples to load
+                                        false,          //binarize
+                                        true,             //train or test
+                                        true,            //whether examples should be shuffled
+                                        RNG_SEED                //random number generator seed to use when shuffling examples
+                                )
+                        )
+                    :
+                        train(
+                                model,                          //model to train
+                                getDataSetIteratorFromFile()
+                        );
         }
         catch(Exception e)
         {
@@ -98,46 +108,16 @@ public class Training
         return null;
     }
 
-    private List<ImageTransform> getTransforms(){
-        return Arrays.asList(new ImageTransform[]{
-                                                    new FlipImageTransform(rng),
-                                                    new WarpImageTransform(rng,42),
-                                                    new FlipImageTransform(new Random(123))
-                                                });
-    }
-
-    private DataSetIterator getTrainingDataSetIterator(boolean pretrain) throws IOException
+    private DataSetIterator getDataSetIteratorFromFile() throws IOException
     {
-        String path = System.getProperty("user.dir") + "\\src\\database.txt";
-        /**Get Training Data Directory*/
-        File parentPath = new File(
-                                    System.getProperty("user.dir"),
-                                    "\\src\\main\\java\\ga\\teamgammma\\ai" + (pretrain ? "\\pretraining\\" : "\\training\\")
-        );
-        System.out.println("Training Set Path: "+parentPath.toString());;
-
+        File parentPath = new File(System.getProperty("user.dir"), "/pathToTrainingDataFolder/");
         ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
-        FileSplit trainData = new FileSplit(parentPath, NativeImageLoader.ALLOWED_FORMATS, rng);
-
-        /**Ensure Training Data is Distributed Equally amongst the various labels*/
+        FileSplit fileSplit = new FileSplit(parentPath, NativeImageLoader.ALLOWED_FORMATS, rng);
         BalancedPathFilter pathFilter = new BalancedPathFilter(rng, labelMaker, numSamples, outputNum, batchSize);
-
-
         ImageRecordReader recordReader = new ImageRecordReader(numRows,numCols,outputNum,labelMaker);
-        recordReader.initialize(trainData);
-        /**Add Transformed Data To Pretraing On*/
-        for (ImageTransform transform : getTransforms()){
-            recordReader.initialize(trainData,transform);
-        }
-        /**Data Normalization*/
-        DataNormalization scaler = new ImagePreProcessingScaler(0,1);
-        DataSetIterator dataIter = new RecordReaderDataSetIterator(recordReader,batchSize,1,outputNum);
-        scaler.fit(dataIter);
-        dataIter.setPreProcessor(scaler);
-
-        return dataIter;
+        recordReader.initialize(fileSplit);
+        return new RecordReaderDataSetIterator(recordReader,batchSize,1,outputNum);
     }
-
 
     private MultiLayerNetwork train(MultiLayerNetwork model, DataSetIterator data) throws IOException
     {
@@ -167,10 +147,6 @@ public class Training
         /**Attach the StatsStorage instance to the UI: this allows the contents of the StatsStorage to be visualized*/
         uiServer.attach(statsStorage);
 
-       /* File parentPath = new File(
-                System.getProperty("user.dir"),
-                "\\src\\main\\java\\ga\\teamgammma\\ai" + (pretrain ? "\\pretraining\\" : "\\training\\")
-        );*/
         if(new File("../NeuralNetworkConfiguration.zip").exists())
         {
             model = ModelSerializer.restoreMultiLayerNetwork(new File("../NeuralNetworkConfiguration.zip"));
@@ -180,18 +156,15 @@ public class Training
             for (int i = 0; i < NUM_EPOCHS; i++)
             {
                 model.fit(data);
+                /*ModelSerializer
+                        .writeModel(
+                                model,
+                                new File( "../NeuralNetworkConfiguration.zip"),
+                                true
+                        );*/
             }
-            ModelSerializer
-                    .writeModel(
-                            model,
-                            new File( "../NeuralNetworkConfiguration.zip"),
-                            true
-                    );
-
         }
 
-        Evaluation eval = model.evaluate(data);
-        System.out.println(eval.stats(true));
         return model;
     }
 }
