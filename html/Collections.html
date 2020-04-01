@@ -11,11 +11,11 @@
   <script src="../vendor/jquery/jquery.min.js" defer></script>
   <script src="../vendor/bootstrap/js/bootstrap.min.js" defer></script>
   <script src="../js/ui.js" defer></script>
+  <script src="../js/Upload.js" defer></script>
 
 </head>
 <body>
 
-  <div class="header"></div>
   <nav class="navbar navbar-expand-sm navbar-light bg-light" id="navbar">
       <div class="container-fluid">
           <a href="Explore.html" class="navbar-brand">
@@ -29,9 +29,9 @@
           </button>
           <div class="navbar-collapse collapse flex-row" id="mp-nav">
               <div class="nav navbar-nav">
-                  <a href="Explore.html" class="nav-item nav-link text-dark">Explore</a>
-                  <a href="Upload.html" class="nav-item nav-link text-dark">Upload</a>
-                  <a href="Collections.html" class="nav-item nav-link text-dark">Collections</a>
+                  <a class ="not" href="Explore.html" class="nav-item nav-link text-dark">Explore</a>
+                  <a class ="not" href="Upload.html" class="nav-item nav-link text-dark">Upload</a>
+                  <a class="active" href="Collections.html" class="nav-item nav-link text-dark">Collections</a>
               </div>
           </div>
           <div class="nav navbar-nav ml-auto user-prefs" id="user-prefs-2">
@@ -170,6 +170,19 @@
               </a>
           </div>
           </div>
+          <div class="modal fade" v-if="updateForm !== null" id="update-user-prefs">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Update field</h4>
+                        <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- html elements injected via javascript-->
+                    </div>
+                </div>
+            </div>
+        </div>
   </div>
 
 

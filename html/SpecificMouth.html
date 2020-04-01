@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <title>Specific Mouth</title>
   <link rel="stylesheet" href="../css/Explore.css">
+  <link rel="stylesheet" href="../css/SpecificMouths.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -20,7 +21,6 @@
 </head>
 <body>
 
-<div class="header"></div>
 <nav class="navbar navbar-expand-sm navbar-light bg-light" id="navbar">
   <div class="container-fluid">
     <a href="Explore.html" class="navbar-brand">
@@ -34,9 +34,9 @@
     </button>
     <div class="navbar-collapse collapse flex-row" id="mp-nav">
       <div class="nav navbar-nav">
-        <a href="Explore.html" class="nav-item nav-link text-dark">Explore</a>
-        <a href="Upload.html" class="nav-item nav-link text-dark">Upload</a>
-        <a href="Collections.html" class="nav-item nav-link text-dark">Collections</a>
+        <a class ="active" href="Explore.html" class="nav-item nav-link text-dark">Explore</a>
+        <a class ="not" href="Upload.html" class="nav-item nav-link text-dark">Upload</a>
+        <a class ="not" href="Collections.html" class="nav-item nav-link text-dark">Collections</a>
       </div>
     </div>
     <div class="nav navbar-nav ml-auto user-prefs" id="user-prefs-2">
@@ -103,16 +103,18 @@
     </div>
   </div>
 </section>
-<div class="div1" >
-  <form>
-    <input type="text" name="search" placeholder="Search for a user or image pack...">
-  </form>
-  <br>
-  <p class="p1"> Popular: #vampire, #funny, #funky, #caricature, #smiles...</p>
-</div>
-<br>
+
 
 <h3 align="center">Created by: Armani Lewis</h3>
+<p class="stars">
+  <span>
+    <a class="star-1" href="#">1</a>
+    <a class="star-2" href="#">2</a>
+    <a class="star-3" href="#">3</a>
+    <a class="star-4" href="#">4</a>
+    <a class="star-5" href="#">5</a>
+  </span>
+</p>
 
 <div class="container">
 
@@ -151,6 +153,19 @@
 
 <div style="text-align: center">
   <button type="button" class="btn btn-dark">Download</button>
+</div>
+<div class="modal fade" v-if="updateForm !== null" id="update-user-prefs">
+  <div class="modal-dialog modal-md">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4>Update field</h4>
+              <button class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+              <!-- html elements injected via javascript-->
+          </div>
+      </div>
+  </div>
 </div>
 
 

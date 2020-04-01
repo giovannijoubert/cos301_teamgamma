@@ -3,20 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <title>Explore</title>
-    <link rel="stylesheet" href="../css/Explore.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Explore page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">   
     <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/Upload.css">
+    <link rel="stylesheet" href="../css/Explore.css">
     <script src="../vendor/jquery/jquery.min.js" defer></script>
     <script src="../vendor/bootstrap/js/bootstrap.min.js" defer></script>
     <script src="../js/ui.js" defer></script>
     <script src="../js/Upload.js" defer></script>
+    <script src="../js/Explore.js" defer></script>
 
 </head>
 <body>
@@ -35,9 +32,9 @@
         </button>
         <div class="navbar-collapse collapse flex-row" id="mp-nav">
             <div class="nav navbar-nav">
-                <a href="Explore.html" class="nav-item nav-link text-dark">Explore</a>
-                <a href="Upload.html" class="nav-item nav-link text-dark">Upload</a>
-                <a href="Collections.html" class="nav-item nav-link text-dark">Collections</a>
+                <a class="active" href="Explore.html" class="nav-item nav-link text-dark">Explore</a>
+                <a class ="not" href="Upload.html" class="nav-item nav-link text-dark">Upload</a>
+                <a class ="not" href="Collections.html" class="nav-item nav-link text-dark">Collections</a>
             </div>
         </div>
         <div class="nav navbar-nav ml-auto user-prefs" id="user-prefs-2">
@@ -130,11 +127,11 @@
     <hr class="mt-2 mb-5">
 
     <div class="row text-center text-lg-left">
-
+        
         <div class="col-lg-3 col-md-4 col-6">
             <a href="SpecificMouth.html" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth1.bmp.png" alt="">
-                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star"></span>
@@ -145,7 +142,7 @@
         <div class="col-lg-3 col-md-4 col-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth2.bmp.png" alt="">
-                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star"></span>
@@ -156,7 +153,7 @@
         <div class="col-lg-3 col-md-4 col-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth3.jpg" alt="">
-                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star"></span>
@@ -167,7 +164,7 @@
         <div class="col-lg-3 col-md-4 col-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth4.jpg" alt="">
-                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star"></span>
@@ -178,7 +175,7 @@
                 <div class="col-lg-3 col-md-4 col-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth8.jpg" alt="">
-                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star"></span>
@@ -189,7 +186,7 @@
         <div class="col-lg-3 col-md-4 col-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth6.jpg" alt="">
-                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star"></span>
@@ -200,7 +197,7 @@
         <div class="col-lg-3 col-md-4 col-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth7.jpg" alt="">
-                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star"></span>
@@ -211,7 +208,7 @@
         <div class="col-lg-3 col-md-4 col-6">
             <a href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" src="../images/mouth8.jpg" alt="">
-                <figcaption class="figure-caption">Rating: <span class="fa fa-star checked"></span>
+                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star"></span>
@@ -220,7 +217,21 @@
             </a>
         </div>
         </div>
+        <div class="modal fade" v-if="updateForm !== null" id="update-user-prefs">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Update field</h4>
+                        <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- html elements injected via javascript-->
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
+
 
 
 </body>
