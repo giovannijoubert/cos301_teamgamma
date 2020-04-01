@@ -43,7 +43,7 @@ public class NeuralNetwork
 	 * 3.) Stride
 	 * 				-
 	 * 4.) Number of nodes
-	 * 			- Start with a minimum number of hideen nodes, increase the hidden nodes number until you get a good performance.
+	 * 			- Start with a minimum number of hidden nodes, increase the hidden nodes number until you get a good performance.
 	 * 			- Too few nodes 	-> high error as the predictive factors might be too complex for a small number of nodes to capture.
 	 * 			- Too many nodes 	-> will overfit to your training data and not generalize well.
 	 * 			- The number of hidden nodes you should have is based on a complex relationship between
