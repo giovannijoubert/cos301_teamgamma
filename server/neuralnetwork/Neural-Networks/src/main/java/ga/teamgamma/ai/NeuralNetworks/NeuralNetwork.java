@@ -8,6 +8,7 @@ import org.deeplearning4j.nn.conf.distribution.NormalDistribution;
 import org.deeplearning4j.nn.conf.inputs.InputType;
 import org.deeplearning4j.nn.conf.layers.*;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
+import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.nn.weights.WeightInitDistribution;
 import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.activations.Activation;
@@ -286,5 +287,33 @@ public class NeuralNetwork
 				.build();
 				/**====================================================================*/
 		return new MultiLayerNetwork(conf);
+	}
+
+	public MultiLayerNetwork lenetModel() {
+		/*
+		 * Revisde Lenet Model approach developed by ramgo2 achieves slightly above random
+		 * Reference: https://gist.github.com/ramgo2/833f12e92359a2da9e5c2fb6333351c5
+		 */
+		MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
+				.seed(seed)
+				.l2(0.005)
+				.activation(Activation.RELU)
+				.weightInit(WeightInit.XAVIER)
+				.updater(new AdaDelta())
+				.list()
+				.layer(0, convInit("cnn1", channels, 50 ,  new int[]{5, 5}, new int[]{1, 1}, new int[]{0, 0}, 0))
+				.layer(1, maxPool("maxpool1", new int[]{2,2}))
+				.layer(2, conv5x5("cnn2", 100, new int[]{5, 5}, new int[]{1, 1}, 0))
+				.layer(3, maxPool("maxool2", new int[]{2,2}))
+				.layer(4, new DenseLayer.Builder().nOut(500).build())
+				.layer(5, new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
+						.nOut(10)
+						.activation(Activation.SOFTMAX)
+						.build())
+				.setInputType(InputType.convolutionalFlat(28, 28, 1))
+				.build();
+
+		return new MultiLayerNetwork(conf);
+
 	}
 }

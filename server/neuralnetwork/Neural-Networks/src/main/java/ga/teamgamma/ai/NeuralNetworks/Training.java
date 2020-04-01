@@ -99,7 +99,6 @@ public class Training
                                 model,                          //model to train
                                 getDataSetIteratorFromFile()
                         );
-
         }
         catch(Exception e)
         {
@@ -157,12 +156,12 @@ public class Training
             for (int i = 0; i < NUM_EPOCHS; i++)
             {
                 model.fit(data);
-                ModelSerializer
+                /*ModelSerializer
                         .writeModel(
                                 model,
                                 new File( "../NeuralNetworkConfiguration.zip"),
                                 true
-                        );
+                        );*/
             }
         }
 
