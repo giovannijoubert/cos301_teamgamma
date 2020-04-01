@@ -23,11 +23,11 @@ public class NeuralNetworksApplication {
     public static void main(String[] args) {
         SpringApplication.run(NeuralNetworksApplication.class, args);
 
-        MultiLayerNetwork alex = (new NeuralNetwork()).alexnetModel();
+        //MultiLayerNetwork alex = (new NeuralNetwork()).alexnetModel();
 
         Training t = new Training();
 
-        t.train(true, alex);
+        t.train(true, (new NeuralNetwork()).alexnetModel());
     }
 
     
