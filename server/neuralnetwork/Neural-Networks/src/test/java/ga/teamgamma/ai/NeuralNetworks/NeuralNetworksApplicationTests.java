@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NeuralNetworksApplicationTests {
-
+class NeuralNetworksApplicationTests
+{
     @Test
-    public void contextLoads() {
+    public void contextLoads()
+    {
         //return null;
     }
-
 }

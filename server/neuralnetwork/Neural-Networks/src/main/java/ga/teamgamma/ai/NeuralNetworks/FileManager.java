@@ -8,9 +8,10 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * @author Aaron Phillip Facoline
  */
-public class FileManager {
-
-    public FileManager() {
+public class FileManager
+{
+    public FileManager()
+    {
 
     }
   
@@ -19,7 +20,8 @@ public class FileManager {
      * @param sound the destination folder for the inputFile to be writen to.
      * @throws IOException 
      */
-    public void addFile(MultipartFile inputFile, String sound) throws IOException {
+    public void addFile(MultipartFile inputFile, String sound) throws IOException
+    {
         File myFile = new File("/uploads/"+ sound +"/"+ genName(8) + inputFile.getOriginalFilename());
         myFile.createNewFile();
         FileOutputStream output = new FileOutputStream(myFile);
@@ -27,10 +29,12 @@ public class FileManager {
         output.close();
     }
     
-    private String genName(int n){
+    private String genName(int n)
+    {
         String val = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvxyz";
         String myString = "";
-        for (int i = 0; i < n; i++) { 
+        for (int i = 0; i < n; i++)
+        {
             int index = (int)(val.length() * Math.random());
             myString = myString + val.charAt(index);
         } 
