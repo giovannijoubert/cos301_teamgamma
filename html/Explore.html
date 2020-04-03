@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore page</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">   
+    <title>Explore</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/explore.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/Upload.css">
     <link rel="stylesheet" href="../css/Explore.css">
-    <script src="../vendor/jquery/jquery.min.js" defer></script>
-    <script src="../vendor/bootstrap/js/bootstrap.min.js" defer></script>
-    <script src="../js/ui.js" defer></script>
-    <script src="../js/Upload.js" defer></script>
-    <script src="../js/Explore.js" defer></script>
 
 </head>
 <body>
 
-<div class="header"></div>
+
 <nav class="navbar navbar-expand-sm navbar-light bg-light" id="navbar">
     <div class="container-fluid">
         <a href="Explore.html" class="navbar-brand">
@@ -101,139 +99,372 @@
         </div>
     </div>
 </section>
+
 <div class="div1" >
-<form>
-    <input type="text" name="search" placeholder="Search for a user or image pack...">
-</form>
+    <form id="search-form">
+        <input type="text"  id="search-field"  name="search" placeholder="Search for a user or image pack...">
+    </form>
     <br>
     <p class="p1"> Popular: #vampire, #funny, #funky, #caricature, #smiles...</p>
 </div>
+
 <br>
 <div class="container">
     <div class="dropdown">
         <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown">
-            Filter
+            Sort
         </button>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="#" >Popular</a>
+            <a class="dropdown-item" href="#" id="pop">Popular</a>
             <a class="dropdown-item" href="#">New</a>
             <a class="dropdown-item" href="#">Top Rated</a>
-       </div>
+        </div>
     </div>
 </div>
 
-<div class="container">
+
+<div class="container" id="main-content">
 
     <hr class="mt-2 mb-5">
 
     <div class="row text-center text-lg-left">
-        
+
         <div class="col-lg-3 col-md-4 col-6">
-            <a href="SpecificMouth.html" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="../images/mouth1.bmp.png" alt="">
-                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </figcaption>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="../images/mouth2.bmp.png" alt="">
-                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </figcaption>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="../images/mouth3.jpg" alt="">
-                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </figcaption>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="../images/mouth4.jpg" alt="">
-                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </figcaption>
-            </a>
-        </div>
-                <div class="col-lg-3 col-md-4 col-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="../images/mouth8.jpg" alt="">
-                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </figcaption>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="../images/mouth6.jpg" alt="">
-                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </figcaption>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="../images/mouth7.jpg" alt="">
-                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </figcaption>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6">
-            <a href="#" class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="../images/mouth8.jpg" alt="">
-                <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </figcaption>
-            </a>
-        </div>
-        </div>
-        <div class="modal fade" v-if="updateForm !== null" id="update-user-prefs">
-            <div class="modal-dialog modal-md">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>Update field</h4>
-                        <button class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- html elements injected via javascript-->
-                    </div>
+            <h2>Title</h2>
+            <div class="card cardSize"  >
+                <a href="SpecificMouth.html" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth1.bmp.png" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
                 </div>
             </div>
         </div>
+        <div class="col-lg-3 col-md-4 col-6">
+            <h2>Title</h2>
+            <div class="card cardSize">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth2.bmp.png" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+            <h2>Title</h2>
+            <div class="card cardSize">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth3.jpg" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+            <h2>Title</h2>
+            <div class="card cardSize">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth4.jpg" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+            <h2>Title</h2>
+            <div class="card cardSize">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth8.jpg" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+            <h2>Title</h2>
+            <div class="card cardSize">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth6.jpg" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+            <h2>Title</h2>
+            <div class="card cardSize">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth7.jpg" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+            <h2>Title</h2>
+            <div class="card cardSize">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth8.jpg" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" v-if="updateForm !== null" id="update-user-prefs">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Update field</h4>
+                    <button class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <!-- html elements injected via javascript-->
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+<div class="container collapse" id="search-content">
+    <div class="row text-center text-lg-left">
+        <div class="col-12 my-3" id="search-heading">
+            <h4>
+                <a href="Explore.html"><i class="fa fa-arrow-left"></i> back</a>
+                <span>Search Results for &lt;query&gt;</span>
+            </h4>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6 search-data lindo user collapse">
+            <a href="SpecificMouth.html" class="d-block mb-4 h-100">
+                <img class="img-fluid img-thumbnail" src="../images/mouth1.bmp.png" alt="">
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6 search-data lindo ryan collapse">
+            <a href="#" class="d-block mb-4 h-100">
+                <img class="img-fluid img-thumbnail" src="../images/mouth2.bmp.png" alt="">
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6 search-data user collapse">
+            <a href="#" class="d-block mb-4 h-100">
+                <img class="img-fluid img-thumbnail" src="../images/mouth3.jpg" alt="">
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6 search-data ryan collapse">
+            <a href="#" class="d-block mb-4 h-100">
+                <img class="img-fluid img-thumbnail" src="../images/mouth4.jpg" alt="">
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container collapse" id="sort-popular">
+    <div class="row text-center text-lg-left">
+
+        <div class="col-lg-3 col-md-4 col-6">
+            <h2>Title</h2>
+            <div class="card cardSize">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth8.jpg" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-6">
+            <h2>Title</h2>
+            <div class="card cardSize">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth2.bmp.png" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-6">
+            <h2>Title</h2>
+            <div class="card cardSize"  >
+                <a href="SpecificMouth.html" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth1.bmp.png" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-6">
+            <h2>Title</h2>
+            <div class="card cardSize">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth4.jpg" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+            <h2>Title</h2>
+            <div class="card cardSize">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth8.jpg" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-6">
+            <h2>Title</h2>
+            <div class="card cardSize">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth3.jpg" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-6">
+            <h2>Title</h2>
+            <div class="card cardSize">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth6.jpg" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+            <h2>Title</h2>
+            <div class="card cardSize">
+                <a href="#" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="../images/mouth7.jpg" alt="">
+                    <figcaption class="figure-caption"><span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </figcaption>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">John Doe</h5>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 
 </body>
 </html>
+
 
