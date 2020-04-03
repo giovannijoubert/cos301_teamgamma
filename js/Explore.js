@@ -20,3 +20,14 @@ $(document).ready(function(){
 
     })
 })
+
+$(document).ready(function(){
+
+    $("#pop").click(function(){
+
+        $("#main-content").hide();
+        $("#sort-popular").show();
+
+    })
+})
+
