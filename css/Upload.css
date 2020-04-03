@@ -23,12 +23,22 @@ body{
     border-bottom: 1px solid #eee;
     font-family: 'arciform_sansregular';
 }
-
-.header {
-    background-color:grey !important;
-    padding: 1.5%;
-    text-align: center;
+#navbar a:hover{
+    background-color: silver;
+    color: #303030;
+}
+.not{
+    color: #303030;
+    padding:4px;
+    text-decoration: none;
+}
+.active {
+    text-decoration: underline;
+    text-decoration-color: #F2929c;
+    color: #303030;
+    padding:4px;
   }
+
   
   #breadcrumb{
       background-color: #303030 !important;

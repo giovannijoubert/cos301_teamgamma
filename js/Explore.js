@@ -17,11 +17,9 @@ $(document).ready(function(){
         }
         $(".search-data").removeClass("show");
         $("#search-heading h4 span").html("No results for "+query);
+    });
 
-    })
-})
-
-$(document).ready(function(){
+// $(document).ready(function(){
 
     $("#pop").click(function(){
 
@@ -29,5 +27,13 @@ $(document).ready(function(){
         $("#sort-popular").show();
 
     })
+
+    $('.stars a').on('click', function(){
+        $('.stars span, .stars a').removeClass('active');
+      
+        $(this).addClass('active');
+        $('.stars span').addClass('active');
+      });
+
 })
 

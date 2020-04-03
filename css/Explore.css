@@ -1,8 +1,3 @@
-.header {
-    background-color:grey !important;
-    padding: 1.5%;
-    text-align: center;
-}
 
 .div1 {
     background-color:#303030;
@@ -17,17 +12,12 @@
 }
 
 input[type=text] {
-    width: 250px;
+    width: 700px;
     height:50px;
     border-radius: 25px;
     border: black;
     padding: 5px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
-}
 
-input[type=text]:focus {
-    width: 80%;
 }
 
 .center-block {
@@ -45,6 +35,17 @@ input[type=text]:focus {
     color: aliceblue;
 }
 
-.checked {
+.checked{
     color: orange;
+}
+
+.figure-caption{
+    margin-left:80px;
+}
+
+.box{
+    margin-top:10px;
+    width:250px;
+    height:350px;
+    margin-left:20px;
 }
