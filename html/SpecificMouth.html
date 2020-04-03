@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <title>Specific Mouth</title>
   <link rel="stylesheet" href="../css/Explore.css">
   <link rel="stylesheet" href="../css/SpecificMouths.css">
@@ -105,7 +103,7 @@
 </section>
 
 
-<h3 align="center">Created by: Armani Lewis</h3>
+<h3 align="center" class="creator">Created by: Armani Lewis</h3>
 <p class="stars">
   <span>
     <a class="star-1" href="#">1</a>
@@ -122,27 +120,27 @@
 
   <div class="row text-center text-lg-left">
 
-    <div class="col-lg-3 col-md-4 col-6">
+    <div class="col-lg-3 col-md-4 col-6 zoom">
       <a href="SpecificMouth.html" class="d-block mb-4 h-100">
         <img class="img-fluid img-thumbnail" src="../images/aei.jpg" alt="">
       </a>
     </div>
-    <div class="col-lg-3 col-md-4 col-6">
+    <div class="col-lg-3 col-md-4 col-6 zoom">
       <a href="#" class="d-block mb-4 h-100">
         <img class="img-fluid img-thumbnail" src="../images/ah.jpg" alt="">
       </a>
     </div>
-    <div class="col-lg-3 col-md-4 col-6">
+    <div class="col-lg-3 col-md-4 col-6 zoom">
       <a href="#" class="d-block mb-4 h-100">
         <img class="img-fluid img-thumbnail" src="../images/l.jpg" alt="">
       </a>
     </div>
-    <div class="col-lg-3 col-md-4 col-6">
+    <div class="col-lg-3 col-md-4 col-6 zoom">
       <a href="#" class="d-block mb-4 h-100">
         <img class="img-fluid img-thumbnail" src="../images/m.jpg" alt="">
       </a>
     </div>
-    <div class="col-lg-3 col-md-4 col-6">
+    <div class="col-lg-3 col-md-4 col-6 zoom">
       <a href="#" class="d-block mb-4 h-100">
         <img class="img-fluid img-thumbnail" src="../images/ts.jpg" alt="">
       </a>
@@ -151,9 +149,15 @@
 </div>
 <br>
 
-<div style="text-align: center">
-  <button type="button" class="btn btn-dark">Download</button>
+<div  style="text-align: center" >
+   <button type="button" class="btn btn-dark" style="width: 300px">Download</button>
 </div>
+
+<div style="text-align: left">
+  <button  type="button" class="btn btn-dark" style="width: 150px">Back</button>
+</div>
+
+
 <div class="modal fade" v-if="updateForm !== null" id="update-user-prefs">
   <div class="modal-dialog modal-md">
       <div class="modal-content">
@@ -171,4 +175,5 @@
 
 </body>
 </html>
+
 
