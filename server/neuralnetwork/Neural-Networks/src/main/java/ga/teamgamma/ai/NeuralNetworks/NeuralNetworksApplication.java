@@ -25,9 +25,15 @@ public class NeuralNetworksApplication {
 
         //MultiLayerNetwork alex = (new NeuralNetwork()).alexnetModel();
 
+        System.out.println("Lenet Model");
         Training t = new Training();
 
-        t.train(true, (new NeuralNetwork()).alexnetModel());
+        t.train(true, (new NeuralNetwork()).lenetModel());
+
+        //System.out.println("Alexnet Model");
+        //Training t2 = new Training();
+
+        //t2.train(true, (new NeuralNetwork()).alexnetModel());
     }
 
     

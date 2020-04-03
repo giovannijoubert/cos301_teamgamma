@@ -155,11 +155,11 @@ public class NeuralNetwork
 				.layer(
 						convInit(
 								"cnn1",
-								1,									//channels - 1 because grey scale.
+								channels,									//channels - 1 because grey scale.
 							96,									//filters - 96 (of size 11x11) WHY!!!!
 								new int[]{11, 11},						//kernel - 11x11 window to capture objects
 								new int[]{4, 4},						//stride - 4 to reduce size
-								new int[]{3, 3},						//padding
+								new int[]{3, 3},						//padding needs to be {3, 3}
 							0										//bias - 0 for no bias
 						)
 				)
@@ -278,10 +278,10 @@ public class NeuralNetwork
 										.build())
 				/**====================================================================*/
 				.setInputType(
-								InputType.convolutional(
+								InputType.convolutionalFlat( // Needs to be convolutional
 										height,						//height   - 100
 										width,						//width    - 100
-										channels					//channels - 12
+										channels					//channels - 1
 								)
 				)
 				.build();
@@ -307,10 +307,10 @@ public class NeuralNetwork
 				.layer(3, maxPool("maxool2", new int[]{2,2}))
 				.layer(4, new DenseLayer.Builder().nOut(500).build())
 				.layer(5, new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
-						.nOut(10)
+						.nOut(numLabels)
 						.activation(Activation.SOFTMAX)
 						.build())
-				.setInputType(InputType.convolutionalFlat(28, 28, 1))
+				.setInputType(InputType.convolutional(height, width, channels))
 				.build();
 
 		return new MultiLayerNetwork(conf);
