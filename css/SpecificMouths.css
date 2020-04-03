@@ -1,115 +1,18 @@
 
-
-body {
-  color: #9fa1a4;
+* {
+  box-sizing: border-box;
 }
 
-.container {
-  z-index: 2;
-  position: relative;
-}
-
-/* Back to top button */
-.back-to-top {
-  position: fixed;
-  display: none;
-  background: #B1B4E5;
-  color: #fff;
-  width: 44px;
-  height: 44px;
-  text-align: center;
-  line-height: 1;
-  font-size: 16px;
-  border-radius: 50%;
-  right: 15px;
-  bottom: 15px;
-  transition: background 0.5s;
-  z-index: 11;
-}
-
-.back-to-top i {
-  color: #fff;
-  font-size: 24px;
-  position: absolute;
-  top: 8px;
-  left: 10px;
-}
-
-@media (max-width: 768px) {
-  .back-to-top {
-    bottom: 15px;
-  }
-}
-
-
-
-/* Review */
-.review h3 {
-  font-size: 20px;
-}
-
-.review p {
-  line-height: 1.8;
-  font-style: italic;
-  color: #303030;
-}
-
-.review .stars span {
-  color: #FF8803;
-}
-
-.review .stars .muted {
-  color: #ccc;
-}
-
-.review .review-user img {
-  width: 70px;
+.zoom {
+  padding: 50px;
+  transition: transform .2s;
+  width: 200px;
+  height: 200px;
   margin: 0 auto;
 }
 
-/* Testimonial Carousel */
-.testimonial-carousel .owl-dots {
-  position: absolute;
-  bottom: -40px;
-  width: 100%;
-  text-align: center;
+.zoom:hover {
+  -ms-transform: scale(2.0); /* IE 9 */
+  -webkit-transform: scale(2.0); /* Safari 3-8 */
+  transform: scale(2.0);
 }
-
-.testimonial-carousel .owl-dots .owl-dot {
-  display: inline-block;
-}
-
-.testimonial-carousel .owl-dots .owl-dot > span {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  background-color: #cbd3da;
-  border-radius: 50%;
-  margin: 5px;
-}
-
-.testimonial-carousel .owl-dots .owl-dot.active {
-  outline: none;
-}
-
-.testimonial-carousel .owl-dots .owl-dot.active > span {
-  background: linear-gradient(-45deg, #1391a5, #274685);
-}
-
-/* Pricing */
-.pricing {
-  padding: 50px;
-  background: linear-gradient(-45deg, #1391a5, #274685);
-  color: #fff;
-  padding-bottom: 12rem !important;
-  position: relative;
-  border-radius: 4px;
-  color: #000000;
-  background: #fff;
-  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.2);
-}
-
-.pricing h3 {
-  color: #2d71a1;
-}
-
