@@ -7,14 +7,14 @@ COPY /server/neuralnetwork/Neural-Networks/src /home/app/src
 
 COPY /server/neuralnetwork/Neural-Networks/pom.xml /home/app
 
-RUN mvn -f /home/app/pom.xml clean package
+RUN mvn -f /home/app/pom.xml clean package -DskipTests=true
 
 #
 # Package stage
 #
 FROM openjdk:11-jre-slim
 
-COPY --from=build /home/app/target/Neural-Networks-0.0.2-SNAPSHOT.jar /usr/local/lib/gamma-ai.jar
+COPY --from=build /home/app/target/Neural-Networks-0.0.4-SNAPSHOT.jar /usr/local/lib/gamma-ai.jar
 
 RUN mkdir -p /data
 

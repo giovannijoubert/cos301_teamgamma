@@ -4,18 +4,20 @@ import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.*;
+import java.nio.file.Files;
+import java.util.TimeZone;
+
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @author Aaron Phillip Facoline
  */
-
 @SpringBootApplication
 @RestController
 public class NeuralNetworksApplication
@@ -37,6 +39,37 @@ public class NeuralNetworksApplication
         //t2.train(true, (new NeuralNetwork()).alexnetModel());
     }
 
+    /**
+     * Initialization function run at boot
+     * Change timezone
+     * Delete existing model
+     * @author Nigel Mpofu
+     */
+    @PostConstruct
+    public void init() {
+        deleteOldModel();
+        TimeZone.setDefault(TimeZone.getTimeZone("Africa/Johannesburg"));
+    }
+
+    /**
+     * Delete the existing model at boot time
+     * @author Nigel Mpofu
+     */
+    private static void deleteOldModel() {
+        File model = new File("//model//NeuralNetworkConfiguration.zip");
+
+        // delete model if the file exists
+        try {
+            boolean isDeleted = Files.deleteIfExists(model.toPath());
+
+            if(isDeleted) {
+                System.out.println("INIT [deleteOldModel]: Model has been deleted");
+            }
+        } catch (IOException e) {
+            System.out.println("INIT [deleteOldModel]: ERROR");
+            e.printStackTrace();
+        }
+    }
     
     /**
      * @param mouth0_0 first spectrogram for "A", "E", "I" sound.
@@ -145,9 +178,15 @@ public class NeuralNetworksApplication
         
         return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
     }
-    
-    @GetMapping("/api/neuralNetwork")
-     public File apiGetNN() {
-        return NeuralNetwork.exportModel();
+
+    /**
+     * API to return the trained model
+     * @author Nigel Mpofu
+     * @return Neural Network Model
+     */
+    @RequestMapping(value = "/api/neuralNetwork", method = RequestMethod.GET, produces = "application/zip; charset=utf-8")
+    @ResponseBody
+     public FileSystemResource apiGetNN() {
+        return new FileSystemResource(NeuralNetwork.exportModel());
     }
 }
