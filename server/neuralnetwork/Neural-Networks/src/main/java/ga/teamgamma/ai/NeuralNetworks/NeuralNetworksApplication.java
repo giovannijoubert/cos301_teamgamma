@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.*;
 import java.nio.file.Files;
+import java.util.TimeZone;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
@@ -12,10 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
+
 /**
  * @author Aaron Phillip Facoline
  */
-
 @SpringBootApplication
 @RestController
 public class NeuralNetworksApplication
@@ -23,8 +25,6 @@ public class NeuralNetworksApplication
     public static void main(String[] args)
     {
         SpringApplication.run(NeuralNetworksApplication.class, args);
-
-        deleteOldModel(); // Delete model at boot
 
         //MultiLayerNetwork alex = (new NeuralNetwork()).alexnetModel();
 
@@ -37,6 +37,18 @@ public class NeuralNetworksApplication
         //Training t2 = new Training();
 
         //t2.train(true, (new NeuralNetwork()).alexnetModel());
+    }
+
+    /**
+     * Initialization function run at boot
+     * Change timezone
+     * Delete existing model
+     * @author Nigel Mpofu
+     */
+    @PostConstruct
+    public void init() {
+        deleteOldModel();
+        TimeZone.setDefault(TimeZone.getTimeZone("Africa/Johannesburg"));
     }
 
     /**
@@ -166,7 +178,12 @@ public class NeuralNetworksApplication
         
         return new ResponseEntity<>("Files successfully uploaded", HttpStatus.OK);
     }
-    
+
+    /**
+     * API to return the trained model
+     * @author Nigel Mpofu
+     * @return Neural Network Model
+     */
     @RequestMapping(value = "/api/neuralNetwork", method = RequestMethod.GET, produces = "application/zip; charset=utf-8")
     @ResponseBody
      public FileSystemResource apiGetNN() {

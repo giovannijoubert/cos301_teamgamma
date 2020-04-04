@@ -7,7 +7,7 @@ COPY /server/neuralnetwork/Neural-Networks/src /home/app/src
 
 COPY /server/neuralnetwork/Neural-Networks/pom.xml /home/app
 
-RUN mvn -f /home/app/pom.xml clean package
+RUN mvn -f /home/app/pom.xml clean package -DskipTests=true
 
 #
 # Package stage
