@@ -10,14 +10,12 @@
     </parent>
     <groupId>ga.teamgamma.ai</groupId>
     <artifactId>Neural-Networks</artifactId>
-    <version>0.0.2-SNAPSHOT</version> <!-- Maintain at '0.0.2-SNAPSHOT' for package auto build and server deploy -->
+    <version>0.0.4-SNAPSHOT</version> <!-- Maintain at '0.0.4-SNAPSHOT' for package auto build and server deploy -->
     <name>NeuralNetworks</name>
     <description>DNeural Networks project for Spring Boot</description>
-
     <properties>
         <java.version>11</java.version>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -53,8 +51,14 @@
         </dependency>
         <dependency>
             <groupId>org.nd4j</groupId>
-            <artifactId>nd4j-native-platform</artifactId>
+            <artifactId>nd4j-native</artifactId>
             <version>1.0.0-beta6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.nd4j</groupId>
+            <artifactId>nd4j-native</artifactId>
+            <version>1.0.0-beta6</version>
+            <classifier>linux-x86_64-avx2</classifier>
         </dependency>
         <dependency>
             <groupId>org.datavec</groupId>
@@ -67,7 +71,6 @@
             <version>1.0.0-beta6</version>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -76,5 +79,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
