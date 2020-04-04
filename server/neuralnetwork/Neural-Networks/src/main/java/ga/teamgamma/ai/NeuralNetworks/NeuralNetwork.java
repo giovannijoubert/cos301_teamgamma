@@ -289,9 +289,10 @@ public class NeuralNetwork
 		return new MultiLayerNetwork(conf);
 	}
 
-	public MultiLayerNetwork lenetModel() {
+	public MultiLayerNetwork lenetModel()
+	{
 		/*
-		 * Revisde Lenet Model approach developed by ramgo2 achieves slightly above random
+		 * Revised Lenet Model approach developed by ramgo2 achieves slightly above random
 		 * Reference: https://gist.github.com/ramgo2/833f12e92359a2da9e5c2fb6333351c5
 		 */
 		MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
@@ -314,6 +315,5 @@ public class NeuralNetwork
 				.build();
 
 		return new MultiLayerNetwork(conf);
-
 	}
 }

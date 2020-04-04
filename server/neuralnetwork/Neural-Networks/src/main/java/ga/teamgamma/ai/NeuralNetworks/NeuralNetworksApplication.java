@@ -18,9 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 @SpringBootApplication
 @RestController
-public class NeuralNetworksApplication {
-
-    public static void main(String[] args) {
+public class NeuralNetworksApplication
+{
+    public static void main(String[] args)
+    {
         SpringApplication.run(NeuralNetworksApplication.class, args);
 
         //MultiLayerNetwork alex = (new NeuralNetwork()).alexnetModel();

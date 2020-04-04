@@ -104,12 +104,14 @@ public class Training
         return null;
     }
 
-    private List<ImageTransform> getTransforms(){
-        return Arrays.asList(new ImageTransform[]{
-                                                    new FlipImageTransform(rng),
-                                                    new WarpImageTransform(rng,42),
-                                                    new FlipImageTransform(new Random(123))
-                                                });
+    private List<ImageTransform> getTransforms()
+    {
+        return Arrays.asList(new ImageTransform[]
+                            {
+                                new FlipImageTransform(rng),
+                                new WarpImageTransform(rng,42),
+                                new FlipImageTransform(new Random(123))
+                            });
     }
 
     private DataSetIterator getTrainingDataSetIterator(boolean pretrain) throws IOException
