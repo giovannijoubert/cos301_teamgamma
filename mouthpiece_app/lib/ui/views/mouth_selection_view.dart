@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mouthpiece_app/ui/views/collection_view.dart';
 import '../../core/viewmodels/mouth_selection_model.dart';
 import '../../ui/shared/app_colors.dart';
 import '../../ui/shared/text_styles.dart';
@@ -38,7 +39,7 @@ class _MouthSelectionState extends State<MouthSelectionView> {
                 ),
                 titleSection,
                 Expanded(
-                  child: ColourSelectionGrid(),
+                  child: ColourSelectionGrid(updateState: () {setState(() {});},),
                 ),
               ],
             ), 
@@ -70,7 +71,9 @@ class _MouthNavigationBarState extends State<MouthNavigationBar>  {
             children: <Widget>[
               new GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, "collection");
+                  Navigator.push(context, PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => CollectionView(),
+                  ),);
                 },
                 child: Container(
                   padding: EdgeInsets.only(
@@ -88,7 +91,9 @@ class _MouthNavigationBarState extends State<MouthNavigationBar>  {
               ),
               new GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, "mouth-selection");
+                  Navigator.push(context, PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => MouthSelectionView(),
+                  ),);
                 },
                 child: Container(
                   padding: EdgeInsets.only(
@@ -146,12 +151,17 @@ Widget titleSection = Container(
 List<String> images;
 List<String> colours;
 
-class MouthSelectionGrid extends StatelessWidget {
+class MouthSelectionGrid extends StatefulWidget {
+  @override
+  _MouthSelectionGridState createState() => _MouthSelectionGridState();
+}
+
+MouthSelectionModel mouthSelectionModel = new MouthSelectionModel();
+
+class _MouthSelectionGridState extends State<MouthSelectionGrid> {
   @override
   Widget build(BuildContext context) {
-    MouthSelectionModel mouthSelectionModel = new MouthSelectionModel();
     images = mouthSelectionModel.getImageList();
-    colours = mouthSelectionModel.getColourList();
 
     return Scaffold(
       body: Stack(
@@ -170,10 +180,17 @@ class MouthSelectionGrid extends StatelessWidget {
                     crossAxisCount: 3,
                       children: List.generate(images.length, (index) {
                         return Card(
-                          child: InkWell(
-                            onTap: (() {print(index);}), 
-                            child: Image.asset(images[index]), 
-                          ),
+                          shape: Border.all(color: (mouthSelectionModel.getSelectedListAtIndex(index)) ? Color(0xffffb8b8) : Colors.transparent, width: 3),
+                            child: InkWell(
+                              onTap: (() {
+                                setState(() {
+                                  mouthSelectionModel.setMouthIndex(index);
+                                  mouthSelectionModel.clearSelectedList();
+                                  mouthSelectionModel.setSelectedListAtIndex(index, true);
+                                });
+                              }), 
+                              child: Image.asset(images[index]), 
+                            ),
                           color: Color(int.parse(colours[index]))
                         );
                       }),
@@ -190,10 +207,18 @@ class MouthSelectionGrid extends StatelessWidget {
 
 List<String> bgColours;
 
-class ColourSelectionGrid extends StatelessWidget {
+class ColourSelectionGrid extends StatefulWidget {
+  final Function() updateState;
+  ColourSelectionGrid({Key key, @required this.updateState}) : super(key: key);
+
+  @override
+  _ColourSelectionGridState createState() => _ColourSelectionGridState();
+}
+
+class _ColourSelectionGridState extends State<ColourSelectionGrid> {
   @override
   Widget build(BuildContext context) {
-    MouthSelectionModel mouthSelectionModel = new MouthSelectionModel();
+    // MouthSelectionModel mouthSelectionModel = new MouthSelectionModel();
     bgColours = mouthSelectionModel.getBgColourList();
 
     return Scaffold(
@@ -203,7 +228,8 @@ class ColourSelectionGrid extends StatelessWidget {
             height: 200.0,
             margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
             child: CustomScrollView(
-              physics: BouncingScrollPhysics(),
+              // physics: BouncingScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               primary: false,
               slivers: <Widget>[
                 SliverPadding(
@@ -213,7 +239,15 @@ class ColourSelectionGrid extends StatelessWidget {
                     crossAxisCount: 6,
                       children: List.generate(bgColours.length, (index) {
                         return Card(
-                          color: Color(int.parse(bgColours[index]))
+                          color: Color(int.parse(bgColours[index])),
+                          child: InkWell(
+                            onTap: () { 
+                              setState(() {
+                                mouthSelectionModel.setColoursListAtIndex(mouthSelectionModel.getMouthIndex(), bgColours[index]);
+                                widget.updateState();
+                              });
+                            },
+                          ),
                         );
                       }),
                   ),

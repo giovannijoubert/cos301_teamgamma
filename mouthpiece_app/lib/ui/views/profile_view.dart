@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mouthpiece_app/ui/views/choose_mode_view.dart';
+import 'package:mouthpiece_app/ui/views/login_view.dart';
+import 'package:mouthpiece_app/ui/views/voice_training_view.dart';
 import '../../core/viewmodels/profile_model.dart';
 import '../../ui/shared/app_colors.dart';
 import '../widgets/bottom_navigation.dart';
@@ -41,13 +44,13 @@ Widget optionSection = new Container (
   margin: EdgeInsets.only(top: 30, left: 20, right: 20),
   child: new Row(
     crossAxisAlignment: CrossAxisAlignment.center,
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    mainAxisAlignment: MainAxisAlignment.end,
     mainAxisSize: MainAxisSize.max,
     children: <Widget>[
-      Icon(Icons.arrow_back_ios),
+      // Icon(Icons.arrow_back_ios),
       new Text(
         'Edit', 
-        textAlign: TextAlign.center,
+        // textAlign: TextAlign.center,
         style: TextStyle(fontSize: 17, fontFamily: 'Helvetica', color: Color(0xFF303030)),
       ),
     ]
@@ -102,7 +105,9 @@ class PreferencesSection extends StatelessWidget {
         children: <Widget>[
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, 'choose-mode');
+              Navigator.push(context, PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) => ChooseModeView(),
+              ),);
             },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -148,7 +153,9 @@ class PreferencesSection extends StatelessWidget {
           divider,
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, 'voice-training');
+              Navigator.push(context, PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
+              ),);
             },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -185,7 +192,7 @@ class SignOutButton extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(95, 0, 95, 0),
       child: RawMaterialButton(
         onPressed: () {
-          Navigator.pushNamed(context, 'login');
+          Navigator.pushNamedAndRemoveUntil(context, "login", (r) => false);
         },
         padding: EdgeInsets.all(15),
         shape: new RoundedRectangleBorder(
