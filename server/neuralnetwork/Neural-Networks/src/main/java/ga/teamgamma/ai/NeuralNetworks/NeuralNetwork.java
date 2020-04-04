@@ -28,7 +28,7 @@ public class NeuralNetwork
 	int numLabels = 12;
 
 	public static File exportModel() {
-		return new File("../NeuralNetworkConfiguration.zip");
+		return new File("//model//NeuralNetworkConfiguration.zip");
 	}
 
 	/**
