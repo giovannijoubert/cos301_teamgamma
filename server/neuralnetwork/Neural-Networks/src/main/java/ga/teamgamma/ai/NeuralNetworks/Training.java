@@ -225,17 +225,18 @@ public class Training
             for (int i = 0; i < NUM_EPOCHS; i++)
             {
                 model.fit(data);
-                eval = model.evaluate(data);
+                //eval = model.evaluate(data);
+                eval = model.evaluate(testIter);
                 System.out.println(eval.stats(true));
             }
             long t2 = System.currentTimeMillis();
             long time = t2 - t1;
-            /*ModelSerializer
+            ModelSerializer
                     .writeModel(
                             model,
-                            new File( "../NeuralNetworkConfiguration.zip"),
+                            new File( "//model//NeuralNetworkConfiguration.zip"),
                             true
-                    );*/
+                    );
             System.out.println("Done training, took: " + time + "ms");
         }
 
