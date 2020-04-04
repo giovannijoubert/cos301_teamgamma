@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mouthpiece_app/ui/views/collection_view.dart';
+import 'package:mouthpiece_app/ui/views/home_view.dart';
+import 'package:mouthpiece_app/ui/views/profile_view.dart';
 int _currentTabIndex = 0;
 
 class BottomNavigation extends StatefulWidget {
@@ -11,26 +14,30 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class BottomNavigationState extends State<BottomNavigation> {
+  static int index = 0;
   @override
   Widget build(BuildContext context) {
     _onTap(int tabIndex) {
-      switch (tabIndex) {
-        case 0:
-          Navigator.pushNamed(context, '/');
-          break;
-        case 1:
-          Navigator.pushNamed(context, 'collection');
-          break;
-        /* case 2:
-          Navigator.pushNamed(context, 'mouth-selection');
-          break; */
-        case 2:
-          Navigator.pushNamed(context, 'profile');
-          break;
+      if (index != tabIndex) {
+        index = tabIndex;
+        switch (tabIndex) {
+          case 0:
+            Navigator.push(context, PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) => HomeView(),
+            ),);
+            break;
+          case 1:
+            Navigator.push(context, PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) => CollectionView(),
+            ),);
+            break;
+          case 2:
+            Navigator.push(context, PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) => ProfileView(),
+            ),);
+            break;
+        }
       }
-      setState(() {
-        _currentTabIndex = tabIndex;
-      });
     }
 
     return Container(

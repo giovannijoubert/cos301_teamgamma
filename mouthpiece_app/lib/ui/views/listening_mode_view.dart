@@ -9,14 +9,21 @@ import 'dart:ui';
 
 import 'base_view.dart';
 
-class ListeningModeView extends StatelessWidget {
+class ListeningModeView extends StatefulWidget {
+  @override
+  _ListeningModeViewState createState() => _ListeningModeViewState();
+}
+bool _isVisible = false;
+class _ListeningModeViewState extends State<ListeningModeView> {
   @override
   Widget build(BuildContext context) {
-    return BaseView<HomeModel>(
-      builder: (context, model, child) => Scaffold(
-        backgroundColor: backgroundColor,
-        body: ActivateListeningMode(),
-      ),
+    return new GestureDetector(
+      onTap: () {
+        setState((){
+          _isVisible = !_isVisible; 
+        });
+      },
+      child: ActivateListeningMode(),
     );
   }
 }
@@ -32,7 +39,6 @@ class ActivateListeningMode extends StatelessWidget {
     HomeModel homeModel = new HomeModel();
     imgSrc = homeModel.getListeningModeImg();
     colour = homeModel.getListeningModeColour();
-    // print("image: " + homeModel.getListeningModeImg());
 
     Widget mouthText = new Container(
       child: Image.asset(
@@ -42,6 +48,20 @@ class ActivateListeningMode extends StatelessWidget {
         ),
     );
 
+    Widget closeIcon = new Visibility (
+      child: Container (
+        margin: EdgeInsets.only(top: 30, left: 20),
+        child: GestureDetector(
+          child: Icon(Icons.close, size: 35.0, color: (colour == '0xFFFFFFFF') ? Color(0xFF303030) : Colors.white),
+          onTap: () { 
+            _isVisible = false;
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      visible: _isVisible,
+    );
+
     return Material(
       child: Hero(
         tag: 'blackBox',
@@ -49,9 +69,14 @@ class ActivateListeningMode extends StatelessWidget {
         child: Container(
           color: Color(int.parse(colour)),
           alignment: Alignment.center,
-          child: RotatedBox(
-            quarterTurns: 3,
-            child: mouthText
+          child: Stack (
+            children: [
+              RotatedBox(
+                quarterTurns: 3,
+                child: mouthText
+              ),
+              closeIcon
+            ]
           ),
         ),
       ),

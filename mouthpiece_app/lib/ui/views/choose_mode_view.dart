@@ -7,6 +7,8 @@ import '../../ui/shared/text_styles.dart';
 
 import 'base_view.dart';
 
+ChooseModeModel model = new ChooseModeModel();
+
 class ChooseModeView extends StatefulWidget {
   @override
   _ChooseModeState createState() => _ChooseModeState();
@@ -16,6 +18,7 @@ class _ChooseModeState extends State<ChooseModeView> {
 
   @override
   Widget build(BuildContext context) {
+    precacheImage(AssetImage("assets/images/wave.png"), context);
     return BaseView<ChooseModeModel>(
         builder: (context, model, child) => Scaffold(
           backgroundColor: backgroundColor,
@@ -81,11 +84,12 @@ Widget volumeButtonSection(BuildContext context, model) {
       children: [
         new RawMaterialButton(
           onPressed: () async {
-            Navigator.pushNamed(context, '/');
-            /* var modeSuccessfullySet = await model.setUserMode("Volume");
-            if(modeSuccessfullySet){
-              Navigator.pushNamed(context, '/');
-            } */
+           if (!model.getIsSet()) {
+              model.setIsSet(true);
+              Navigator.pushNamedAndRemoveUntil(context, "/", (r) => false);
+            } else { 
+              Navigator.pop(context);
+            }
           },
           shape: CircleBorder(),
           child:Container(
@@ -152,11 +156,12 @@ Widget formantButtonSection(BuildContext context, model) {
       children: [
         new RawMaterialButton(
           onPressed: () async {
-            Navigator.pushNamed(context, '/');
-            /* var modeSuccessfullySet = await model.setUserMode("formant");
-            if(modeSuccessfullySet){
-              Navigator.pushNamed(context, '/');
-            } */
+            if (!model.getIsSet()) {
+              model.setIsSet(true);
+              Navigator.pushNamedAndRemoveUntil(context, "/", (r) => false);
+            } else { 
+              Navigator.pop(context);
+            }
           },
           shape: CircleBorder(),
           child:Container(

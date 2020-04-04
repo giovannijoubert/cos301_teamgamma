@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mouthpiece_app/ui/views/register_view.dart';
+import 'package:mouthpiece_app/ui/views/voice_training_view.dart';
 import '../../core/enums/viewstate.dart';
 import '../../core/viewmodels/login_model.dart';
 import '../../ui/shared/app_colors.dart';
@@ -17,6 +19,7 @@ class _LoginViewState extends State<LoginView> {
  
   @override
    Widget build(BuildContext context) {
+    precacheImage(AssetImage("assets/images/wave.png"), context);
     return BaseView<LoginModel>(
       builder: (context, model, child) => Scaffold(
         body: Padding(
@@ -31,7 +34,8 @@ class _LoginViewState extends State<LoginView> {
                 passwordValidationMsg: model.errorMessage,
               ),
               ForgotPassword(),
-              model.state == ViewState.Busy ? CircularProgressIndicator() : 
+              model.state == ViewState.Busy ? 
+              Center (child: CircularProgressIndicator()) :  
               Container(
                 height: 50,
                 width: 325,
@@ -48,7 +52,9 @@ class _LoginViewState extends State<LoginView> {
                   onPressed: () async {
                     var loginSuccess = await model.login(emailController.text, passwordController.text);
                     if(loginSuccess){
-                      Navigator.pushNamed(context, 'register');
+                      Navigator.push(context, PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
+                      ),);
                     }
                   },
                     shape: new RoundedRectangleBorder(
@@ -190,7 +196,9 @@ class SkipLink extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Navigator.pushNamed(context, 'voice-training');
+                Navigator.push(context, PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
+                ),);
               },
             )
           ],
@@ -206,7 +214,9 @@ class SignUpAccountLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: (){
-        Navigator.pushNamed(context, 'register');
+        Navigator.push(context, PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) => RegisterView(),
+        ),);
       },textColor: Color(0xffB1B4E5),
       child: Align(
         alignment: Alignment.bottomCenter,
