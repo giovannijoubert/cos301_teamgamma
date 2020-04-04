@@ -53,12 +53,14 @@
             <artifactId>nd4j-native</artifactId>
             <version>1.0.0-beta6</version>
         </dependency>
+        <!-- Disable AVX2
         <dependency>
             <groupId>org.nd4j</groupId>
             <artifactId>nd4j-native</artifactId>
             <version>1.0.0-beta6</version>
             <classifier>linux-x86_64-avx2</classifier>
         </dependency>
+        -->
         <dependency>
             <groupId>org.datavec</groupId>
             <artifactId>datavec-api</artifactId>
