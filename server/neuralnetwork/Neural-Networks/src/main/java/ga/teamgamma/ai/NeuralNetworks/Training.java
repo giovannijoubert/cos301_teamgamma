@@ -57,22 +57,22 @@ public class Training
     /**
      * TRAINING
      * */
-    private int numRows = 100,
-                numCols = 100,
-                outputNum = 12,
-                numSamples = 36,//3 samples per formant, 12 formants
-                batchSize = 100;
+    private int numRows     = 100,
+                numCols     = 100,
+                outputNum   = 12,
+                numSamples  = 36,//3 samples per formant, 12 formants
+                batchSize   = 100;
 
     /**
      * PRE-TRAINING
      */
 
-    private int NUM_ROWS = 100,
+    private int NUM_ROWS    = 100,
                 NUM_COLUMNS = 100,
                 OUTPUT_NUMS = 12,//number of output classes
-                BATCH_SIZE = 10,//batch size for each epoch
-                RNG_SEED = 123,
-                NUM_EPOCHS = 10;//number of epochs to perform
+                BATCH_SIZE  = 10,//batch size for each epoch
+                RNG_SEED    = 123,
+                NUM_EPOCHS  = 10;//number of epochs to perform
 
     private  double RATE = 0.0015;//learning rate
 
@@ -116,9 +116,10 @@ public class Training
     {
         //String path = System.getProperty("user.dir") + "\\src\\database.txt";
         /**Get Training Data Directory*/
-        File parentPath = new File(
-                                    System.getProperty("user.dir"),
-                                "//src//main//java//ga//teamgamma//ai" + (pretrain ? "//pretraining" : "//training//")
+        File parentPath = new File("//data"
+                                 /*   System.getProperty("user.dir"),
+                                "//src//main//java//ga//teamgamma//ai" */
+                                        + (pretrain ? "//pretraining//" : "//training//")
         );
         //System.out.println("Training Set Path: "+parentPath.toString());;
 
@@ -211,9 +212,9 @@ public class Training
         );*/
 
 
-        if(new File("../NeuralNetworkConfiguration.zip").exists())
+        if(new File("//model//NeuralNetworkConfiguration.zip").exists())
         {
-            model = ModelSerializer.restoreMultiLayerNetwork(new File("../NeuralNetworkConfiguration.zip"));
+            model = ModelSerializer.restoreMultiLayerNetwork(new File("//model//NeuralNetworkConfiguration.zip"));
         }
         else
         {
