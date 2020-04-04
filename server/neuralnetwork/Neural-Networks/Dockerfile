@@ -18,7 +18,15 @@ COPY --from=build /home/app/target/Neural-Networks-0.0.2-SNAPSHOT.jar /usr/local
 
 RUN mkdir -p /data
 
+RUN mkdir -p /data/pretraining
+
+RUN mkdir -p /data/training
+
+RUN mkdir -p /model
+
 VOLUME ["/data"]
+
+VOLUME ["/model"]
 
 EXPOSE 8080
 
