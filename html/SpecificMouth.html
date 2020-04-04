@@ -15,6 +15,7 @@
   <script src="../vendor/bootstrap/js/bootstrap.min.js" defer></script>
   <script src="../js/ui.js" defer></script>
   <script src="../js/Upload.js" defer></script>
+  <script src="../js/SpecificMouths.js" defer></script>
 </head>
 
 </head>
@@ -45,61 +46,62 @@
 </nav>
 <section class="row collapse" id="user-preferences-section">
   <div class="container py-3 mt-4">
-    <div class="col-12 flex-row mb-3">
-      <h4>
-        Account Settings
-        <a href="javascript: void(0)" class="text-dark float-right"><i class="fa fa-user"></i></a>
-      </h4>
-    </div>
-    <div class="col-12 flex-row">
-      <div class="text-muted user-prefs-header pb-1">Account Preferences</div>
-      <div class="preference-option m-2">
-        <div>
-          <h5 class="mb-0">Username</h5>
-          <p class="small text-muted">Lindo Mlambo</p>
-        </div>
-        <div>
-          <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdateUsername()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
-        </div>
+      <div class="col-12 flex-row mb-3">
+          <h4>
+              Account Settings
+              <a href="javascript: void(0)" data-toggle="collapse" data-target="#user-preferences-section" class="text-dark float-right"><i class="fa fa-user"></i></a>
+          </h4>
       </div>
-      <div class="preference-option m-2">
-        <div>
-          <h5 class="mb-0">Email Address</h5>
-          <p class="small text-muted">mlambolindo6@gmail.com</p>
-        </div>
-        <div>
-          <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdateEmail()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
-        </div>
-      </div>
-      <div class="preference-option m-2">
-        <div>
-          <h5 class="mb-0">Password</h5>
-          <p class="small text-muted">Change your password</p>
-        </div>
-        <div>
-          <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdatePassword()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
-        </div>
-      </div>
-      <div class="text-muted user-prefs-header pb-1">Theme Preferences</div>
-      <div class="preference-option m-2">
-        <div>
-          <h5 class="mb-0">Dark Mode</h5>
-          <p class="small text-muted">Coming Soon</p>
-        </div>
-        <div>
-          <div class="custom-control custom-switch float-right">
-            <input type="checkbox" class="custom-control-input" id="switch-theme">
-            <label class="custom-control-label" for="switch-theme"></label>
+      <div class="col-12 flex-row">
+          <div class="text-muted user-prefs-header pb-1">Account Preferences</div>
+          <div class="preference-option m-2">
+              <div>
+                  <h5 class="mb-0">Username</h5>
+                  <p class="small text-muted">Lindo Mlambo</p>
+              </div>
+              <div>
+                  <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdateUsername()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+              </div>
           </div>
-        </div>
-      </div>
+          <div class="preference-option m-2">
+              <div>
+                  <h5 class="mb-0">Email Address</h5>
+                  <p class="small text-muted">mlambolindo6@gmail.com</p>
+              </div>
+              <div>
+                  <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdateEmail()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+              </div>
+          </div>
+          <div class="preference-option m-2">
+              <div>
+                  <h5 class="mb-0">Password</h5>
+                  <p class="small text-muted">Change your password</p>
+              </div>
+              <div>
+                  <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdatePassword()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+              </div>
+          </div>
+          <!-- Not a necessary feature at the moment, can be done if the time allows -->
+          <!-- <div class="text-muted user-prefs-header pb-1">Theme Preferences</div>
+          <div class="preference-option m-2">
+              <div>
+                  <h5 class="mb-0">Dark Mode</h5>
+                  <p class="small text-muted">Coming Soon</p>
+              </div>
+              <div>
+                  <div class="custom-control custom-switch float-right">
+                      <input type="checkbox" class="custom-control-input" id="switch-theme">
+                      <label class="custom-control-label" for="switch-theme"></label>
+                  </div>
+              </div>
+          </div> -->
 
-      <div class="mt-3 mb-1 text-center">
-        <button class="mx-auto btn btn-outline-secondary bg-white text-dark" onclick="logout()" style="border-radius: 40px"><i class="fa fa-sign-out"></i> Logout</button><br>
+          <div class="mt-3 mb-1 text-center">
+              <button class="mx-auto btn btn-outline-secondary bg-white text-dark" onclick="logout()" style="border-radius: 40px"><i class="fa fa-sign-out"></i> Logout</button><br>
 
-        <button class="btn btn-link text-secondary mt-2"  data-toggle="collapse" data-target="#user-preferences-section">&times; close</button>
+              <button class="btn btn-link text-secondary mt-2"  data-toggle="collapse" data-target="#user-preferences-section">&times; close</button>
+          </div>
       </div>
-    </div>
   </div>
 </section>
 
@@ -155,7 +157,7 @@
 </div>
 
 <div style="text-align: center">
-  <button  type="button" class="but" style="width: 150px"> <i class="fa fa-arrow-left"></i> Back</button>
+  <button  onclick="goBack()" type="button" class="but" style="width: 150px"> <i class="fa fa-arrow-left"></i> Back</button>
 </div>
 
 
@@ -172,7 +174,11 @@
       </div>
   </div>
 </div>
-
+<script>
+  function goBack() {
+    window.history.back()
+  }
+</script>
 
 </body>
 </html>

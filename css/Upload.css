@@ -178,3 +178,12 @@ body{
         display: block;
     }
 }
+
+#username-inp{
+    width: 466px;
+    height: 38px;
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    border-color:lightgrey;
+}

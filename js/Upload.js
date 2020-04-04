@@ -79,6 +79,7 @@ let passwordForm = null;
 function logout(){
     // send a logout request to user management
     console.log("You logged out");
+    document.location = "Login.html"
 }
 
 function getUpdateUsername(){
@@ -180,6 +181,7 @@ function submitUpdateForm(evt){
             formData.username = document.getElementById("username-inp").value;
             console.log(formData);
             // submit form data
+            $(".preference-option:nth-child(2)>div>p")[0].innerHTML = formData.username;
             break;
         }
         case "update-email":{ // update email
@@ -187,13 +189,14 @@ function submitUpdateForm(evt){
             formData.email = document.getElementById("email-inp").value;
             console.log(formData);
             // submit form data
+            $(".preference-option:nth-child(3)>div>p")[0].innerHTML = formData.email;
             break;
         }
         case "update-password":{ // update password
             let formData = {};
             formData.password = document.getElementById("npassword-inp").value;
             if(formData.password != document.getElementById("cpassword-inp").value){
-                alert("password don't match");
+                alert("passwords don't match");
                 return;
             }
             console.log(formData);

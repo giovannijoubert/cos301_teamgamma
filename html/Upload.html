@@ -43,7 +43,7 @@
             <div class="col-12 flex-row mb-3">
                 <h4>
                     Account Settings
-                    <a href="javascript: void(0)" class="text-dark float-right"><i class="fa fa-user"></i></a>
+                    <a href="javascript: void(0)" data-toggle="collapse" data-target="#user-preferences-section" class="text-dark float-right"><i class="fa fa-user"></i></a>
                 </h4>
             </div>
             <div class="col-12 flex-row">
@@ -75,7 +75,8 @@
                         <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdatePassword()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
                     </div>
                 </div>
-                <div class="text-muted user-prefs-header pb-1">Theme Preferences</div>
+                <!-- Not a necessary feature at the moment, can be done if the time allows -->
+                <!-- <div class="text-muted user-prefs-header pb-1">Theme Preferences</div>
                 <div class="preference-option m-2">
                     <div>
                         <h5 class="mb-0">Dark Mode</h5>
@@ -87,7 +88,7 @@
                             <label class="custom-control-label" for="switch-theme"></label>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="mt-3 mb-1 text-center">
                     <button class="mx-auto btn btn-outline-secondary bg-white text-dark" onclick="logout()" style="border-radius: 40px"><i class="fa fa-sign-out"></i> Logout</button><br>
