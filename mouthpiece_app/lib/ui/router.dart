@@ -8,6 +8,7 @@ import '../ui/views/choose_mode_view.dart';
 import '../ui/views/mouth_selection_view.dart';
 import '../ui/views/listening_mode_view.dart';
 import '../ui/views/collection_view.dart';
+import '../ui/views/mouthpack_view.dart';
 import '../ui/views/profile_view.dart';
 
 const String initialRoute = "login";
@@ -31,6 +32,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => ListeningModeView());
       case 'collection':
         return MaterialPageRoute(builder: (_) => CollectionView());
+      case 'mouthpack':
+        return MaterialPageRoute(builder: (_) => MouthpackView());
       case 'profile':
         return MaterialPageRoute(builder: (_) => ProfileView());
       default:

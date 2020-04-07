@@ -3,6 +3,7 @@ import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:mouthpiece_app/ui/views/mouth_selection_view.dart';
+import 'package:mouthpiece_app/ui/views/mouthpack_view.dart';
 import '../../core/viewmodels/collection_model.dart';
 import 'base_view.dart';
 import '../widgets/bottom_navigation.dart';
@@ -224,6 +225,9 @@ class _MouthCardState extends State<MouthCard> {
       child: new GestureDetector(
         onTap: (){
           print('pressed card');
+          Navigator.push(context, PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) => MouthpackView(),
+          ),);
         },
         child: Row(
           children: <Widget>[
