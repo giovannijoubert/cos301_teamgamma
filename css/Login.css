@@ -65,7 +65,7 @@ ul {
    
   }
 
-  #bottomnextup3 {
+  #bottomnextup3,#bottomnextup4 {
     font: 15px/1.3 times verdana,helvetica,arial,sans-serif ;
     background-color:white;
     padding: 5px 19px;
@@ -79,7 +79,9 @@ ul {
    
    }
 
-   /* #back {
+
+
+    #back {
     font: 15px/1.3 times verdana,helvetica,arial,sans-serif ;
     background-color:white;
     padding: 5px 19px;
@@ -91,7 +93,7 @@ ul {
     background-color:#61a3ee;
     color:white;
    
-   } */
+   }
   
   .active {
     text-decoration: underline;
