@@ -110,9 +110,15 @@ body{
     background-size: cover !important;
     background-position: center center !important;
 }
+
+.mouth-drop-target:hover{
+    background-color: lightgrey;
+    cursor: pointer;
+
+}
 .mouth-drop-target h4{
     display: flex;
-    background: rgba(255 ,255 , 255, 0.8);
+    /* background: rgba(255 ,255 , 255, 0.8); */
     padding: 0px 4px;
     align-self: center;
     font-weight: bold;

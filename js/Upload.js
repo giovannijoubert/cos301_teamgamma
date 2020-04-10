@@ -225,3 +225,23 @@ function buildForm(fields){
     return form;
 }
 /* END OF user preferences VanillaJS */
+
+//switch to dark mode/light mode
+
+// document.addEventListener('DOMContentLoaded', () => {
+
+//     const themeStylesheet = document.getElementById('theme');
+//     const themeToggle = document.getElementById('theme-toggle');
+//     themeToggle.addEventListener('click', () => {
+//         // if it's light -> go dark
+//         if(themeStylesheet.href.includes('Light')){
+//             themeStylesheet.href = 'DarkTheme.css';
+
+//         } else {
+//             // if it's dark -> go light
+//             themeStylesheet.href = 'LightTheme.css';
+    
+
+//         }
+//     })
+// })
