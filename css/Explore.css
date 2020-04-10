@@ -82,6 +82,27 @@ a{
     color: orange;
 }
 
+.btns {
+    color: #494949 !important;
+    margin: auto;
+    font-size: 13px;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #ffffff;
+    padding: 5px;
+    margin-bottom: 5px;;
+    border: 1px solid #494949 !important;
+    display: inline-block;
+    transition: all 0.4s ease 0s;
+}
+
+.btns:hover {
+    color: #ffffff !important;
+    background: #303030;
+    border-color: #303030 !important;
+    transition: all 0.4s ease 0s;
+}
+
 .figure-caption{
     margin-left:80px;
 }
