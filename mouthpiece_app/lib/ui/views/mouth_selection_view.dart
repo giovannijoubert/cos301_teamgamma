@@ -191,7 +191,7 @@ class _MouthSelectionGridState extends State<MouthSelectionGrid> {
                               }), 
                               child: Image.asset(images[index]), 
                             ),
-                          color: Color(int.parse(colours[index]))
+                          color: Color(int.parse(mouthSelectionModel.getColoursListAtIndex(index)))
                         );
                       }),
                   ),

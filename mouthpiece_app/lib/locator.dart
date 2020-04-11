@@ -10,6 +10,7 @@ import 'core/viewmodels/choose_mode_model.dart';
 import 'core/viewmodels/mouth_selection_model.dart';
 import 'core/viewmodels/listening_mode_model.dart';
 import 'core/viewmodels/collection_model.dart';
+import 'core/viewmodels/mouthpack_model.dart';
 import 'core/viewmodels/profile_model.dart';
 
 GetIt locator = GetIt();
@@ -26,5 +27,6 @@ void setupLocator() {
   locator.registerFactory(() => HomeModel());
   locator.registerFactory(() => ListeningModeModel());
   locator.registerFactory(() => CollectionModel());
+  locator.registerFactory(() => MouthpackModel());
   locator.registerFactory(() => ProfileModel());
 }
