@@ -7,8 +7,6 @@ import '../../ui/shared/text_styles.dart';
 
 import 'base_view.dart';
 
-ChooseModeModel model = new ChooseModeModel();
-
 class ChooseModeView extends StatefulWidget {
   @override
   _ChooseModeState createState() => _ChooseModeState();
@@ -18,7 +16,6 @@ class _ChooseModeState extends State<ChooseModeView> {
 
   @override
   Widget build(BuildContext context) {
-    precacheImage(AssetImage("assets/images/wave.png"), context);
     return BaseView<ChooseModeModel>(
         builder: (context, model, child) => Scaffold(
           backgroundColor: backgroundColor,
@@ -28,12 +25,14 @@ class _ChooseModeState extends State<ChooseModeView> {
               volumeSection,
               volumeCaptionSection,
               volumeButtonSection(context, model),
+              
               imageSection,
               formantSection,
               formantCaptionSection,
               formantButtonSection(context, model),
             ],
           ),
+          
         ),
     );
   }
@@ -84,20 +83,20 @@ Widget volumeButtonSection(BuildContext context, model) {
       children: [
         new RawMaterialButton(
           onPressed: () async {
-           if (!model.getIsSet()) {
-              model.setIsSet(true);
-              Navigator.pushNamedAndRemoveUntil(context, "/", (r) => false);
-            } else { 
-              Navigator.pop(context);
-            }
+            model.setVolumeBased();
+            Navigator.pushNamed(context, '/');
+            /* var modeSuccessfullySet = await model.setUserMode("Volume");
+            if(modeSuccessfullySet){
+              Navigator.pushNamed(context, '/');
+            } */
           },
           shape: CircleBorder(),
           child:Container(
             height: 65,
             width: 65,
             child: new Icon(
-              Icons.mic_none,
-              color: Color(0xff61A3EE),
+              Icons.volume_up,
+              color: Color(int.parse(model.modeIconColorVol)),
               size: 35.0,
             ),
             decoration: BoxDecoration(
@@ -156,12 +155,13 @@ Widget formantButtonSection(BuildContext context, model) {
       children: [
         new RawMaterialButton(
           onPressed: () async {
-            if (!model.getIsSet()) {
-              model.setIsSet(true);
-              Navigator.pushNamedAndRemoveUntil(context, "/", (r) => false);
-            } else { 
-              Navigator.pop(context);
-            }
+            model.setFormantBased();
+            
+            Navigator.pushNamed(context, '/');
+            /* var modeSuccessfullySet = await model.setUserMode("formant");
+            if(modeSuccessfullySet){
+              Navigator.pushNamed(context, '/');
+            } */
           },
           shape: CircleBorder(),
           child:Container(
@@ -169,7 +169,7 @@ Widget formantButtonSection(BuildContext context, model) {
             width: 65,
             child: new Icon(
               Icons.mic_none,
-              color: Color(0xff303030),
+              color: Color(int.parse(model.modeIconColorFor)),
               size: 35.0,
             ),
             decoration: BoxDecoration(

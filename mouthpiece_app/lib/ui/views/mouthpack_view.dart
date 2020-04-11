@@ -157,7 +157,7 @@ class _ImageSectionState extends State<ImageSection> {
     return GridView.count(
       crossAxisCount: 4,
       shrinkWrap: true,
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       children: List.generate(12, (index) {
         return Center(
           child: Container(
@@ -168,7 +168,7 @@ class _ImageSectionState extends State<ImageSection> {
                 width: 80,
                 height: 80,
                 child: new Image.asset(
-                  '',
+                  "assets/images/mouth-packs/mouth-"+ (index+1).toString() +".png",
                   fit: BoxFit.contain,
                 ),
               ),

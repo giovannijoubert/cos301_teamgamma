@@ -1,10 +1,10 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:mouthpiece_app/ui/views/register_view.dart';
-import 'package:mouthpiece_app/ui/views/voice_training_view.dart';
 import '../../core/enums/viewstate.dart';
 import '../../core/viewmodels/login_model.dart';
 import '../../ui/shared/app_colors.dart';
 import '../../ui/shared/text_styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'base_view.dart';
  
@@ -14,12 +14,72 @@ class LoginView extends StatefulWidget {
 }
  
 class _LoginViewState extends State<LoginView> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
- 
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  String _email;
+  String _password;
+
+Widget _buildEmail() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Email'),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Email is Required';
+        }
+
+        /* if(EmailValidator.Validate(value, true))
+        {
+          return 'Please enter a valid email Address';
+        } */
+
+        if (!RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?").hasMatch(value)) {
+          return 'Please enter a valid email Address';
+        }
+
+        return null;
+      },
+      onSaved: (String value) {
+        _email = value;
+      },
+    );
+  }
+
+Widget _buildPassword() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Password'),
+      keyboardType: TextInputType.visiblePassword,
+      obscureText: true,
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Password is Required';
+        }
+        if (value.length < 4 ) {
+          return 'Password is too short';
+        }
+
+        return null;
+      },
+      onSaved: (String value) {
+        _password = value;
+      },
+    );
+  }
+
+
+  Future _loginCommand(model) async{
+      var loginSuccess = await model.login(_email, _password);
+      if(loginSuccess){
+           SharedPreferences prefs = await SharedPreferences.getInstance();
+           prefs.setBool('loggedIn', true);
+           Navigator.pushNamed(context, '/');
+       }else{
+            Navigator.pushNamed(context, 'login'); 
+            throw Exception('Invalid email or Invalid password provided'); 
+           
+        }
+  }
   @override
    Widget build(BuildContext context) {
-    precacheImage(AssetImage("assets/images/wave.png"), context);
     return BaseView<LoginModel>(
       builder: (context, model, child) => Scaffold(
         body: Padding(
@@ -27,15 +87,19 @@ class _LoginViewState extends State<LoginView> {
           child: ListView(
             children: <Widget>[
               LoginHeader(),
-              LoginInputFields(
-                emailController: emailController, 
-                passwordController: passwordController, 
-                emailValidationMsg: model.errorMessage, 
-                passwordValidationMsg: model.errorMessage,
+              Container(
+                  child: Form(
+                      key: formKey,
+                      child: Column(
+                        children: <Widget> [ 
+                            _buildEmail(),
+                            _buildPassword()
+                        ],
+                      ),
+                  ),
               ),
               ForgotPassword(),
-              model.state == ViewState.Busy ? 
-              Center (child: CircularProgressIndicator()) :  
+              model.state == ViewState.Busy ? Center (child: CircularProgressIndicator()) : 
               Container(
                 height: 50,
                 width: 325,
@@ -49,13 +113,13 @@ class _LoginViewState extends State<LoginView> {
                     style: TextStyle(fontSize: 15,
                     fontFamily: 'Arciform'),
                   ),
-                  onPressed: () async {
-                    var loginSuccess = await model.login(emailController.text, passwordController.text);
-                    if(loginSuccess){
-                      Navigator.push(context, PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
-                      ),);
-                    }
+                  onPressed: (){
+                      final form = formKey.currentState;
+
+                      if(form.validate()){
+                        form.save();
+                        _loginCommand(model);
+                      }
                   },
                     shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(10.0),
@@ -90,27 +154,38 @@ class LoginHeader extends StatelessWidget {
 }
 
 class LoginInputFields extends StatelessWidget {
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
-  final String passwordValidationMsg;
-  final String emailValidationMsg;
 
-  LoginInputFields({@required this.emailController, @required this.passwordController, this.emailValidationMsg, this.passwordValidationMsg});
+  final formKey;
+  String email;
+  String password;
+  LoginInputFields({@required this.formKey,@required this.email, @required this.password});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        TextInputField(emailController, 'Email', 'john@gmail.com', false),
-        this.emailValidationMsg != null
-          ? Text(emailValidationMsg, style: TextStyle(color: Colors.red))
-          : Container(),
-        TextInputField(passwordController, 'Password', '*******', true),
-        this.passwordValidationMsg != null
-          ? Text(passwordValidationMsg, style: TextStyle(color: Colors.red))
-          : Container()
-      ]
-    );
+      return Container(
+          child: Form(
+              key: formKey,
+              child: Column(
+                children: [ 
+                    TextFormField(
+                        decoration: InputDecoration(labelText: 'Email'),
+                        validator: (val) => EmailValidator.Validate(val,true)
+                        ? 'Please provide a valid email.'
+                        : null,
+                        onSaved: (val) => email = val,
+                    ),
+                    TextFormField(
+                        decoration: InputDecoration(labelText: 'Password'),
+                        validator: (val) => val.length < 4 
+                        ? 'Your password is too short.'
+                        : null,
+                        onSaved: (val) => password = val,
+                        obscureText: true,
+                    ),
+                ],
+              ),
+          ),
+      );
   }
 }
 
@@ -178,7 +253,7 @@ class ForgotPassword extends StatelessWidget {
 }
 
 class SkipLink extends StatelessWidget {
-  @override
+@override
   Widget build(BuildContext context) {
     return Container(
       child: Align(
@@ -196,9 +271,7 @@ class SkipLink extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Navigator.push(context, PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
-                ),);
+                Navigator.pushNamed(context, 'voice-training');
               },
             )
           ],
@@ -214,9 +287,7 @@ class SignUpAccountLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: (){
-        Navigator.push(context, PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) => RegisterView(),
-        ),);
+        Navigator.pushNamed(context, 'register');
       },textColor: Color(0xffB1B4E5),
       child: Align(
         alignment: Alignment.bottomCenter,

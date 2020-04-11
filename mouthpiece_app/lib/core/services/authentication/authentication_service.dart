@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import '../../models/user.dart';
-
 import '../../../locator.dart';
 import '../api.dart';
 
@@ -10,14 +8,27 @@ class AuthenticationService {
 
   StreamController<User> userController = StreamController<User>();
 
-  Future<bool> login(int userId) async {
-    var fetchedUser = await _api.getUserProfile(userId);
+ Future<bool> login(String email, String pass) async {
+    User fetchedUser;
+    fetchedUser = await _api.fetchUser(email, pass);
 
-    var hasUser = fetchedUser != null;
-    if(hasUser) {
-      userController.add(fetchedUser);
-    }
+    // var hasUser = fetchedUser != null;
+    // if(hasUser) {
+    //   userController.add(fetchedUser);
+    // }
 
-    return hasUser;
+    //return hasUser;
+  }
+
+    Future<bool> register(String userName, String email , String password) async {
+      User fetchedUser;
+      fetchedUser = await _api.createUser(userName, email, password);
+
+      // var hasUser = fetchedUser != null;
+      // if(hasUser) {
+      //   userController.add(fetchedUser);
+      // }
+
+      //return hasUser;
   }
 }

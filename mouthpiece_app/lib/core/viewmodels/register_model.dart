@@ -1,6 +1,7 @@
 import '../enums/viewstate.dart';
 import '../services/authentication/authentication_service.dart';
 import '../viewmodels/base_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../locator.dart';
 
@@ -9,23 +10,19 @@ class RegisterModel extends BaseModel {
 
   String errorMessage;
 
+
   Future<bool> register(String username, String email, String pass) async {
     setState(ViewState.Busy);
 
-    /* var userEmail = int.tryParse(email);
+     //var success = await _registerAuthenticationService.register(username, email, pass);
 
-    // Not a number
-    if(userEmail == null) {
-      errorMessage = 'Value entered is not a number';
-      setState(ViewState.Idle);
-      return false;
-    }
-
-    var success = await _authenticationService.login(userEmail);
-
-    // Handle potential error here too.
-
-    setState(ViewState.Idle); */
-    return true;
+      if(true && email != null && pass != null){
+        // SharedPreferences prefs = await SharedPreferences.getInstance();
+        // prefs.setBool('registered', true);
+        // setState(ViewState.Idle);
+        return true;
+      }else{
+          return false;
+      }
   }
 }

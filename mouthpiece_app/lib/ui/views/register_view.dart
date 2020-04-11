@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mouthpiece_app/ui/views/login_view.dart';
-import 'package:mouthpiece_app/ui/views/voice_training_view.dart';
+import 'package:email_validator/email_validator.dart';
 import '../../core/enums/viewstate.dart';
 import '../../core/viewmodels/register_model.dart';
 import '../../ui/shared/app_colors.dart';
-// import '../../ui/widgets/login_header.dart';
 import '../../ui/shared/text_styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'base_view.dart';
 
@@ -15,10 +14,95 @@ class RegisterView extends StatefulWidget {
 }
  
 class _RegisterViewState extends State<RegisterView> {
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
  
+  final GlobalKey<FormState> form_Key = GlobalKey<FormState>();
+  String _email; 
+  String _password;
+  String _userName;
+
+  Widget _buildName() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Username'),
+      // maxLength: 10,
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Username is Required';
+        }
+        if(value.length < 4){
+            return 'Username must exceed 4 characters.';
+        }
+
+        return null;
+      },
+      onSaved: (String value) {
+        _userName = value;
+      },
+    );
+  }
+
+  Widget _buildEmail() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Email'),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Email is Required';
+        }
+
+        if(EmailValidator.Validate(value, true))
+        {
+          return 'Please enter a valid email Address';
+        }
+
+        if (!RegExp(
+                r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+            .hasMatch(value)) {
+          return 'Please enter a valid email Address';
+        }
+
+        return null;
+      },
+      onSaved: (String value) {
+        _email = value;
+      },
+    );
+  }
+
+  Widget _buildPassword() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Password'),
+      keyboardType: TextInputType.visiblePassword,
+      obscureText: true,
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Password is Required';
+        }
+
+        if (value.length < 4 ) {
+          return 'Password is too short';
+        }
+
+        return null;
+      },
+      onSaved: (String value) {
+        _password = value;
+      },
+    );
+  }
+
+  Future _registerCommand(model) async{
+      var loginSuccess = await model.register(_userName,_email,_password);
+        
+        if(loginSuccess){
+           SharedPreferences prefs = await SharedPreferences.getInstance();
+           //prefs.remove('loggedIn');
+           prefs.setBool('loggedIn', true);
+           Navigator.pushNamed(context, '/');
+          Navigator.pushNamed(context, 'voice-training');
+        }else{
+             Navigator.pushNamed(context, 'register');  
+            throw Exception('User not registered'); 
+        }
+  }
   @override
    Widget build(BuildContext context) {
     return BaseView<RegisterModel>(
@@ -28,16 +112,19 @@ class _RegisterViewState extends State<RegisterView> {
               child: ListView(
                 children: <Widget>[
                   RegisterHeader(),
-                  LoginInputFields(
-                    usernameController: usernameController, 
-                    emailController: emailController, 
-                    passwordController: passwordController, 
-                    usernameValidationMsg: model.errorMessage, 
-                    emailValidationMsg: model.errorMessage, 
-                    passwordValidationMsg: model.errorMessage,
+                  Container(
+                      child: Form(
+                          key: form_Key,
+                          child: Column(
+                            children: <Widget> [         
+                                _buildName(),
+                                _buildEmail(),
+                                _buildPassword(),
+                            ],
+                          ),
+                      ),
                   ),
-                  model.state == ViewState.Busy ? 
-                  Center (child: CircularProgressIndicator()) : 
+                  model.state == ViewState.Busy ? CircularProgressIndicator() : 
                   Container(
                     height: 50,
                     width: 325,
@@ -52,12 +139,12 @@ class _RegisterViewState extends State<RegisterView> {
                         fontFamily: 'Arciform'),
                       ),
                       onPressed: () async {
-                        var loginSuccess = await model.register(usernameController.text, emailController.text, passwordController.text);
-                        if(loginSuccess){
-                          Navigator.push(context, PageRouteBuilder(
-                              pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
-                          ),);
-                        }
+                              final form = form_Key.currentState;
+                              if(form.validate())
+                              {
+                                form.save();
+                                _registerCommand(model);
+                              }
                       },
                         shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(10.0),
@@ -132,7 +219,7 @@ class LogoImage extends StatelessWidget {
 }
 
 class LoginInputFields extends StatelessWidget {
-  final TextEditingController usernameController;
+ final TextEditingController usernameController;
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final String usernameValidationMsg;
@@ -214,9 +301,7 @@ class SkipLink extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Navigator.push(context, PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
-                ),);
+                Navigator.pushNamed(context, 'voice-training');
               },
             )
           ],
@@ -232,9 +317,7 @@ class SignUpAccountLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: (){
-        Navigator.push(context, PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) => LoginView(),
-        ),);
+        Navigator.pushNamed(context, 'login');
       },textColor: Color(0xffB1B4E5),
       child: Align(
         alignment: Alignment.bottomCenter,
@@ -248,6 +331,3 @@ class SignUpAccountLink extends StatelessWidget {
     );
   }
 }
-
-
-

@@ -21,79 +21,86 @@
 19         additional functionality it is fine to subclass or reimplement
 20         FlutterApplication and put your custom class here.
 21    -->
-22    <application
-22-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:8:5-46:19
-23        android:name="io.flutter.app.FlutterApplication"
-23-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:9:9-57
-24        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-24-->[androidx.core:core:1.1.0] C:\Users\Cadon Gernandt\.gradle\caches\transforms-2\files-2.1\a528b13ac93e64cafa3d0480e2c93207\core-1.1.0\AndroidManifest.xml:24:18-86
-25        android:debuggable="true"
-26        android:icon="@mipmap/ic_launcher"
-26-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:11:9-43
-27        android:label="mouthpiece_app" >
-27-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:10:9-39
-28        <activity
-28-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:12:9-40:20
-29            android:name="com.example.mouthpiece_app.MainActivity"
-29-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:13:13-41
-30            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-30-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:16:13-163
-31            android:hardwareAccelerated="true"
-31-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:17:13-47
-32            android:launchMode="singleTop"
-32-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:14:13-43
-33            android:theme="@style/LaunchTheme"
-33-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:15:13-47
-34            android:windowSoftInputMode="adjustResize" >
-34-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:18:13-55
-35
-36            <!--
-37                 Specifies an Android theme to apply to this Activity as soon as
-38                 the Android process has started. This theme is visible to the user
-39                 while the Flutter UI initializes. After that, this theme continues
-40                 to determine the Window background behind the Flutter UI.
-41            -->
-42            <meta-data
-42-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:23:13-26:17
-43                android:name="io.flutter.embedding.android.NormalTheme"
-43-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:24:15-70
-44                android:resource="@style/NormalTheme" />
-44-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:25:15-52
-45            <!--
-46                 Displays an Android View that continues showing the launch screen
-47                 Drawable until Flutter paints its first frame, then this splash
-48                 screen fades out. A splash screen is useful to avoid any visual
-49                 gap between the end of Android's launch screen and the painting of
-50                 Flutter's first frame.
-51            -->
-52            <meta-data
-52-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:32:13-35:17
-53                android:name="io.flutter.embedding.android.SplashScreenDrawable"
-53-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:33:15-79
-54                android:resource="@drawable/launch_background" />
-54-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:34:15-61
-55
-56            <intent-filter>
-56-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:36:13-39:29
-57                <action android:name="android.intent.action.MAIN" />
-57-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:37:17-68
-57-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:37:25-66
+22    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+22-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:9:4-70
+22-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:9:21-67
+23    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+23-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:10:5-81
+23-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:10:22-78
+24
+25    <application
+25-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:11:5-50:19
+26        android:name="io.flutter.app.FlutterApplication"
+26-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:12:9-57
+27        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+27-->[androidx.core:core:1.1.0] C:\Users\Cadon Gernandt\.gradle\caches\transforms-2\files-2.1\a528b13ac93e64cafa3d0480e2c93207\core-1.1.0\AndroidManifest.xml:24:18-86
+28        android:debuggable="true"
+29        android:icon="@mipmap/ic_launcher"
+29-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:14:9-43
+30        android:label="mouthpiece_app" >
+30-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:13:9-39
+31        <activity
+31-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:16:9-44:20
+32            android:name="com.example.mouthpiece_app.MainActivity"
+32-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:17:13-41
+33            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+33-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:20:13-163
+34            android:hardwareAccelerated="true"
+34-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:21:13-47
+35            android:launchMode="singleTop"
+35-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:18:13-43
+36            android:theme="@style/LaunchTheme"
+36-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:19:13-47
+37            android:windowSoftInputMode="adjustResize" >
+37-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:22:13-55
+38
+39            <!--
+40                 Specifies an Android theme to apply to this Activity as soon as
+41                 the Android process has started. This theme is visible to the user
+42                 while the Flutter UI initializes. After that, this theme continues
+43                 to determine the Window background behind the Flutter UI.
+44            -->
+45            <meta-data
+45-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:27:13-30:17
+46                android:name="io.flutter.embedding.android.NormalTheme"
+46-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:28:15-70
+47                android:resource="@style/NormalTheme" />
+47-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:29:15-52
+48            <!--
+49                 Displays an Android View that continues showing the launch screen
+50                 Drawable until Flutter paints its first frame, then this splash
+51                 screen fades out. A splash screen is useful to avoid any visual
+52                 gap between the end of Android's launch screen and the painting of
+53                 Flutter's first frame.
+54            -->
+55            <meta-data
+55-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:36:13-39:17
+56                android:name="io.flutter.embedding.android.SplashScreenDrawable"
+56-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:37:15-79
+57                android:resource="@drawable/launch_background" />
+57-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:38:15-61
 58
-59                <category android:name="android.intent.category.LAUNCHER" />
-59-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:38:17-76
-59-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:38:27-74
-60            </intent-filter>
-61        </activity>
-62        <!--
-63             Don't delete the meta-data below.
-64             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-65        -->
-66        <meta-data
-66-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:43:9-45:33
-67            android:name="flutterEmbedding"
-67-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:44:13-44
-68            android:value="2" />
-68-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:45:13-30
-69    </application>
-70
-71</manifest>
+59            <intent-filter>
+59-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:40:13-43:29
+60                <action android:name="android.intent.action.MAIN" />
+60-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:41:17-68
+60-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:41:25-66
+61
+62                <category android:name="android.intent.category.LAUNCHER" />
+62-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:42:17-76
+62-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:42:27-74
+63            </intent-filter>
+64        </activity>
+65        <!--
+66             Don't delete the meta-data below.
+67             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+68        -->
+69        <meta-data
+69-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:47:9-49:33
+70            android:name="flutterEmbedding"
+70-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:48:13-44
+71            android:value="2" />
+71-->C:\Users\Cadon Gernandt\Documents\BIS - Multimedia\COS 301\Mini Projects\Mini Project Assignment 3\Development\dev\cos301_teamgamma\mouthpiece_app\android\app\src\main\AndroidManifest.xml:49:13-30
+72    </application>
+73
+74</manifest>

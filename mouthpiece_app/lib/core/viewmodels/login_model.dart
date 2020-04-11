@@ -1,7 +1,6 @@
 import '../enums/viewstate.dart';
 import '../services/authentication/authentication_service.dart';
 import '../viewmodels/base_model.dart';
-
 import '../../locator.dart';
 
 class LoginModel extends BaseModel {
@@ -9,21 +8,19 @@ class LoginModel extends BaseModel {
 
   String errorMessage;
 
-  Future<bool> login(String email, String pass) async {
+Future<bool> login(String email, String pass) async {
     setState(ViewState.Busy);
-
-    /* var userEmail = int.tryParse(email);
-
-    // Not a number
-    if(userEmail == null) {
-      errorMessage = 'Value entered is not a number';
+    
+    String userKey;
+    //var success = await _loginAuthenticationService.login(email, pass);
+     var success = true;
+    if(success && email != null && pass != null){
       setState(ViewState.Idle);
-      return false;
+
+      return true;
+    }else{
+        return false;
     }
 
-    var success = await _loginAuthenticationService.login(userEmail); */
-
-    setState(ViewState.Idle);
-    return true;
   }
 }

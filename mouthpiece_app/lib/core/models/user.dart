@@ -1,25 +1,30 @@
+import '../../locator.dart';
+import 'dart:convert';
+
 class User {
-  int id;
-  String name;
-  String username;
-  User({this.id, this.name, this.username});
+    final String password;
+    final String email;
 
-  User.initial()
-      : id = 0,
-        name = '',
-        username = '';
+    User({this.email,this.password});
 
-  User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    username = json['username'];
+    User.initial()
+      : email ='',
+        password = '';
+
+    factory User.fromJson(Map<String, dynamic> json)
+    {
+        return User(         
+          email: json['email'],
+          password: json['password']
+        );
+
+    }
+
+    Map<String, dynamic> toJson() {
+      final Map<String, dynamic> data = new Map<String, dynamic>();
+      data['email'] = this.email;
+      data['password'] = this.password;
+      return data;
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['username'] = this.username;
-    return data;
-  }
 }

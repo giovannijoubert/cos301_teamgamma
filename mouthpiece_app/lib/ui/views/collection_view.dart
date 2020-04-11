@@ -2,11 +2,12 @@ import 'dart:math';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:mouthpiece_app/ui/views/mouth_selection_view.dart';
-import 'package:mouthpiece_app/ui/views/mouthpack_view.dart';
 import '../../core/viewmodels/collection_model.dart';
 import 'base_view.dart';
 import '../widgets/bottom_navigation.dart';
+
+
+
 
 class CollectionView extends StatefulWidget {
   @override
@@ -64,9 +65,7 @@ class _MouthNavigationBarState extends State<MouthNavigationBar>  {
             children: <Widget>[
               new GestureDetector(
                 onTap: () {
-                  Navigator.push(context, PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => CollectionView(),
-                  ),);
+                  Navigator.pushNamed(context, "collection");
                 },
                 child: Container(
                   padding: EdgeInsets.only(
@@ -91,9 +90,7 @@ class _MouthNavigationBarState extends State<MouthNavigationBar>  {
               ),
               new GestureDetector(
                 onTap: () {
-                  Navigator.push(context, PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => MouthSelectionView(),
-                  ),);
+                  Navigator.pushNamed(context, "mouth-selection");
                 },
                 child: Container(
                   padding: EdgeInsets.only(
@@ -136,19 +133,70 @@ class CollectionSearchBar extends StatefulWidget {
 
 class _CollectionSearchBarState extends State<CollectionSearchBar> {
   final SearchBarController<SearchItem> _searchBarController = SearchBarController();
+  List<MouthCard> packs = <MouthCard>[
+    MouthCard('assets/images/mouth-packs/mouth-1.png', "Vampire Pack 1", "Peter Davie", "2020/03/01", "24", "4.5"), 
+    MouthCard('assets/images/mouth-packs/mouth-1.png', "Dog Pack 1", "Peter Davie", "2020/03/01", "24", "4.5"),
+    MouthCard('assets/images/mouth-packs/mouth-1.png', "Dog Pack 2", "Peter Davie", "2020/03/01", "24", "4.5"),
+    MouthCard('assets/images/mouth-packs/mouth-1.png', "Dog Pack 3", "Peter Davie", "2020/03/01", "24", "4.5"),
+  ];
+
+  void initialize(_CollectionSearchBarState parent){
+      for(int i = 0; i < packs.length; i++){
+         packs[i].setParent(parent);
+     }
+  }
+
+    List<SearchItem> getSearched(String text){
+        List<SearchItem> searchItems = [];
+        for(int i = 0; i < packs.length ; i++){
+            if(packs[i].getCreator().contains(text)){
+                searchItems.add(SearchItem(packs[i].getImgSrc(), packs[i].getTitle(),  packs[i].getCreator(),  packs[i].getDate(),  packs[i].getImages(),  packs[i].getRating()));
+            }
+            else if(packs[i].getDate().contains(text)){
+              searchItems.add(SearchItem(packs[i].getImgSrc(), packs[i].getTitle(),  packs[i].getCreator(),  packs[i].getDate(),  packs[i].getImages(),  packs[i].getRating()));
+            }
+            else if(packs[i].getRating().contains(text)){
+              searchItems.add(SearchItem(packs[i].getImgSrc(), packs[i].getTitle(),  packs[i].getCreator(),  packs[i].getDate(),  packs[i].getImages(),  packs[i].getRating()));
+            }
+            else if(packs[i].getTitle().contains(text)){
+              searchItems.add(SearchItem(packs[i].getImgSrc(), packs[i].getTitle(),  packs[i].getCreator(),  packs[i].getDate(),  packs[i].getImages(),  packs[i].getRating()));
+            }
+        }
+        return searchItems;
+    }
+
+    void delete(String imgSrc, String title, String creator, String date, String totalImages, String rating)
+    {
+        for(int i = 0; i < packs.length ; i++){      
+            if( packs[i].getImgSrc() == imgSrc &&
+                packs[i].getTitle() == title &&
+                packs[i].getCreator() == creator &&
+                packs[i].getDate() == date &&
+                packs[i].getImages() == totalImages &&
+                packs[i].getRating() == rating )
+                {
+                  packs.remove(packs[i]);
+                  setState(() {
+                  });
+                  break;
+                }
+        }
+    }
 
   Future<List<SearchItem>> _getAllSearchItems(String text) async {
     await Future.delayed(Duration(seconds: text.length == 4 ? 10 : 1));
+    return getSearched(text);
+  }
 
-    List<SearchItem> searchItems = [];
-
-    for (int i = 0; i < 3; i++) {
-      searchItems.add(SearchItem('assets/images/mouth-packs/mouth-1.png', "Vampire Pack 1", "Peter Davie", "2020/03/01", "24", "4.5"));
-    }
-    return searchItems;
+    @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initialize(this);
   }
 
   @override
+  
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -159,7 +207,16 @@ class _CollectionSearchBarState extends State<CollectionSearchBar> {
           onSearch: _getAllSearchItems,
           searchBarController: _searchBarController,
           hintText: "Search...",
-          placeHolder: MouthCard('assets/images/mouth-packs/mouth-1.png', "Vampire Pack 1", "Peter Davie", "2020/03/01", "24", "4.5"), // Collection list
+          placeHolder:ListView.builder(
+                  itemCount: packs.length,
+                  itemBuilder: (BuildContext context, int index){
+                      return Column(children: <Widget>[
+                          packs[index]
+                      ]
+                    );
+                  }
+              )
+            ,
           emptyWidget: Text("empty"),
           indexedScaledTileBuilder: (int index) => ScaledTile.count(1, index.isEven ? 2 : 1),
           mainAxisSpacing: 0,
@@ -179,7 +236,9 @@ class _CollectionSearchBarState extends State<CollectionSearchBar> {
                       crossAxisSpacing: 0.0,
                       crossAxisCount: 1,
                         children: List.generate(5, (index) {
-                          return MouthCard(searchItem.imgSrc, searchItem.title, searchItem.creator, searchItem.date, searchItem.totalImages, searchItem.rating);
+                          var holder = MouthCard(searchItem.imgSrc, searchItem.title, searchItem.creator, searchItem.date, searchItem.totalImages, searchItem.rating);
+                          holder.setParent(this);
+                          return holder;
                         }),
                     ),
                   ),
@@ -200,11 +259,41 @@ class MouthCard extends StatefulWidget {
   final String date;
   final String totalImages;
   final String rating;
+  _CollectionSearchBarState parent;
 
   MouthCard(this.imgSrc, this.title, this.creator, this.date, this.totalImages, this.rating);
 
+  void setParent(_CollectionSearchBarState par){
+    this.parent = par;
+  }
+
+  String getTitle(){
+    return title;
+  }
+
+  String getCreator(){
+    return creator;
+  }
+
+  String getDate(){
+    return date;
+  }
+
+  String getRating(){
+    return rating;
+  }
+
+  String getImgSrc(){
+      return imgSrc;
+  }
+
+  String getImages(){
+      return totalImages;
+  }
+  
+  
   @override
-  _MouthCardState createState() => _MouthCardState(this.imgSrc, this.title, this.creator, this.date, this.totalImages, this.rating);
+  _MouthCardState createState() => _MouthCardState(this.imgSrc, this.title, this.creator, this.date, this.totalImages, this.rating, this.parent);
 }
 
 class _MouthCardState extends State<MouthCard> {
@@ -214,8 +303,8 @@ class _MouthCardState extends State<MouthCard> {
   final String date;
   final String totalImages;
   final String rating;
-
-  _MouthCardState(this.imgSrc, this.title, this.creator, this.date, this.totalImages, this.rating);
+  final _CollectionSearchBarState parent;
+  _MouthCardState(this.imgSrc, this.title, this.creator, this.date, this.totalImages, this.rating, this.parent);
 
   @override
   Widget build(BuildContext context) {
@@ -225,9 +314,7 @@ class _MouthCardState extends State<MouthCard> {
       child: new GestureDetector(
         onTap: (){
           print('pressed card');
-          Navigator.push(context, PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) => MouthpackView(),
-          ),);
+          Navigator.pushNamed(context, 'mouthpack');
         },
         child: Row(
           children: <Widget>[
@@ -295,6 +382,7 @@ class _MouthCardState extends State<MouthCard> {
                               new GestureDetector(
                                 onTap: (){
                                   print('pressed delete');
+                                  parent.delete(this.imgSrc, this.title, this.creator, this.date, this.totalImages, this.rating);
                                 },
                                 child: Icon(
                                   Icons.delete_outline,
@@ -361,8 +449,6 @@ class _MouthCardState extends State<MouthCard> {
 class BulletPoint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Text(
-      '•',
-    );
+    return new Text('•');
   }
 }
