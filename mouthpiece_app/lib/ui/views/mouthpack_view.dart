@@ -26,7 +26,7 @@ class _MouthpackState extends State<MouthpackView> {
           ImageSection(),
         ],
       ),
-        bottomNavigationBar: BottomNavigation(),
+        // bottomNavigationBar: BottomNavigation(),
       ),
     );
   }

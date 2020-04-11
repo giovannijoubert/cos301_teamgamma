@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mouthpiece_app/ui/views/choose_mode_view.dart';
 import 'package:mouthpiece_app/ui/views/login_view.dart';
 import 'package:mouthpiece_app/ui/views/voice_training_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/viewmodels/profile_model.dart';
 import '../../ui/shared/app_colors.dart';
 import '../widgets/bottom_navigation.dart';
@@ -191,8 +192,11 @@ class SignOutButton extends StatelessWidget {
       margin: EdgeInsets.only(top: 30),
       padding: EdgeInsets.fromLTRB(95, 0, 95, 0),
       child: RawMaterialButton(
-        onPressed: () {
-          Navigator.pushNamedAndRemoveUntil(context, "login", (r) => false);
+        onPressed: () async {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setBool('loggedIn', false);
+          prefs.setInt('index', 0);
+          Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => LoginView()), (Route<dynamic> route) => false);
         },
         padding: EdgeInsets.all(15),
         shape: new RoundedRectangleBorder(

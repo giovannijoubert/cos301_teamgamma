@@ -5,8 +5,18 @@ import '../../locator.dart';
 
 class ChooseModeModel extends BaseModel {
 
-    String modeIconColorVol = '0xff61A3EE'; // Blue - Black = '0xff303030';
-    String modeIconColorFor = '0xff303030';
+  static bool isSet = false;
+
+  void setIsSet(bool value) {
+    isSet = value;
+  }
+
+  bool getIsSet() {
+    return isSet;
+  }
+
+  String modeIconColorVol = '0xff61A3EE'; // Blue - Black = '0xff303030';
+  String modeIconColorFor = '0xff303030';
 
   setUserMode(String mode) async {
     

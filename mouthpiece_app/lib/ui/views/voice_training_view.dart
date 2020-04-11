@@ -4,6 +4,8 @@ import 'dart:async';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:flutter/material.dart';
+import 'package:mouthpiece_app/core/viewmodels/choose_mode_model.dart';
+import 'package:mouthpiece_app/ui/views/choose_mode_view.dart';
 import 'package:mouthpiece_app/ui/views/profile_view.dart';
 import '../../core/viewmodels/voice_training_model.dart';
 import '../../ui/shared/app_colors.dart';
@@ -184,6 +186,7 @@ Widget captionSection = Container(
 );
 
 Widget navigationSection(BuildContext context) {
+  ChooseModeModel mode = new ChooseModeModel();
   return Container(
     padding: const EdgeInsets.only(left:32, right: 32, top: 50),
     child: Row(
@@ -213,7 +216,16 @@ Widget navigationSection(BuildContext context) {
             children: [
               Container(
                 child: InkWell(
-                  onTap: () => Navigator.pushNamed(context, 'choose-mode'), 
+                  onTap: () {
+                    if (!mode.getIsSet()) {
+                      Navigator.push(context, PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) => ChooseModeView(),
+                      ),);
+                    } else { 
+                      Navigator.pop(context);
+                    }
+                    
+                  },  
                   child: Text(
                     'Skip',
                     style: TextStyle(

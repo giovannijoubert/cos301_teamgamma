@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:mouthpiece_app/ui/views/login_view.dart';
+import 'package:mouthpiece_app/ui/views/voice_training_view.dart';
 import '../../core/enums/viewstate.dart';
 import '../../core/viewmodels/register_model.dart';
 import '../../ui/shared/app_colors.dart';
@@ -45,18 +47,16 @@ class _RegisterViewState extends State<RegisterView> {
       decoration: InputDecoration(labelText: 'Email'),
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Email is Required';
+          return 'Email is required';
         }
 
-        if(EmailValidator.Validate(value, true))
-        {
-          return 'Please enter a valid email Address';
-        }
+        // if(EmailValidator.Validate(value))
+        // {
+        //   return 'Please enter a valid email address';
+        // }
 
-        if (!RegExp(
-                r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-            .hasMatch(value)) {
-          return 'Please enter a valid email Address';
+        if (!RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?").hasMatch(value)) {
+          return 'Please enter a valid email address';
         }
 
         return null;
@@ -74,7 +74,7 @@ class _RegisterViewState extends State<RegisterView> {
       obscureText: true,
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Password is Required';
+          return 'Password is required';
         }
 
         if (value.length < 4 ) {
@@ -93,13 +93,17 @@ class _RegisterViewState extends State<RegisterView> {
       var loginSuccess = await model.register(_userName,_email,_password);
         
         if(loginSuccess){
-           SharedPreferences prefs = await SharedPreferences.getInstance();
-           //prefs.remove('loggedIn');
-           prefs.setBool('loggedIn', true);
-           Navigator.pushNamed(context, '/');
-          Navigator.pushNamed(context, 'voice-training');
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          //prefs.remove('loggedIn');
+          prefs.setBool('loggedIn', true);
+          // Navigator.pushNamed(context, '/');
+          Navigator.push(context, PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
+          ),);
         }else{
-             Navigator.pushNamed(context, 'register');  
+            Navigator.push(context, PageRouteBuilder(
+                pageBuilder: (context, animation1, animation2) => RegisterView(),
+            ),);  
             throw Exception('User not registered'); 
         }
   }
@@ -124,7 +128,8 @@ class _RegisterViewState extends State<RegisterView> {
                           ),
                       ),
                   ),
-                  model.state == ViewState.Busy ? CircularProgressIndicator() : 
+                  model.state == ViewState.Busy ? 
+                  Center (child: CircularProgressIndicator()) :  
                   Container(
                     height: 50,
                     width: 325,
@@ -301,7 +306,9 @@ class SkipLink extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Navigator.pushNamed(context, 'voice-training');
+                Navigator.push(context, PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
+                ),);
               },
             )
           ],
@@ -317,7 +324,9 @@ class SignUpAccountLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: (){
-        Navigator.pushNamed(context, 'login');
+        Navigator.push(context, PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) => LoginView(),
+        ),);
       },textColor: Color(0xffB1B4E5),
       child: Align(
         alignment: Alignment.bottomCenter,

@@ -1,5 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:mouthpiece_app/ui/views/home_view.dart';
+import 'package:mouthpiece_app/ui/views/register_view.dart';
+import 'package:mouthpiece_app/ui/views/voice_training_view.dart';
 import '../../core/enums/viewstate.dart';
 import '../../core/viewmodels/login_model.dart';
 import '../../ui/shared/app_colors.dart';
@@ -24,7 +27,7 @@ Widget _buildEmail() {
       decoration: InputDecoration(labelText: 'Email'),
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Email is Required';
+          return 'Email is required';
         }
 
         /* if(EmailValidator.Validate(value, true))
@@ -33,7 +36,7 @@ Widget _buildEmail() {
         } */
 
         if (!RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?").hasMatch(value)) {
-          return 'Please enter a valid email Address';
+          return 'Please enter a valid email address';
         }
 
         return null;
@@ -51,7 +54,7 @@ Widget _buildPassword() {
       obscureText: true,
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Password is Required';
+          return 'Password is required';
         }
         if (value.length < 4 ) {
           return 'Password is too short';
@@ -71,15 +74,18 @@ Widget _buildPassword() {
       if(loginSuccess){
            SharedPreferences prefs = await SharedPreferences.getInstance();
            prefs.setBool('loggedIn', true);
-           Navigator.pushNamed(context, '/');
+           Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
        }else{
-            Navigator.pushNamed(context, 'login'); 
+            Navigator.push(context, PageRouteBuilder(
+                pageBuilder: (context, animation1, animation2) => LoginView(),
+            ),);
             throw Exception('Invalid email or Invalid password provided'); 
            
         }
   }
   @override
    Widget build(BuildContext context) {
+    precacheImage(AssetImage("assets/images/wave.png"), context);
     return BaseView<LoginModel>(
       builder: (context, model, child) => Scaffold(
         body: Padding(
@@ -99,7 +105,8 @@ Widget _buildPassword() {
                   ),
               ),
               ForgotPassword(),
-              model.state == ViewState.Busy ? Center (child: CircularProgressIndicator()) : 
+              model.state == ViewState.Busy ? 
+              Center (child: CircularProgressIndicator()) :  
               Container(
                 height: 50,
                 width: 325,
@@ -271,7 +278,9 @@ class SkipLink extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Navigator.pushNamed(context, 'voice-training');
+                Navigator.push(context, PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
+                ),);
               },
             )
           ],
@@ -287,7 +296,9 @@ class SignUpAccountLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: (){
-        Navigator.pushNamed(context, 'register');
+        Navigator.push(context, PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) => RegisterView(),
+        ),);
       },textColor: Color(0xffB1B4E5),
       child: Align(
         alignment: Alignment.bottomCenter,

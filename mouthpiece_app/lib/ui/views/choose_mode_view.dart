@@ -1,11 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mouthpiece_app/ui/views/home_view.dart';
 import '../../core/viewmodels/choose_mode_model.dart';
 import '../../ui/shared/app_colors.dart';
 import '../../ui/shared/text_styles.dart';
 
 import 'base_view.dart';
+
+ChooseModeModel model = new ChooseModeModel();
 
 class ChooseModeView extends StatefulWidget {
   @override
@@ -25,7 +28,6 @@ class _ChooseModeState extends State<ChooseModeView> {
               volumeSection,
               volumeCaptionSection,
               volumeButtonSection(context, model),
-              
               imageSection,
               formantSection,
               formantCaptionSection,
@@ -84,11 +86,12 @@ Widget volumeButtonSection(BuildContext context, model) {
         new RawMaterialButton(
           onPressed: () async {
             model.setVolumeBased();
-            Navigator.pushNamed(context, '/');
-            /* var modeSuccessfullySet = await model.setUserMode("Volume");
-            if(modeSuccessfullySet){
-              Navigator.pushNamed(context, '/');
-            } */
+            if (!model.getIsSet()) {
+              model.setIsSet(true);
+              Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
+            } else { 
+              Navigator.pop(context);
+            }
           },
           shape: CircleBorder(),
           child:Container(
@@ -157,11 +160,12 @@ Widget formantButtonSection(BuildContext context, model) {
           onPressed: () async {
             model.setFormantBased();
             
-            Navigator.pushNamed(context, '/');
-            /* var modeSuccessfullySet = await model.setUserMode("formant");
-            if(modeSuccessfullySet){
-              Navigator.pushNamed(context, '/');
-            } */
+            if (!model.getIsSet()) {
+              model.setIsSet(true);
+              Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
+            } else { 
+              Navigator.pop(context);
+            }
           },
           shape: CircleBorder(),
           child:Container(

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Cadon Gernandt\\Documents\\BIS - Multimedia\\COS 301\\Mini Projects\\Mini Project Assignment 3\\Development\\dev\\cos301_teamgamma\\mouthpiece_app\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-is\\values-is.xml",
+            "outputFile": "C:\\Folder\\South Africa\\IKS\\Year 4\\COS301\\Mini-Projects\\Deliverable 3\\dev\\cos301_teamgamma\\mouthpiece_app\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-is\\values-is.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Cadon Gernandt\\.gradle\\caches\\transforms-2\\files-2.1\\a528b13ac93e64cafa3d0480e2c93207\\core-1.1.0\\res\\values-is\\values-is.xml",
+                    "source": "C:\\Users\\Iva\\.gradle\\caches\\transforms-2\\files-2.1\\a6b3cea9d5982f96644e4f92725f7c69\\core-1.0.1\\res\\values-is\\values-is.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

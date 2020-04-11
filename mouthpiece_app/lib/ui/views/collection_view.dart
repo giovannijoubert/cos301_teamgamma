@@ -2,11 +2,11 @@ import 'dart:math';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:mouthpiece_app/ui/views/mouth_selection_view.dart';
+import 'package:mouthpiece_app/ui/views/mouthpack_view.dart';
 import '../../core/viewmodels/collection_model.dart';
 import 'base_view.dart';
 import '../widgets/bottom_navigation.dart';
-
-
 
 
 class CollectionView extends StatefulWidget {
@@ -65,7 +65,9 @@ class _MouthNavigationBarState extends State<MouthNavigationBar>  {
             children: <Widget>[
               new GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, "collection");
+                  Navigator.push(context, PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => CollectionView(),
+                  ),);
                 },
                 child: Container(
                   padding: EdgeInsets.only(
@@ -90,7 +92,9 @@ class _MouthNavigationBarState extends State<MouthNavigationBar>  {
               ),
               new GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, "mouth-selection");
+                  Navigator.push(context, PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => MouthSelectionView(),
+                  ),);
                 },
                 child: Container(
                   padding: EdgeInsets.only(
@@ -314,7 +318,9 @@ class _MouthCardState extends State<MouthCard> {
       child: new GestureDetector(
         onTap: (){
           print('pressed card');
-          Navigator.pushNamed(context, 'mouthpack');
+          Navigator.push(context, PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) => MouthpackView(),
+          ),);
         },
         child: Row(
           children: <Widget>[

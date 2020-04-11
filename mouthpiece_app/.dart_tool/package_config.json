@@ -195,7 +195,7 @@
     },
     {
       "name": "pedantic",
-      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/pedantic-1.9.0",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/pedantic-1.8.0+1",
       "packageUri": "lib/",
       "languageVersion": "2.1"
     },
@@ -297,9 +297,9 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.2.15",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.2.11",
       "packageUri": "lib/",
-      "languageVersion": "2.4"
+      "languageVersion": "2.2"
     },
     {
       "name": "typed_data",
@@ -332,7 +332,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-04-11T15:33:05.775154Z",
+  "generated": "2020-04-11T20:37:02.980761Z",
   "generator": "pub",
-  "generatorVersion": "2.8.0-dev.15.0.flutter-96cf889e6b"
+  "generatorVersion": "2.7.0"
 }

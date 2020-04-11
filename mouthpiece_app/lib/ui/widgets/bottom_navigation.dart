@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:mouthpiece_app/ui/views/collection_view.dart';
 import 'package:mouthpiece_app/ui/views/home_view.dart';
 import 'package:mouthpiece_app/ui/views/profile_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 int _currentTabIndex = 0;
 
 class BottomNavigation extends StatefulWidget {
   void setIndex(int index) {
     _currentTabIndex = index;
+    
   }
 
   @override
@@ -14,12 +17,14 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class BottomNavigationState extends State<BottomNavigation> {
-  static int index = 0;
+  // static int index = 0;
   @override
   Widget build(BuildContext context) {
-    _onTap(int tabIndex) {
-      if (index != tabIndex) {
-        index = tabIndex;
+    _onTap(int tabIndex) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      
+      if (prefs.getInt('index') != tabIndex) {
+        prefs.setInt('index', tabIndex);
         switch (tabIndex) {
           case 0:
             Navigator.push(context, PageRouteBuilder(
