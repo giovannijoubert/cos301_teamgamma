@@ -1,8 +1,3 @@
-/**
- *  @file NeuralNetwork.java
- *  @class NeuralNetwork
- *  @author Dylan Krajnc, Pavlo Andrianatos, Rudo Janse van Rensburg, Brad Zietsman
- */
 
 package ga.teamgamma.ai.NeuralNetworks;
 
@@ -33,6 +28,9 @@ public class NeuralNetwork
 	int width = 100;
 	int numLabels = 12;
 
+	/** Export model function, this will export the latest neural network
+	 * @return file that is a zip which contains the neural network
+	 */
 	public static File exportModel() {
 		return new File("//model//NeuralNetworkConfiguration.zip");
 	}
@@ -295,12 +293,12 @@ public class NeuralNetwork
 		return new MultiLayerNetwork(conf);
 	}
 
+	/** lenet Model function, this returns a newly constructed neural network that follows the lenet model,
+	 * this model is configured to train and run 100x100 spectrogram
+	 * @return multi layer network that follows the lenet model
+	 */
 	public MultiLayerNetwork lenetModel()
 	{
-		/*
-		 * Revised Lenet Model approach developed by ramgo2 achieves slightly above random
-		 * Reference: https://gist.github.com/ramgo2/833f12e92359a2da9e5c2fb6333351c5
-		 */
 		MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
 				.seed(seed)
 				.l2(0.005)
