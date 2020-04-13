@@ -31,16 +31,12 @@ public class NeuralNetworksApplication
     {
         SpringApplication.run(NeuralNetworksApplication.class, args);
 
-        //MultiLayerNetwork alex = (new NeuralNetwork()).alexnetModel();
-
         System.out.println("Lenet Model");
         Training t = new Training();
-
         t.train(true, (new NeuralNetwork()).lenetModel());
 
         //System.out.println("Alexnet Model");
         //Training t2 = new Training();
-
         //t2.train(true, (new NeuralNetwork()).alexnetModel());
     }
 
@@ -51,7 +47,8 @@ public class NeuralNetworksApplication
      * @author Nigel Mpofu
      */
     @PostConstruct
-    public void init() {
+    public void init()
+    {
         deleteOldModel();
         TimeZone.setDefault(TimeZone.getTimeZone("Africa/Johannesburg"));
     }
@@ -60,17 +57,22 @@ public class NeuralNetworksApplication
      * Delete the existing model at boot time
      * @author Nigel Mpofu
      */
-    private static void deleteOldModel() {
+    private static void deleteOldModel()
+    {
         File model = new File("//model//NeuralNetworkConfiguration.zip");
 
         // delete model if the file exists
-        try {
+        try
+        {
             boolean isDeleted = Files.deleteIfExists(model.toPath());
 
-            if(isDeleted) {
+            if(isDeleted)
+            {
                 System.out.println("INIT [deleteOldModel]: Model has been deleted");
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             System.out.println("INIT [deleteOldModel]: ERROR");
             e.printStackTrace();
         }
@@ -191,7 +193,7 @@ public class NeuralNetworksApplication
      */
     @RequestMapping(value = "/api/neuralNetwork", method = RequestMethod.GET, produces = "application/zip; charset=utf-8")
     @ResponseBody
-     public FileSystemResource apiGetNN() {
+    public FileSystemResource apiGetNN() {
         return new FileSystemResource(NeuralNetwork.exportModel());
     }
 }

@@ -44,10 +44,10 @@ public class NeuralNetwork
 	 * ==============================
 	 * 1.) Bias
 	 * 			- Allows you to shift the activation function to the left or right, allowing better fit to data.
-	 * 			-Typically important in first layer, but it plays less of a role in fully connected layers towards the end.
-	 * 			-For images, it may actually be better not to use a bias at all.
+	 * 			- Typically important in first layer, but it plays less of a role in fully connected layers towards the end.
+	 * 			- For images, it may actually be better not to use a bias at all.
 	 * 2.) Padding
-	 * 				-
+	 * 				- et to fit
 	 * 3.) Stride
 	 * 				-
 	 * 4.) Number of nodes

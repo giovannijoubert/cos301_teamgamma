@@ -133,9 +133,11 @@ public class Training
     private DataSetIterator getTrainingDataSetIterator(boolean pretrain) throws IOException
     {
         File parentPath = new File("//data"
-                                 /*   System.getProperty("user.dir"),
-                                "//src//main//java//ga//teamgamma//ai" */
-                                        + (pretrain ? "//pretraining//" : "//training//")
+                                 /*
+                                 System.getProperty("user.dir"),
+                                "//src//main//java//ga//teamgamma//ai"
+                                */
+                                 + (pretrain ? "//pretraining//" : "//training//")
         );
 
         ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
@@ -255,6 +257,28 @@ public class Training
             System.out.println("Done training, took: " + time + "ms");
         }
 
+        /*
+        File imageFile = new File("C:\Users\..."); //Image location
+        NativeImageLoader loader = new NativeImageLoader(100, 100, 1);
+        INDArray image = loader.asMatrix(imageFile);
+        ImagePreProcessingScaler preProcessor = new ImagePreProcessingScaler(0, 1);
+        preProcessor.transform(image);
+        INDArray out = model.output(image, false);
+        System.out.println(out);
+
+        Double max = out.amaxNumber().doubleValue();
+        int index = -1
+        for(int i = 0; i < 12; i++)
+        {
+            if(out.getDouble(i) == max || max.equals(out.getDouble(i)))
+            {
+                index = i;
+                break;
+            }
+        }
+        index++;
+        System.out.println(index);
+        */
         return model;
     }
 }
