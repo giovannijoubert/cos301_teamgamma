@@ -1,3 +1,9 @@
+/**
+ *  @file NeuralNetwork.java
+ *  @class NeuralNetwork
+ *  @author Dylan Krajnc, Pavlo Andrianatos, Rudo Janse van Rensburg, Brad Zietsman
+ */
+
 package ga.teamgamma.ai.NeuralNetworks;
 
 import org.deeplearning4j.nn.conf.GradientNormalization;

@@ -1,3 +1,8 @@
+/**
+ *  @file Training.java
+ *  @class Training
+ *  @author Dylan Krajnc, Pavlo Andrianatos, Rudo Janse van Rensburg, Brad Zietsman
+ */
 package ga.teamgamma.ai.NeuralNetworks;
 import org.datavec.api.io.filters.BalancedPathFilter;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
@@ -40,6 +45,7 @@ import java.util.Random;
 
 public class Training
 {
+    
     private MultiLayerNetwork model = null;
 
     /**
@@ -89,6 +95,11 @@ public class Training
         /**Configure where the network information (gradients, score vs. time etc) is to be stored. Here: store in memory*/
         statsStorage = new InMemoryStatsStorage(); //Alternative: new FileStatsStorage(File), for saving and loading later.
     }
+    /**
+     * @param pretrain  - boolean, to determine whether there is training or pretraining.
+     * @param model     - the model to train or pretrain.
+     * @return a trained or pretrained neural network model(A MultilayerNetwork java object)
+     */
 
     public MultiLayerNetwork train(boolean pretrain, MultiLayerNetwork model)
     {
@@ -103,7 +114,9 @@ public class Training
 
         return null;
     }
-
+    /**
+     * @return a List of image tranformation operations.
+     */
     private List<ImageTransform> getTransforms()
     {
         return Arrays.asList(new ImageTransform[]
