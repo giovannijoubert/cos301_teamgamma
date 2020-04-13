@@ -126,17 +126,17 @@ public class Training
                                 new FlipImageTransform(new Random(123))
                             });
     }
-
+    /**
+     * @param pretrain - boolean, to determine whether the pretraining or training dataset is to be used.
+     * @return a DatasetIterator that contains the training or pretraining data.
+     */
     private DataSetIterator getTrainingDataSetIterator(boolean pretrain) throws IOException
     {
-        //String path = System.getProperty("user.dir") + "\\src\\database.txt";
-        /**Get Training Data Directory*/
         File parentPath = new File("//data"
                                  /*   System.getProperty("user.dir"),
                                 "//src//main//java//ga//teamgamma//ai" */
                                         + (pretrain ? "//pretraining//" : "//training//")
         );
-        //System.out.println("Training Set Path: "+parentPath.toString());;
 
         ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
         //FileSplit trainData = new FileSplit(parentPath, NativeImageLoader.ALLOWED_FORMATS, rng);
@@ -146,7 +146,6 @@ public class Training
         int nlbls = Objects.requireNonNull(fileSplit.getRootDir().listFiles(File::isDirectory)).length; //This only works if your root is clean: only label subdirs.
         int maxPathsPerLabel = 10; // Not sure if maxPathsPerLabel is right
 
-        /**Ensure Training Data is Distributed Equally amongst the various labels*/
         BalancedPathFilter pathFilter = new BalancedPathFilter(rng, labelMaker, numExamples, nlbls, maxPathsPerLabel);
 
         double splitTrainTest = 0.8;
@@ -157,7 +156,6 @@ public class Training
         /*ImageRecordReader recordReader = new ImageRecordReader(numRows,numCols,3,labelMaker);*/
 
         //recordReader.initialize(trainData);
-        /**Add Transformed Data To Pretraing On*/
         /*for (ImageTransform transform : getTransforms()){
             recordReader.initialize(trainData,transform);
         }*/
@@ -172,7 +170,7 @@ public class Training
 
         ImageTransform transform = new PipelineImageTransform(pipeline,shuffle);
 
-        /**Data Normalization*/
+        /*Data Normalization*/
         DataNormalization scaler = new ImagePreProcessingScaler(0,1);
 
         ImageRecordReader testRR = new ImageRecordReader(numRows, numCols, 1, labelMaker);
@@ -190,27 +188,31 @@ public class Training
         return dataIter;
     }
 
-
+    /**
+     * @param model - model to traing(MultilayerNetwork Java object).
+     * @param data - DataSetIterator holding the training data.
+     * @return a trained model(MultiLayerNetwork Java Object).
+     */
     private MultiLayerNetwork train(MultiLayerNetwork model, DataSetIterator data) throws IOException
     {
         //DataSetIterator mnistTest = new MnistDataSetIterator(10, 50, true, true, true, RNG_SEED);
         //data = mnistTest;
         model.init();
 
-        /**Score
+        /* Score
          * -----------------------------------------------------------
          * This collects information, such as the loss, from the neural network and outputs them after a certain number of iterations.
-         * */
+         */
         /*model.setListeners(
                             new ScoreIterationListener(1)
                             );*/
 
-        /**Then add the EvaluativeListener to print out the accuracy after each iteration*/
+        /*Then add the EvaluativeListener to print out the accuracy after each iteration*/
         /*model.setListeners(
                             new EvaluativeListener(testIter, 1)
                             );*/
 
-        /**Then add the StatsListener to collect this information from the network, as it trains*/
+        /*Then add the StatsListener to collect this information from the network, as it trains*/
         model.setListeners(
                             new StatsListener(
                                     statsStorage,
@@ -218,7 +220,7 @@ public class Training
                             )
         );
 
-        /**Attach the StatsStorage instance to the UI: this allows the contents of the StatsStorage to be visualized*/
+        /*Attach the StatsStorage instance to the UI: this allows the contents of the StatsStorage to be visualized*/
         uiServer.attach(statsStorage);
 
        /* File parentPath = new File(
