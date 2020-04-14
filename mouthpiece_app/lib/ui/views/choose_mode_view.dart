@@ -86,8 +86,8 @@ Widget volumeButtonSection(BuildContext context, model) {
         new RawMaterialButton(
           onPressed: () async {
             model.setVolumeBased();
-            if (!model.getIsSet()) {
-              model.setIsSet(true);
+            if (!model.getIsVolSet()) {
+              model.setIsVolSet(true);
               Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
             } else { 
               Navigator.pop(context);
@@ -99,7 +99,7 @@ Widget volumeButtonSection(BuildContext context, model) {
             width: 65,
             child: new Icon(
               Icons.volume_up,
-              color: Color(int.parse(model.modeIconColorVol)),
+              color: Color(int.parse(model.getModeIconColorVol())),
               size: 35.0,
             ),
             decoration: BoxDecoration(
@@ -160,8 +160,8 @@ Widget formantButtonSection(BuildContext context, model) {
           onPressed: () async {
             model.setFormantBased();
             
-            if (!model.getIsSet()) {
-              model.setIsSet(true);
+            if (model.getIsVolSet()) {
+              model.setIsVolSet(false);
               Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
             } else { 
               Navigator.pop(context);
@@ -173,7 +173,7 @@ Widget formantButtonSection(BuildContext context, model) {
             width: 65,
             child: new Icon(
               Icons.mic_none,
-              color: Color(int.parse(model.modeIconColorFor)),
+              color: Color(int.parse(model.getModeIconColorFor())),
               size: 35.0,
             ),
             decoration: BoxDecoration(

@@ -1,48 +1,57 @@
-import 'package:mouthpiece_app/ui/views/voice_training_view.dart';
 
+
+import 'package:permission_handler/permission_handler.dart';
 import '../enums/viewstate.dart';
 import '../viewmodels/base_model.dart';
-import '../../locator.dart';
-import 'dart:io' as io;
-import 'package:file/file.dart';
-import 'package:audio_recorder/audio_recorder.dart';
-import 'package:file/local.dart';
+import 'dart:async';
+import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'dart:io' as io;
+import '../../locator.dart';
+
 
 class VoiceTrainingModel extends BaseModel {
 
+  
+ 
+  
+  //io.Directory tempDir;
+ // FlutterAudioRecorder _recorder;
+  //final String folderPath = '/TrainingAudio/';
+ // final String _prefix = 'Recorder Manager:';
+ // String currentPath;
+  String wordColour = "0xff54ff33";
+  //String errorMessage;
+  
 
-  final LocalFileSystem localFileSystem;
-  VoiceTrainingModel({localFileSystem}):
-  this.localFileSystem = localFileSystem ?? LocalFileSystem();
 
- String wordColour = "0xff54ff33";
-  String errorMessage;
 
-  var arr = ["Apples", "Pears", "Peaches"];
+  var arr = ["Apples", "Pears", "Peaches","New fruit"];   // Add words as required
   var index = 0;
 
   bool changeMode(bool mode) {
     return !mode;
   }
-
+String getWord(){
+  return arr[index];
+}
   String changeToNextWord(){
     String word = arr[index];
     index++;
 
-    if (index > 2) 
+    if (index > arr.length-1) 
       index = 0;
     
     return word;
   }
   
 
-  String changeWordStart(){
-    return 'Start';
-  }
+ 
 
-    final PermissionHandler _permissionHandler = PermissionHandler();
+
+ final PermissionHandler _permissionHandler = PermissionHandler();
+
+
     // Template code to access permissions
     Future<bool> _requestPermission(PermissionGroup permission) async {
     var result = await _permissionHandler.requestPermissions([permission]);
@@ -50,9 +59,11 @@ class VoiceTrainingModel extends BaseModel {
       return true;
     }    return false;
   }
-  // Important note: permissions listed below are just for android, need to do 
-  // Platform.isAndroid ? : to sort out for iOS
-  // Specific code to request permissions if !hasPermission
+
+  // Important note: permissions listed below are just for android, need to do something like
+  // Platform.isAndroid ? : to sort out for iOS permissions
+
+  // Specific code to request permissions 
    Future<bool> requestMicrophonePermission() async {
     return _requestPermission(PermissionGroup.microphone);
    }
@@ -61,76 +72,118 @@ class VoiceTrainingModel extends BaseModel {
     return _requestPermission(PermissionGroup.storage);
   }
 
+  
+
+
    // Template code to check if app hasPermission
-Future<bool> hasPermission(PermissionGroup permission) async {
+    Future<bool> hasPermission(PermissionGroup permission) async {
     var permissionStatus =
         await _permissionHandler.checkPermissionStatus(permission);
-    return permissionStatus == PermissionStatus.granted;
+    return(permissionStatus == PermissionStatus.granted);
+    
   }
-// Specific code to check hasPermission
+  // Specific code to check hasPermission
   Future<bool> hasMicrophonePermission() async {
     return hasPermission(PermissionGroup.microphone);
   }
-
+    
   Future<bool> hasStoragePermission() async {
     return hasPermission(PermissionGroup.storage);
   }
 
-  Recording globalRecording=  new Recording();
-  bool globalIsRecording = false; 
 
 
 
-int i=0;
+  bool isRecording = false;
+  io.Directory tempDir;
+  FlutterAudioRecorder _recorder;
+  final String folderPath = '/TrainingAudio/';
+  final String _prefix = 'Recorder Manager:';
+  String currentPath;
+  String errorMessage;
+  int i=0;
 
-start() async {
+  void RecordAudio() async{
+  print("Entered RecordAudio . . .");
+      isRecording=true;
+      wordColour="0xff0d72e7";
+       
+    record(arr[index]);
+  }
+
+
+  void StopRecordingAudio(){
+    
+    print("Entered StopRecord . . .");
+    isRecording=false;
+    wordColour = "0xffe7110d";
+    stopRecorder();
+  }
+
+
+
+
+Future<String> record(String word) async {
     try {
-         bool Microphonepermission = await requestMicrophonePermission();
-         bool StoragePermission = await requestStoragePermission();
-      if (await AudioRecorder.hasPermissions) {
-        print("Permission granted");
-
-            final io.Directory appDocDirectory =
-                await getApplicationDocumentsDirectory();
-            final String path = '${appDocDirectory.path}/TrainingFiles';
-            await new io.Directory(path).create(recursive:true);
-            String filePath = '$path/${DateTime.now().toUtc().millisecondsSinceEpoch.toString()}';
-           // i++;
-           // filePath+='newFile'+i.toString();
-          print("Start recording: $filePath");
+          bool StoragePermission = await requestStoragePermission();
           
-          await AudioRecorder.start(
-              path: filePath, audioOutputFormat: AudioOutputFormat.AAC);
-          wordColour="0xff0d72e7";
-          bool isRecording = await AudioRecorder.isRecording;
-          globalRecording = new Recording(duration: new Duration(), path: "");
-          globalIsRecording = isRecording;
-        
-      } else {
-          // Something here to update UI to say permission not granted and thereafter request again
-          print("Permission not granted!");
-           
+          bool Microphonepermission = await requestMicrophonePermission();
+         
+         if(Microphonepermission && StoragePermission){
+
+          print("Entered record . . .");
+      if (await FlutterAudioRecorder.hasPermissions) {
+
+      print("Permission granted");
+      tempDir = await getApplicationDocumentsDirectory();
+      String tempPath = tempDir.path + folderPath + word + i.toString();  // temp solution of file naming 
+      //until Deleting of files in folder is implemented by converter team.
+      i++;
+      final io.Directory recordingDirectory = io.Directory(tempDir.path + folderPath);
+      if (!recordingDirectory.existsSync()) 
+        await recordingDirectory.create(recursive:true);
+       _recorder = FlutterAudioRecorder(tempPath, audioFormat: AudioFormat.WAV);
+        await _recorder.initialized;
+
+      await _recorder.start();
+      return folderPath + word + '.wav';
       }
-    } catch (e) {
-      print(e);
+    } }catch (e) {
+      print(e.toString());
+      return "";
+    }
+    return "";
+  }
+
+void stopRecorder() async {
+    try {
+      
+      if (await FlutterAudioRecorder.hasPermissions) {
+      print("Entered stopRecorder . . .");
+     
+      
+      print('$_prefix Recorder ending and saving recording...');
+      var result = await _recorder.stop();
+    print('$_prefix Recorder ended successfully!');
+    print('$_prefix Recording saved to: ' + result.path);
+
+      /*
+        TODO:
+          Add code for passing the audio wave file to the spectogram generator
+          Add code for deleting recorded wave files
+      */
+
+    } }catch (e) {
+      print('$_prefix Recorder was unable to save recording!');
+      print(e.toString());
     }
   }
 
 
 
-  stop() async{ // Stopping requires 2 button taps, fix. Also there is interference from rawButton
-    wordColour = "0xffe7110d";
-  print("Entered _Stop");
-  var recording = await AudioRecorder.stop();
-  print("Stop recording: ${recording.path}");
-  bool isRecording = await AudioRecorder.isRecording;
-    File file = localFileSystem.file(recording.path);
-    print("  File length: ${await file.length()}");
-      //setState(()) ...
-      globalRecording = recording;
-      globalIsRecording = isRecording;
-      
-    }
+
+
+
 
 
 }

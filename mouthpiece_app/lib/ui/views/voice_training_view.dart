@@ -1,5 +1,4 @@
 import 'dart:io' as io;
-
 import 'dart:async';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
@@ -10,7 +9,6 @@ import 'package:mouthpiece_app/ui/views/profile_view.dart';
 import '../../core/viewmodels/voice_training_model.dart';
 import '../../ui/shared/app_colors.dart';
 import '../../ui/shared/text_styles.dart';
-import 'package:audio_recorder/audio_recorder.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'base_view.dart';
@@ -27,19 +25,10 @@ class _VoiceTrainingState extends State<VoiceTrainingView> {
 
   bool trainingMode = false;
 
-  String word = 'Start';
+  
   String ins = 'then read the word aloud';
 
  
-
-  void validateWord(bool correct) {
-    if (correct) {
-   
-  }
-  }
-  
-  
-
   @override
   Widget build(BuildContext context) {
     return BaseView<VoiceTrainingModel>(
@@ -52,7 +41,7 @@ class _VoiceTrainingState extends State<VoiceTrainingView> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 80, 0, 80),
                 child: Text(
-                  '$word',
+                  model.getWord(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 55,
@@ -74,7 +63,7 @@ class _VoiceTrainingState extends State<VoiceTrainingView> {
                       ),
                     ),
                     Icon(
-                      trainingMode ? Icons.crop_square : Icons.mic_none,
+                      model.isRecording ? Icons.mic_off : Icons.mic_none,
                       color: Color(0xff303030),
                     ),
                     Text(
@@ -93,22 +82,6 @@ class _VoiceTrainingState extends State<VoiceTrainingView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     new RawMaterialButton(
-                      onPressed: () {
-                        this.trainingMode = model.changeMode(trainingMode);
-                        
-                        if (trainingMode == true){
-                          setState(() {
-                            ins = "when you are done";
-                          });
-                        } else {
-                          validateWord(true);
-                          setState(() {
-                            word = model.changeToNextWord();
-                            
-                            ins = "then read the word aloud";
-                          });
-                        }
-                      },
                       shape: CircleBorder(),
                       child: Container(
                         height: 80,
@@ -116,14 +89,28 @@ class _VoiceTrainingState extends State<VoiceTrainingView> {
                           child: Row(children: <Widget>[
                             IconButton(
                           icon: Icon(Icons.mic_none),
-                          onPressed: model.globalIsRecording ? null : model.start,  
+                          onPressed:(){ if(model.isRecording == false)
+                           model.RecordAudio();
+                           
+                        if (model.isRecording == true){
+                          setState(() {
+                            ins = "when you are done";
+                            });
+                          } 
+                        },  
                           color: Color(0xff303030),
                           iconSize: 40.0, 
                         ),
                          IconButton(
                          icon: Icon(Icons.mic_off),
-                          onPressed: model.globalIsRecording ? model.stop : null,  
-                          color: Color(0xff303030),
+                          onPressed: (){ if (model.isRecording == true)
+                           model.StopRecordingAudio();
+                          setState(() {
+                             model.changeToNextWord();
+                            
+                            ins = "then read the word aloud";
+                          });},  
+                          color: Color(0xff123456),
                           iconSize: 40.0, 
                         ),
                        ],
@@ -217,7 +204,7 @@ Widget navigationSection(BuildContext context) {
               Container(
                 child: InkWell(
                   onTap: () {
-                    if (!mode.getIsSet()) {
+                    if (!mode.getIsVolSet()) {
                       Navigator.push(context, PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) => ChooseModeView(),
                       ),);

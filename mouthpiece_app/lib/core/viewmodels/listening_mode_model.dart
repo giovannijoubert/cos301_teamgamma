@@ -5,4 +5,13 @@ import '../../locator.dart';
 import 'base_model.dart';
 
 class ListeningModeModel extends BaseModel {
+  bool volumeBased = true;
+
+
+  void volumeConverter(){}
+
+ void formantConverter(){}
+
+
+
 }
