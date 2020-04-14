@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:mouthpiece_app/core/viewmodels/choose_mode_model.dart';
 import 'package:mouthpiece_app/ui/views/choose_mode_view.dart';
 import 'package:mouthpiece_app/ui/views/profile_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/viewmodels/voice_training_model.dart';
 import '../../ui/shared/app_colors.dart';
 import '../../ui/shared/text_styles.dart';
@@ -82,39 +83,39 @@ class _VoiceTrainingState extends State<VoiceTrainingView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     new RawMaterialButton(
+                      onPressed: (){},
                       shape: CircleBorder(),
                       child: Container(
                         height: 80,
                         width: 112,
                           child: Row(children: <Widget>[
                             IconButton(
-                          icon: Icon(Icons.mic_none),
-                          onPressed:(){ if(model.isRecording == false)
-                           model.RecordAudio();
-                           
-                        if (model.isRecording == true){
-                          setState(() {
-                            ins = "when you are done";
-                            });
-                          } 
-                        },  
-                          color: Color(0xff303030),
-                          iconSize: 40.0, 
+                              icon: Icon(Icons.mic_none),
+                              onPressed:(){ 
+                                if(model.isRecording == false) {
+                                  model.RecordAudio();
+                                } else {
+                                  setState(() {
+                                    ins = "when you are done";
+                                  });
+                                } 
+                              },  
+                              color: Color(0xff303030),
+                              iconSize: 40.0, 
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.mic_off),
+                              onPressed: (){ if (model.isRecording == true)
+                              model.StopRecordingAudio();
+                              setState(() {
+                                model.changeToNextWord();
+                                ins = "then read the word aloud";
+                              });},  
+                              color: Color(0xff123456),
+                              iconSize: 40.0, 
+                            ),
+                          ],
                         ),
-                         IconButton(
-                         icon: Icon(Icons.mic_off),
-                          onPressed: (){ if (model.isRecording == true)
-                           model.StopRecordingAudio();
-                          setState(() {
-                             model.changeToNextWord();
-                            
-                            ins = "then read the word aloud";
-                          });},  
-                          color: Color(0xff123456),
-                          iconSize: 40.0, 
-                        ),
-                       ],
-                       ),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           shape: BoxShape.rectangle,
@@ -173,7 +174,6 @@ Widget captionSection = Container(
 );
 
 Widget navigationSection(BuildContext context) {
-  ChooseModeModel mode = new ChooseModeModel();
   return Container(
     padding: const EdgeInsets.only(left:32, right: 32, top: 50),
     child: Row(
@@ -203,15 +203,15 @@ Widget navigationSection(BuildContext context) {
             children: [
               Container(
                 child: InkWell(
-                  onTap: () {
-                    if (!mode.getIsVolSet()) {
+                  onTap: () async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance(); 
+                    if (!prefs.getBool('loggedIn') ?? false) {
                       Navigator.push(context, PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) => ChooseModeView(),
                       ),);
                     } else { 
                       Navigator.pop(context);
                     }
-                    
                   },  
                   child: Text(
                     'Skip',

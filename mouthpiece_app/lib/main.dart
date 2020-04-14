@@ -70,6 +70,7 @@ class _MouthPieceState extends State<MouthPiece> {
 
 Future<bool> getLoggedIn() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool loggedIn = await prefs.getBool('loggedIn') ?? false;
+  bool loggedIn = prefs.getBool('loggedIn') ?? false;
+  await prefs.setInt('tabIndex', 0);
   return loggedIn;
 }

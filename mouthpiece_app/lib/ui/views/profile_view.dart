@@ -194,8 +194,8 @@ class SignOutButton extends StatelessWidget {
       child: RawMaterialButton(
         onPressed: () async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setBool('loggedIn', false);
-          prefs.setInt('index', 0);
+          await prefs.setBool('loggedIn', false);
+          await prefs.setInt('tabIndex', 0);
           Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => LoginView()), (Route<dynamic> route) => false);
         },
         padding: EdgeInsets.all(15),

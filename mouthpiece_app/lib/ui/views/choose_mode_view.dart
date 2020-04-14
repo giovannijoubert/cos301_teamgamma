@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:mouthpiece_app/ui/views/home_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/viewmodels/choose_mode_model.dart';
 import '../../ui/shared/app_colors.dart';
 import '../../ui/shared/text_styles.dart';
@@ -86,8 +87,12 @@ Widget volumeButtonSection(BuildContext context, model) {
         new RawMaterialButton(
           onPressed: () async {
             model.setVolumeBased();
-            if (!model.getIsVolSet()) {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            if (!model.getIsVolSet())
               model.setIsVolSet(true);
+
+            if (!prefs.getBool('loggedIn')) {
+              prefs.setBool('loggedIn', true);
               Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
             } else { 
               Navigator.pop(context);
@@ -159,9 +164,12 @@ Widget formantButtonSection(BuildContext context, model) {
         new RawMaterialButton(
           onPressed: () async {
             model.setFormantBased();
-            
-            if (model.getIsVolSet()) {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            if (model.getIsVolSet())
               model.setIsVolSet(false);
+
+            if (!prefs.getBool('loggedIn')) {
+              prefs.setBool('loggedIn', true);
               Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
             } else { 
               Navigator.pop(context);
