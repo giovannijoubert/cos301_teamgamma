@@ -72,10 +72,10 @@ class Database
             print_r($exception->getMessage());
         }
     }
-    public function registerUser($username,$fname, $lname,$password, $email, $authkey){
+    public function registerUser($username,$fname, $lname,$password, $email){
         try {
-            $query = $this->connection->prepare("INSERT INTO Users (username, f_name, l_name, password, email, authkey) values (?, ?,?,?,?,?)");
-            $query->execute([$username,$fname, $lname, $password,  $email, $authkey]);
+            $query = $this->connection->prepare("INSERT INTO Users (username, f_name, l_name, password, email) values (?, ?,?,?,?)");
+            $query->execute([$username,$fname, $lname, $password,  $email]);
             $query = null;
             return json_encode(array("status" => "success", "message" => "User Registered."));
         } catch (PDOException $exception){
@@ -86,9 +86,6 @@ class Database
                  }
                  if(strpos($message, 'username')){
                     return json_encode(array("status" => "failure", "message"=>"Username already exists."));
-                 }
-                 if(strpos($message, 'authkey')){
-                    return json_encode(array("status" => "failure", "message"=>"Auth Key already exists."));
                  }
             }
             echo ($exception->getMessage() . "\n");
@@ -101,7 +98,7 @@ class Database
             $query->execute([$username]);
             $user = $query->fetch(PDO::FETCH_ASSOC); 
             if($user ){
-                print_r($user);
+                //login success 
                 return json_encode(array("status"=> "success", "user"=> ($user)));
             }
             else                 
@@ -144,6 +141,33 @@ class Database
                 echo($exception->getMessage());
         }
     }
+    
+    public function logOut($username){
+        try {
+            $user = $this->getUserByUsername($username);
+            if($user === 1)
+                return json_encode(array("status" => "failure")); //user not found
+            $query = $this->connection->prepare("UPDATE Users SET authkey = ? WHERE username = ?");
+            $query->execute(["", $username]);
+            return json_encode(array("status" => "success", "user" => json_decode($this->getUserByUsername($username))->user));
+        } catch(PDOException $exception){
+            echo($exception->getMessage());
+
+        }
+    }
+    public function setAuthkey($username, $authkey){
+        try {
+            $user = $this->getUserByUsername($username);
+            if($user === 1)
+                return json_encode(array("status" => "failure")); //user not found
+            $query = $this->connection->prepare("UPDATE Users SET authkey = ? WHERE username = ?");
+            $query->execute([$authkey, $username]);
+            return json_encode(array("status" => "success", "user" => json_decode($this->getUserByUsername($username))->user));
+        } catch(PDOException $exception){
+            echo($exception->getMessage());
+
+        }
+    }
     public function setPassword($username, $password){
         try {
             $user = $this->getUserByUsername($username);
@@ -163,7 +187,7 @@ class Database
             $query = $this->connection->prepare("SELECT * FROM Users WHERE authkey = ?");
             $query->execute([$authkey]);
             $user = $query->fetch(PDO::FETCH_ASSOC); 
-            print_r($user);
+         //   print_r($user);
             if($user){
                 return json_encode(array("status" => "success", "user" => $user));
             }
@@ -172,52 +196,132 @@ class Database
             echo($exception->getMessage());
         }
     }
-    public function setTheme($username, $theme){
+    public function setTheme($authkey, $theme){
         try {
-            $user = $this->getUserByUsername($username);
+            $user = $this->getUserByAuthKey($authkey);
             if($user === 1)
                 return json_encode(array("status" => "failure"));
             $user = json_decode($user, true);
-            $query = $this->connection->prepare("UPDATE Users SET theme = ? WHERE username = ?");
-            $query->execute([$theme, $username]);
-            return json_encode(array("status" => "success", "user" => json_decode($this->getUserByUsername($username))->user));
-        }
-        catch(PDOException $exception){
-            echo($exception->getMessage());
-        }
-
-    }
-    public function setListeningMode($username, $listeningMode){
-        try {
-            $user = $this->getUserByUsername($username);
-            if($user === 1)
-                return json_encode(array("status" => "failure"));
-            $user = json_decode($user, true);
-            $query = $this->connection->prepare("UPDATE Users SET listening_mode = ? WHERE username = ?");
-            $query->execute([$listeningMode, $username]);
+            $query = $this->connection->prepare("UPDATE Users SET theme = ? WHERE authkey = ?");
+            $query->execute([$theme, $authkey]);
     
-            return json_encode(array("status" => "success", "user" => json_decode($this->getUserByUsername($username))->user));
+            return json_encode(array("status" => "success", "user" => json_decode($this->getUserByAuthKey($authkey))->user));
+        } catch(PDOException $exception){
+            echo($exception->getMessage());
+
+        }
+    }
+    public function setListeningMode($authkey, $listeningMode){
+        try {
+            $user = $this->getUserByAuthKey($authkey);
+            if($user === 1)
+                return json_encode(array("status" => "failure"));
+            $user = json_decode($user, true);
+            $query = $this->connection->prepare("UPDATE Users SET listening_mode = ? WHERE authkey = ?");
+            $query->execute([$listeningMode, $authkey]);
+    
+            return json_encode(array("status" => "success", "user" => json_decode($this->getUserByAuthKey($authkey))->user));
         } catch(PDOException $exception){
             echo($exception->getMessage());
 
         }
     }
     
-    public function setProfileImage($username, $profileImage){
+    public function setProfilePic($authkey, $pp){
         try {
-            $user = $this->getUserByUsername($username);
+            $user = $this->getUserByAuthKey($authkey);
             if($user === 1)
                 return json_encode(array("status" => "failure"));
             $user = json_decode($user, true);
-            $query = $this->connection->prepare("UPDATE Users SET profile_image = ? WHERE username = ?");
-            $query->execute([$profileImage, $username]);
-            return json_encode(array("status" => "success", "user" => json_decode($this->getUserByUsername($username))->user));
-        }
-        catch(PDOException $exception){
+            $query = $this->connection->prepare("UPDATE Users SET profile_image = ? WHERE authkey = ?");
+            $query->execute([$pp, $authkey]);
+    
+            return json_encode(array("status" => "success", "user" => json_decode($this->getUserByAuthKey($authkey))->user));
+        } catch(PDOException $exception){
             echo($exception->getMessage());
-        }
 
+        }
     }
+
+    public function setFName($authkey, $f_name){
+        try {
+            $user = $this->getUserByAuthKey($authkey);
+            if($user === 1)
+                return json_encode(array("status" => "failure"));
+            $user = json_decode($user, true);
+            $query = $this->connection->prepare("UPDATE Users SET f_name = ? WHERE authkey = ?");
+            $query->execute([$f_name, $authkey]);
+    
+            return json_encode(array("status" => "success", "user" => json_decode($this->getUserByAuthKey($authkey))->user));
+        } catch(PDOException $exception){
+            echo($exception->getMessage());
+
+        }
+    }
+
+    public function setLName($authkey, $l_name){
+        try {
+            $user = $this->getUserByAuthKey($authkey);
+            if($user === 1)
+                return json_encode(array("status" => "failure"));
+            $user = json_decode($user, true);
+            $query = $this->connection->prepare("UPDATE Users SET l_name = ? WHERE authkey = ?");
+            $query->execute([$l_name, $authkey]);
+    
+            return json_encode(array("status" => "success", "user" => json_decode($this->getUserByAuthKey($authkey))->user));
+        } catch(PDOException $exception){
+            echo($exception->getMessage());
+
+        }
+    }
+
+    public function setEmail($authkey, $email){
+        try {
+            $user = $this->getUserByAuthKey($authkey);
+            if($user === 1)
+                return json_encode(array("status" => "failure"));
+            $user = json_decode($user, true);
+            $query = $this->connection->prepare("UPDATE Users SET email = ? WHERE authkey = ?");
+            $query->execute([$email, $authkey]);
+    
+            return json_encode(array("status" => "success", "user" => json_decode($this->getUserByAuthKey($authkey))->user));
+        } catch(PDOException $exception){
+            if($exception->errorInfo[1] === 1062 ){
+                    $message = $exception->getMessage();
+                    if(strpos($message, 'email')){
+                        return json_encode(array("status" => "failure", "message"=>"Email already exists."));
+                    }
+            }
+
+            echo($exception->getMessage());
+
+        }
+    }
+
+    public function setUsername($authkey, $username){
+        try {
+            $user = $this->getUserByAuthKey($authkey);
+            if($user === 1)
+                return json_encode(array("status" => "failure"));
+            $user = json_decode($user, true);
+            $query = $this->connection->prepare("UPDATE Users SET username = ? WHERE authkey = ?");
+            $query->execute([$username, $authkey]);
+    
+            return json_encode(array("status" => "success", "user" => json_decode($this->getUserByAuthKey($authkey))->user));
+        } catch(PDOException $exception){
+            if($exception->errorInfo[1] === 1062 ){
+                $message = $exception->getMessage();
+                if(strpos($message, 'username')){
+                    return json_encode(array("status" => "failure", "message"=>"Username already exists."));
+                }
+            }
+
+
+            echo($exception->getMessage());
+
+        }
+    }
+
     public function createMouthpack($user_id, $mouthpack_id,  $user_type, $background_color){
         try {
             $user = $this->getUserById($user_id);
@@ -271,4 +375,4 @@ class Database
 }
 
 $db = Database::getInstance();
-echo(($db->createMouthpack("1234567898","", "", "")) . "\n");
+
