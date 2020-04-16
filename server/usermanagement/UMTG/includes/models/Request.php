@@ -9,7 +9,7 @@ class Request
         if(isset($POST->$data))
             return $POST->$data;
         else
-         //   ResponseObject::error400a();
+            ResponseObject::error400a();
 
          return null;
     }
