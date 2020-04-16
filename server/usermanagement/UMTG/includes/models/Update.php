@@ -41,4 +41,10 @@ class Update
     {
         return Database::getInstance()->setProfilePic($authkey, $pp);
     }
+
+    
+    public static function setCurrentMouthpack($authkey, $mp)
+    {
+        return Database::getInstance()->setCurrentMouthpack($authkey, $mp);
+    }
 }

@@ -24,6 +24,21 @@ class ResponseObject
         echo json_encode($json);
     }
 
+    public static function success200b($x)
+    {
+        $json['status']=200;
+        $json['message']='Successful mouthpack upload';
+        echo json_encode($json);
+    }
+
+    public static function success200d($x)
+    {
+        $json['status']=200;
+        $json['message']='Successful mouthpack removal';
+        echo json_encode($json);
+    }
+
+
     public static function success200a($name, $lname, $theme, $lm, $ak, $mp)
     {
         $json['status']=200;

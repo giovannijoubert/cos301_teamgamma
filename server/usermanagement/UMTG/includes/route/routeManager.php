@@ -36,6 +36,9 @@ class routeManager
             case 'addmouthpack' :
                 require 'includes/controllers/AddMouthpackController.php';
                 break;
+            case 'removemouthpack' :
+                require 'includes/controllers/RemoveMouthpackController.php';
+                break;
             default:
                 ResponseObject::error404();
                 break;

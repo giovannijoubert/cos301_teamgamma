@@ -127,11 +127,10 @@ class Database
             if($uid === 1)
                 return 1;
             $uid = json_decode($uid, true);
-            $uid = $uid['user_id'];
-            echo($uid);
+            $uid = $uid["user"]["user_id"];
             $query = $this->connection->prepare("SELECT * FROM UserMouthpack WHERE user_id = ?");
             $query->execute([$uid]);
-            $mouthpack = $query->fetch(PDO::FETCH_ASSOC); 
+            $mouthpack = $query->fetchAll(PDO::FETCH_ASSOC); 
             if($mouthpack)
                 return json_encode(array("status" => "success", "mouthpack" => ($mouthpack)));
             else return json_encode(array("status" => "failure", "message" => "Mouthpack not found"));
@@ -187,7 +186,7 @@ class Database
             $query = $this->connection->prepare("SELECT * FROM Users WHERE authkey = ?");
             $query->execute([$authkey]);
             $user = $query->fetch(PDO::FETCH_ASSOC); 
-         //   print_r($user);
+          //  print_r($user);
             if($user){
                 return json_encode(array("status" => "success", "user" => $user));
             }
@@ -204,6 +203,22 @@ class Database
             $user = json_decode($user, true);
             $query = $this->connection->prepare("UPDATE Users SET theme = ? WHERE authkey = ?");
             $query->execute([$theme, $authkey]);
+    
+            return json_encode(array("status" => "success", "user" => json_decode($this->getUserByAuthKey($authkey))->user));
+        } catch(PDOException $exception){
+            echo($exception->getMessage());
+
+        }
+    }
+
+    public function setCurrentMouthpack($authkey, $mp){
+        try {
+            $user = $this->getUserByAuthKey($authkey);
+            if($user === 1)
+                return json_encode(array("status" => "failure"));
+            $user = json_decode($user, true);
+            $query = $this->connection->prepare("UPDATE Users SET current_mouthpack = ? WHERE authkey = ?");
+            $query->execute([$mp, $authkey]);
     
             return json_encode(array("status" => "success", "user" => json_decode($this->getUserByAuthKey($authkey))->user));
         } catch(PDOException $exception){
@@ -350,23 +365,31 @@ class Database
         }
     }
     public function checkOwnership($username, $mouthpack_id){
-        $mouthpack = $this->getMouthPackByUsername($username, $mouthpack_id);
-        if(json_decode($mouthpack)->status === "failure"){
+        $mouthpacks = json_decode($this->getMouthPackByUsername($username, $mouthpack_id))->mouthpack;
+        $mouthpack = NULL;
+        for ($i = 0; $i<count($mouthpacks); $i++){
+            if($mouthpacks[$i]->mouthpack_id == $mouthpack_id)
+                $mouthpack = $mouthpacks[$i];
+        }
+        if($mouthpack == NULL){
             return json_encode(array("status" => "failure", "message" => "Mouthpack not found."));
         }
-        $user_id = $this->getUserByUsername($username);
+        $user_id = json_decode($this->getUserByUsername($username))->user->user_id;
         if(!$user_id)
             return json_encode(array("status" => "failure", "message" => "User Not found."));
-        if(json_decode($mouthpack)->user_id === $user_id)
+        if($mouthpack->user_id === $user_id)
             return json_encode(array("status" => "success", "result" => "true"));
         return json_encode(array("status" => "failure", "result" => "false"));
  
     }
-    public function deleteMouthpack($username, $mouthpack_id){
+    public function removeMouthpack($username, $mouthpack_id){
         if(json_decode($this->checkOwnership($username, $mouthpack_id))->status === "success"){
-            $query = $this->connection->prepare("DELETE FROM UserMouthpack WHERE mouthpack_id = ?");
-            $query->execute([$mouthpack_id]);
-            return json_encode(array("status" => "success", "message" => "Mouthpack Deleted."));
+            $query = $this->connection->prepare("DELETE FROM UserMouthpack WHERE (user_id = ?) AND (mouthpack_id = ?)");
+            $user_id = json_decode($this->getUserByUsername($username))->user->user_id;
+            if($query->execute([$user_id, $mouthpack_id]))
+                return json_encode(array("status" => "success", "message" => "Mouthpack Deleted."));
+            else 
+                return json_encode(array("status" => "failure", "message" => "Couldn't make change on database"));
         }
         return json_encode(array("status" => "failure", "message"=>"User does not own mouthpack"));
     }

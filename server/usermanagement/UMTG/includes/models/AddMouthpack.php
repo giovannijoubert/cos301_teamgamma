@@ -7,30 +7,32 @@ class AddMouthpack
 
     public static function getUserViaAuth($authkey)
     {
-        return Database::getUserByAuthKey($authkey);
+        return Database::getInstance()->getUserByAuthKey($authkey);
     }
 
     public static function exists($mp_id, $authkey)
     {
         //get user id
-        $obj = getUserByAuthKey($authkey);
-        $user = $obj->user;
+        $obj = self::getUserViaAuth($authkey);
+        $username = json_decode($obj)->user->username;
 
         //check if mouthpack already exists
-        $obj = Database::checkOwnership($user, $mp_id);
-        if(json_decode($obj)->status === "failure")
+        $obj = Database::getInstance()->checkOwnership($username, $mp_id);
+        if(json_decode($obj)->status == "success")
         {
-            return false;
+           Database::getInstance()->removeMouthpack($username, $mp_id);
+           return true;
         }
-        return true;
+        return false;
     }
 
     public static function addMouth($mp_id, $u_type, $bg_colour, $authkey)
     {
-        //get user id
-        $obj = getUserByAuthKey($authkey);
-        $user = $obj->user;
 
-        return Database::createMouthpack($user,$mp_id,$u_type,$bg_colour);
+        //get user id
+        $obj = self::getUserViaAuth($authkey);
+        $user_id = json_decode($obj)->user->user_id;
+
+        return Database::getInstance()->createMouthpack($user_id,$mp_id,$u_type,$bg_colour);
     }
 }

@@ -10,14 +10,14 @@ class UpdateController extends Controller{
         if(json_decode(Update::getUser(self::getAuthkey()))->status != "success") {
             ResponseObject::error401a();
         } else {
-            if(Controller::getName() != NULL)
-                Update::setFName(self::getAuthkey(), Controller::getName());
+            if(self::getName() != NULL)
+                Update::setFName(self::getAuthkey(), self::getName());
                 
-            if(Controller::getLname() != NULL){}
-                Update::setLName(self::getAuthkey(), Controller::getLName());
+            if(self::getLname() != NULL){}
+                Update::setLName(self::getAuthkey(), self::getLName());
                 
-            if(Controller::getEmail() != NULL){
-                $update = Update::setEmail(self::getAuthkey(), Controller::getEmail());
+            if(self::getEmail() != NULL){
+                $update = Update::setEmail(self::getAuthkey(), self::getEmail());
                 if(json_decode($update)->status == "failure")
                     {
                         echo $update;
@@ -25,8 +25,8 @@ class UpdateController extends Controller{
                     }
             }
              
-            if(Controller::getUsername() != NULL){
-                $update = Update::setUsername(self::getAuthkey(), Controller::getUsername());
+            if(self::getUsername() != NULL){
+                $update = Update::setUsername(self::getAuthkey(), self::getUsername());
                 if(json_decode($update)->status == "failure")
                     {
                         echo $update;
@@ -35,16 +35,20 @@ class UpdateController extends Controller{
             }
               
 
-            if(Controller::getLM() != NULL)
-                Update::setListeningMode(self::getAuthkey(), Controller::getLM());
+            if(self::getLM() != NULL)
+                Update::setListeningMode(self::getAuthkey(), self::getLM());
 
-            if(Controller::getTheme() != NULL)
-                Update::setTheme(self::getAuthkey(), Controller::getTheme());
+            if(self::getTheme() != NULL)
+                Update::setTheme(self::getAuthkey(), self::getTheme());
             
-            if(Controller::getProfilePic() != NULL)
-                Update::setProfilePic(self::getAuthkey(), Controller::getProfilePic());
+            if(self::getProfilePic() != NULL)
+                Update::setProfilePic(self::getAuthkey(), self::getProfilePic());
 
-            echo Update::getUser(self::getAuthkey());
+            if(self::getCurrentMouthpack() != NULL)
+                Update::setCurrentMouthpack(self::getAuthkey(), self::getCurrentMouthpack());
+
+                //output new user profile
+             echo Update::getUser(self::getAuthkey());
         }
     }
 }

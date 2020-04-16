@@ -1,18 +1,22 @@
 <?php
 require_once 'Controller.php';
-require_once 'includes/models/DeleteMouthpack.php';
+require_once 'includes/models/RemoveMouthpack.php';
 require_once 'includes/models/Encryption.php';
 require_once 'includes/models/ResponseObject.php';
 
-class DeleteMouthpackController extends Controller {
+class RemoveMouthPackController extends Controller {
     public static function commitUpdate()
     {
-        if(!DeleteMouthpack::getUserViaAuth(self::getAuthkey()))
-            ResponseObject::error401();
-        else if(self::getMouthpackId()&&self::getAuthkey()&&DeleteMouthpack::exists())
-            ResponseObject::success200b(DeleteMouthpack::deleteMouth(self::getAuthkey(),self::getMouthpackId()));
-        else
-            ResponseObject::error400a();
+       //authenticate via authkey
+        if(json_decode(AddMouthpack::getUserViaAuth(self::getAuthkey()))->status != "success") {
+            ResponseObject::error401a();
+        } else {
+            if(!AddMouthpack::exists(self::getMouthpackId(), self::getAuthkey())){
+                ResponseObject::success200b(AddMouthpack::addMouth(self::getMouthpackId(),self::getUserType(),self::getBGColour(),self::getAuthkey()));
+            }
+            else
+                ResponseObject::error400a();
+        }
     }
 }
-DeleteMouthpackController::commitUpdate();
+RemoveMouthPackController::commitUpdate();

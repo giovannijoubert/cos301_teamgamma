@@ -49,4 +49,13 @@ class Controller
     public static function getBGColour() {
         return Request::post("bgcolour");
     }
+
+    public static function getUserType() {
+        return Request::post("user_type");
+    }
+
+    public static function getCurrentMouthpack() {
+        return Request::post("current_mouthpack");
+    }
+
 }
