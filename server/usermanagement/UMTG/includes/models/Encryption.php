@@ -11,5 +11,14 @@ class Encrypt
         return $encrypted_password;
     }
 
+    public static function decryptpass($password, $hash){
+        if (password_verify($password, $hash)) {
+            return true;
+          } else {
+            return false; // login failed
+        }
+    }
+
+
 }
 ?>

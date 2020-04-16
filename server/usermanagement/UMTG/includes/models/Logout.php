@@ -1,14 +1,10 @@
 <?php
 require 'Database.php';
-class Login
+class Logout
 {
     public static function getUser($username)
     {
         return Database::getInstance()->getUserByUsername($username);
-    }
-    public static function getMouthpacks($username)
-    {
-        return Database::getInstance()->getMouthPackByUsername($username);
     }
     public static function setAuthkey($username, $authkey)
     {

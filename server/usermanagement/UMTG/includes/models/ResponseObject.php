@@ -72,6 +72,13 @@ class ResponseObject
         echo json_encode($json);
     }
 
+    public static function error409a()
+    {
+        $json['status']=409;
+        $json['message']='Email already exists';
+        echo json_encode($json);
+    }
+
     public static function error404a()
     {
         $json['status'] = 404;
