@@ -47,7 +47,7 @@ Widget titleSection = Container(
     'Choose listening mode',
     style: TextStyle(
       fontSize: 24,
-      color: Color(0xff303030),
+      color: Colors.black,
     ),
     textAlign: TextAlign.center,
   ),
@@ -60,7 +60,7 @@ Widget volumeSection = Container(
     textAlign: TextAlign.center,
     style: TextStyle(
       fontSize: 30,
-      color: Color(0xff303030),
+      color: Colors.black,
       fontFamily: 'Arciform',
     ),
   ),
@@ -73,7 +73,7 @@ Widget volumeCaptionSection = Container(
     textAlign: TextAlign.center,
     style: TextStyle(
       fontSize: 16,
-      color: Color(0xff303030),
+      color: Colors.black,
     ),
   ),
 );
@@ -88,8 +88,7 @@ Widget volumeButtonSection(BuildContext context, model) {
           onPressed: () async {
             model.setVolumeBased();
             SharedPreferences prefs = await SharedPreferences.getInstance();
-            if (!model.getIsVolSet())
-              model.setIsVolSet(true);
+         
 
             if (!prefs.getBool('loggedIn')) {
               prefs.setBool('loggedIn', true);
@@ -104,7 +103,7 @@ Widget volumeButtonSection(BuildContext context, model) {
             width: 65,
             child: new Icon(
               Icons.volume_up,
-              color: Color(int.parse(model.getModeIconColorVol())),
+              color: model.getModeIconColorVol(),
               size: 35.0,
             ),
             decoration: BoxDecoration(
@@ -137,7 +136,7 @@ Widget formantSection = Container(
     textAlign: TextAlign.center,
     style: TextStyle(
       fontSize: 30,
-      color: Color(0xff303030),
+      color: Colors.black,
       fontFamily: 'Arciform',
     ),
   ),
@@ -150,7 +149,7 @@ Widget formantCaptionSection = Container(
     textAlign: TextAlign.center,
     style: TextStyle(
       fontSize: 16,
-      color: Color(0xff303030),
+      color: Colors.black,
     ),
   ),
 );
@@ -165,9 +164,7 @@ Widget formantButtonSection(BuildContext context, model) {
           onPressed: () async {
             model.setFormantBased();
             SharedPreferences prefs = await SharedPreferences.getInstance();
-            if (model.getIsVolSet())
-              model.setIsVolSet(false);
-
+            
             if (!prefs.getBool('loggedIn')) {
               prefs.setBool('loggedIn', true);
               Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
@@ -181,7 +178,7 @@ Widget formantButtonSection(BuildContext context, model) {
             width: 65,
             child: new Icon(
               Icons.mic_none,
-              color: Color(int.parse(model.getModeIconColorFor())),
+              color: model.getModeIconColorFor(),
               size: 35.0,
             ),
             decoration: BoxDecoration(

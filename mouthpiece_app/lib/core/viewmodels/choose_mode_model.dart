@@ -1,11 +1,11 @@
 import '../enums/viewstate.dart';
 import '../viewmodels/base_model.dart';
-
+import 'package:flutter/material.dart';
 import '../../locator.dart';
 
 class ChooseModeModel extends BaseModel {
 
-  static bool isSet = false;
+  static bool isSet = true;
 
   void setIsVolSet(bool value) {
     isSet = value;
@@ -15,37 +15,40 @@ class ChooseModeModel extends BaseModel {
     return isSet;
   }
 
-  //String modeIconColorVol = '0xff61A3EE'; // Blue - Black = '0xff303030';
-  //String modeIconColorFor = '0xff303030';
 
   setUserMode(String mode) async {
-    
+    // Duplicate function
   }
 
   void updateUserMode(String newMode) async {
-    // Update in .db ? 
+    // Update in .db  as well
+    if(newMode=="Volume") 
+    setIsVolSet(true);
+    else
+    setIsVolSet(false);
   }
   void setVolumeBased(){
   
     print("Volume chosen!"); 
-    // Add function to set and update in .db this 
-    
+    updateUserMode("Volume");
+
      }
-  String getModeIconColorVol(){
+  Color getModeIconColorVol(){
       if(isSet==true)
-      return "0xff61A3EE";
+      return Colors.blue;
       else
-      return "0xff303030";
+      return Colors.black;
   }
-  String getModeIconColorFor(){
+  Color getModeIconColorFor(){
      if(isSet==false)
-      return "0xff61A3EE";
+      return Colors.blue;
       else
-      return "0xff303030";
+      return Colors.black;
+      
   }
   void setFormantBased(){
   
     print("Formant chosen!"); 
-    // Add function to set and update in .db this 
+    updateUserMode("Formant");
      }
 }

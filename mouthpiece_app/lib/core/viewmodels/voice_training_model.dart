@@ -1,5 +1,7 @@
 
 
+import 'package:flutter/cupertino.dart';
+import 'package:mouthpiece_app/ui/views/home_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../enums/viewstate.dart';
 import '../viewmodels/base_model.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io' as io;
 import '../../locator.dart';
+import 'package:flutter/material.dart';
 
 
 class VoiceTrainingModel extends BaseModel {
@@ -15,17 +18,7 @@ class VoiceTrainingModel extends BaseModel {
   
  
   
-  //io.Directory tempDir;
- // FlutterAudioRecorder _recorder;
-  //final String folderPath = '/TrainingAudio/';
- // final String _prefix = 'Recorder Manager:';
- // String currentPath;
-  String wordColour = "0xff54ff33";
-  //String errorMessage;
-  
-
-
-
+  Color wordColour = Colors.red;
   var arr = ["Apples", "Pears", "Peaches","New fruit"];   // Add words as required
   var index = 0;
 
@@ -106,8 +99,6 @@ String getWord(){
   void RecordAudio() async{
   print("Entered RecordAudio . . .");
       isRecording=true;
-      wordColour="0xff0d72e7";
-       
     record(arr[index]);
   }
 
@@ -116,7 +107,6 @@ String getWord(){
     
     print("Entered StopRecord . . .");
     isRecording=false;
-    wordColour = "0xffe7110d";
     stopRecorder();
   }
 

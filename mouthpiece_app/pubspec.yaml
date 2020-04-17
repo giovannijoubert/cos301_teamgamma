@@ -27,10 +27,11 @@ dependencies:
   page_transition: ^1.1.5
   flare_flutter: ^2.0.1
   flutter_visualizers: ^0.0.2
-  permission_handler: 3.3.0
+  permission_handler: 3.3.0 # Do not change.
+  noise_meter: ^1.0.1
   flutter_audio_recorder:
   file:
-  path_provider:
+  path_provider: 
   http: ^0.12.0+4
   get_it: ^1.0.3
   provider: ^2.0.1
@@ -59,7 +60,12 @@ flutter:
    - assets/images/mouth-packs/
    - assets/images/
    - assets/
-
+   - assets/temp-package/mouth1.png
+   - assets/temp-package/mouth2.png
+   - assets/temp-package/mouth3.png
+   - assets/temp-package/mouth4.png
+   - assets/temp-package/mouth5.png
+   - assets/temp-package/mouth6.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

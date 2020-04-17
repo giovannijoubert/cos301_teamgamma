@@ -46,7 +46,7 @@ class _VoiceTrainingState extends State<VoiceTrainingView> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 55,
-                    color: Color(int.parse(model.wordColour)),
+                    color: model.wordColour,
                     fontFamily: 'Arciform',
                   ),
                 ),
@@ -60,18 +60,18 @@ class _VoiceTrainingState extends State<VoiceTrainingView> {
                       'Press',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Color(0xff303030),
+                        color: Colors.black,
                       ),
                     ),
                     Icon(
                       model.isRecording ? Icons.mic_off : Icons.mic_none,
-                      color: Color(0xff303030),
+                      color: Colors.black,
                     ),
                     Text(
                       '$ins',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Color(0xff303030),
+                        color: Colors.black,
                       ),
                     ),
                   ],
@@ -93,24 +93,36 @@ class _VoiceTrainingState extends State<VoiceTrainingView> {
                               icon: Icon(Icons.mic_none),
                               onPressed:(){ 
                                 if(model.isRecording == false) {
+                                  setState(() {
+                                    model.wordColour=Colors.green;
+                                    ins = "when you are done";
+                                  });
                                   model.RecordAudio();
+
                                 } else {
                                   setState(() {
+                                    
                                     ins = "when you are done";
                                   });
                                 } 
                               },  
-                              color: Color(0xff303030),
+                              color: Colors.black,
                               iconSize: 40.0, 
                             ),
                             IconButton(
                               icon: Icon(Icons.mic_off),
-                              onPressed: (){ if (model.isRecording == true)
+                              onPressed: (){ if (model.isRecording == true){
                               model.StopRecordingAudio();
                               setState(() {
                                 model.changeToNextWord();
+                                model.wordColour=Colors.red;
                                 ins = "then read the word aloud";
-                              });},  
+                              });}
+                               else{
+                                print("Not recording, dont press button.");
+                              }
+                              }
+                             ,  
                               color: Color(0xff123456),
                               iconSize: 40.0, 
                             ),
