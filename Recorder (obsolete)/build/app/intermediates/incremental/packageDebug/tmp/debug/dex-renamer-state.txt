@@ -1,0 +1,4 @@
+#Thu Apr 02 13:19:07 CAT 2020
+base.0=F\:\\University\\Third Year\\COS301\\COS301_ConverterTeam\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
