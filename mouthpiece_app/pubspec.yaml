@@ -31,7 +31,8 @@ dependencies:
   noise_meter: ^1.0.1
   flutter_audio_recorder:
   file:
-  path_provider: 
+  path_provider: ^1.6.5
+  file_utils: ^0.1.4
   http: ^0.12.0+4
   get_it: ^1.0.3
   provider: ^2.0.1
@@ -58,7 +59,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - assets/images/mouth-packs/
-   - assets/images/
+   - assets/images/copyme/
    - assets/
    - assets/temp-package/mouth1.png
    - assets/temp-package/mouth2.png

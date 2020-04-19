@@ -12,11 +12,12 @@ import 'base_view.dart';
 ChooseModeModel model = new ChooseModeModel();
 
 class ChooseModeView extends StatefulWidget {
+  
   @override
-  _ChooseModeState createState() => _ChooseModeState();
+  ChooseModeState createState() => ChooseModeState();
 }
 
-class _ChooseModeState extends State<ChooseModeView> {
+class ChooseModeState extends State<ChooseModeView> {
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +39,7 @@ class _ChooseModeState extends State<ChooseModeView> {
           
         ),
     );
+    
   }
 }
 
@@ -79,6 +81,7 @@ Widget volumeCaptionSection = Container(
 );
 
 Widget volumeButtonSection(BuildContext context, model) {
+  
   return Container(
     padding: const EdgeInsets.only(left:32, right: 32, top: 40),
     child: Row(
@@ -86,10 +89,9 @@ Widget volumeButtonSection(BuildContext context, model) {
       children: [
         new RawMaterialButton(
           onPressed: () async {
-            model.setVolumeBased();
+            model.setVolumeBased();    //setState needs to be called here to update  
+            
             SharedPreferences prefs = await SharedPreferences.getInstance();
-         
-
             if (!prefs.getBool('loggedIn')) {
               prefs.setBool('loggedIn', true);
               Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
@@ -103,7 +105,9 @@ Widget volumeButtonSection(BuildContext context, model) {
             width: 65,
             child: new Icon(
               Icons.volume_up,
-              color: model.getModeIconColorVol(),
+              color:  
+               model.getModeIconColorVol()
+              ,
               size: 35.0,
             ),
             decoration: BoxDecoration(
@@ -163,8 +167,8 @@ Widget formantButtonSection(BuildContext context, model) {
         new RawMaterialButton(
           onPressed: () async {
             model.setFormantBased();
+        
             SharedPreferences prefs = await SharedPreferences.getInstance();
-            
             if (!prefs.getBool('loggedIn')) {
               prefs.setBool('loggedIn', true);
               Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
@@ -178,7 +182,9 @@ Widget formantButtonSection(BuildContext context, model) {
             width: 65,
             child: new Icon(
               Icons.mic_none,
-              color: model.getModeIconColorFor(),
+              color: 
+              model.getModeIconColorFor()
+              ,
               size: 35.0,
             ),
             decoration: BoxDecoration(
