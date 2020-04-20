@@ -41,24 +41,28 @@ class HomeModel extends BaseModel {
   // List<String> getBgColourList() {
   //   return colours;
   // }
-
+  var test;
   static String listeningModeImg;
   static String listeningModeColour;
   static int index = 0;
 
   void setListeningModeImg(String img) {
+    test = "image setted";
     listeningModeImg = img;
   }
 
   String getListeningModeImg() {
+    test = "got image";
     return listeningModeImg;
   }
 
   void setListeningModeColour(String colour) {
+    test = "colour setted";
     listeningModeColour = colour;
   }
 
   String getListeningModeColour() {
+    test = "got colour";
     return listeningModeColour;
   }
 

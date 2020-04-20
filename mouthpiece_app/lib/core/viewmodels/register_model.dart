@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../locator.dart';
 
 class RegisterModel extends BaseModel {
+  var test;
+
   final AuthenticationService _registerAuthenticationService = locator<AuthenticationService>();
 
   String errorMessage;
@@ -20,8 +22,10 @@ class RegisterModel extends BaseModel {
         // SharedPreferences prefs = await SharedPreferences.getInstance();
         // prefs.setBool('registered', true);
         // setState(ViewState.Idle);
+        test = true;
         return true;
       }else{
+        test = false;
           return false;
       }
   }
