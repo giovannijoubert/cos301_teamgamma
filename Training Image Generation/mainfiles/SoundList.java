@@ -48,6 +48,10 @@ public class SoundList {
     //Index 0: Sound
     //Index 1: Example
     public String[] getCurrent() {
+		if (current < sounds.length) {
+            reset();
+        }
+
         String[] set = new String[2];
         set[0] = sounds[current];
         set[1] = examples[current];
