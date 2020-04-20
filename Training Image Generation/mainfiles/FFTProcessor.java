@@ -8,7 +8,6 @@ public class FFTProcessor {
         final int pointNumber = 1024;
         final int halfPointNumber = pointNumber/2;
 
-        double maxSamples;
         double temp;
         double[] absSignals = new double[halfPointNumber];
 
@@ -22,15 +21,8 @@ public class FFTProcessor {
 
         yValues = FFT.fft(complexSignals);
 
-        //maxSamples = 0.0;
-        //int peakPos = 0;
-
         for (int i = 0; i < halfPointNumber; i++) {
             absSignals[i] = Math.sqrt(Math.pow(yValues[i].re(), 2) + Math.pow(yValues[i].im(), 2));
-            /*if (absSignals[i] > pointNumber) {
-                maxSamples = absSignals[i];
-                peakPos = i;
-            }*/
         }
 
         return absSignals;

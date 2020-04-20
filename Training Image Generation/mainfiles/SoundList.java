@@ -34,7 +34,7 @@ public class SoundList {
             "Cheese", "Jam", "Shell"
         };
 
-    private int current = 0;
+    private static int current = 0;
 
     public SoundList() {
 
@@ -48,7 +48,7 @@ public class SoundList {
     //Index 0: Sound
     //Index 1: Example
     public String[] getCurrent() {
-		if (current < sounds.length) {
+        if (current >= sounds.length) {
             reset();
         }
 

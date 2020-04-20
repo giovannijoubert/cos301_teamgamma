@@ -12,11 +12,11 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.LinkedList;
 
 public class Recorder {
@@ -52,6 +52,8 @@ public class Recorder {
 
             recorder.startRecording();
             isRecording = true;
+
+            Log.i("Training Recorder", "Recorder started!");
 
             recorderThread = new Thread(
                 new Runnable() {
@@ -114,19 +116,15 @@ public class Recorder {
             if (read > 0) {
                 normalizedSignal = fftProcessor.calculateFFT(data);
                 dataArray.add(normalizedSignal);
-                Log.i("Normalized added:", "Added");
             }
         }
     }
 
     private void createImage() {
-        Log.i("Arrays: ",Integer.toString(dataArray.size()) + '\t' + bufferSize);
-
         Bitmap graphImage = Bitmap.createBitmap(dataArray.size(), getMaxArray(), Bitmap.Config.RGB_565);
         for (int i = 0; i < dataArray.size(); i++) {
             double[] tempData = dataArray.get(i);
             for (int j = 0; j < tempData.length; j++) {
-                Log.i("Arrays Value: ",Integer.toString((int)(tempData[j] * 10000)) + '\t' + Double.toString(tempData[j] * 10000));
                 int alpha = 255;
                 int red = Math.abs((int)(tempData[j] * 10000));
             int green = Math.abs((int)(tempData[j] * 100));
@@ -159,7 +157,9 @@ public class Recorder {
             Log.i("Path: " + Environment.getExternalStorageDirectory() + OUTPUT_DIR, word + ".png");
             FileOutputStream outputFileStream = new FileOutputStream(outputFile);
 
-            graphImage.compress(Bitmap.CompressFormat.PNG, 100, outputFileStream);
+            /* Resize */
+            Bitmap resized = Bitmap.createScaledBitmap(graphImage, 500, 500, false);
+            resized.compress(Bitmap.CompressFormat.PNG, 100, outputFileStream);
 
             if (outputFileStream != null) {
                 outputFileStream.flush();
@@ -171,7 +171,7 @@ public class Recorder {
 
             */
 
-            deleteFile();
+            //deleteFile();
 
         } catch (IOException e) {
             e.printStackTrace();

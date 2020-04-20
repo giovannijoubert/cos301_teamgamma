@@ -18,14 +18,6 @@ public class Complex {
         return re + " + " + im + "i";
     }
 
-    public double abs() {
-        return Math.hypot(re, im);
-    }
-
-    public double phase() {
-        return Math.atan2(im, re);
-    }
-
     public Complex plus(Complex b) {
         Complex a = this;             // invoking object
         double real = a.re + b.re;
@@ -55,45 +47,12 @@ public class Complex {
         return new Complex(re, -im);
     }
 
-    public Complex reciprocal() {
-        double scale = re * re + im * im;
-        return new Complex(re / scale, -im / scale);
-    }
-
     public double re() {
         return re;
     }
 
     public double im() {
         return im;
-    }
-
-    public Complex divides(Complex b) {
-        Complex a = this;
-        return a.times(b.reciprocal());
-    }
-
-    public Complex exp() {
-        return new Complex(Math.exp(re) * Math.cos(im), Math.exp(re) * Math.sin(im));
-    }
-
-    public Complex sin() {
-        return new Complex(Math.sin(re) * Math.cosh(im), Math.cos(re) * Math.sinh(im));
-    }
-
-    public Complex cos() {
-        return new Complex(Math.cos(re) * Math.cosh(im), -Math.sin(re) * Math.sinh(im));
-    }
-
-    public Complex tan() {
-        return sin().divides(cos());
-    }
-
-    public static Complex plus(Complex a, Complex b) {
-        double real = a.re + b.re;
-        double imag = a.im + b.im;
-        Complex sum = new Complex(real, imag);
-        return sum;
     }
 
     public boolean equals(Object x) {
