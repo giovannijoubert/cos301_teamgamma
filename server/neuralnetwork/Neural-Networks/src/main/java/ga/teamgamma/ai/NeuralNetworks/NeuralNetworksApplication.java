@@ -27,13 +27,14 @@ import javax.annotation.PostConstruct;
 @RestController
 public class NeuralNetworksApplication
 {
+    private static boolean pretrain = true;
     public static void main(String[] args)
     {
         SpringApplication.run(NeuralNetworksApplication.class, args);
 
         System.out.println("Lenet Model");
         Training t = new Training();
-        t.train(true, (new NeuralNetwork()).lenetModel());
+        t.train(pretrain, (new NeuralNetwork()).lenetModel());
 
         //System.out.println("Alexnet Model");
         //Training t2 = new Training();
@@ -49,7 +50,9 @@ public class NeuralNetworksApplication
     @PostConstruct
     public void init()
     {
-        deleteOldModel();
+        if(pretrain){
+            deleteOldModel();
+        }
         TimeZone.setDefault(TimeZone.getTimeZone("Africa/Johannesburg"));
     }
 

@@ -95,23 +95,34 @@ public class Training
         /**Configure where the network information (gradients, score vs. time etc) is to be stored. Here: store in memory*/
         statsStorage = new InMemoryStatsStorage(); //Alternative: new FileStatsStorage(File), for saving and loading later.
     }
+
+    private void purgeDirectory(File dir){
+        for (File file: dir.listFiles()){
+            if(file.isDirectory()) purgeDirectory(file);
+            else file.delete();
+        }
+    }
+
     /**
      * @param pretrain  - boolean, to determine whether there is training or pretraining.
      * @param model     - the model to train or pretrain.
      * @return a trained or pretrained neural network model(A MultilayerNetwork java object)
      */
-
     public MultiLayerNetwork train(boolean pretrain, MultiLayerNetwork model)
     {
-        try
-        {
-            return train(model, getTrainingDataSetIterator(pretrain));
+        if((!pretrain && new File("//data//training//00//").listFiles().length >= 10) || (pretrain && new File("//data//pretraining//00//").listFiles().length >= 10)){
+            System.out.println("Enough data...");
+            try
+            {
+                return train(model, getTrainingDataSetIterator(pretrain), pretrain);
+            }
+            catch(Exception e)
+            {
+                System.err.println("Error Training: "+e.getMessage());
+            }
+        }else{
+            System.out.println("Not enough training data...");
         }
-        catch(Exception e)
-        {
-            System.err.println("Error Training: "+e.getMessage());
-        }
-
         return null;
     }
     /**
@@ -126,6 +137,7 @@ public class Training
                                 new FlipImageTransform(new Random(123))
                             });
     }
+
     /**
      * @param pretrain - boolean, to determine whether the pretraining or training dataset is to be used.
      * @return a DatasetIterator that contains the training or pretraining data.
@@ -195,11 +207,11 @@ public class Training
      * @param data - DataSetIterator holding the training data.
      * @return a trained model(MultiLayerNetwork Java Object).
      */
-    private MultiLayerNetwork train(MultiLayerNetwork model, DataSetIterator data) throws IOException
+    private MultiLayerNetwork train(MultiLayerNetwork model, DataSetIterator data,boolean pretrain) throws IOException
     {
         //DataSetIterator mnistTest = new MnistDataSetIterator(10, 50, true, true, true, RNG_SEED);
         //data = mnistTest;
-        model.init();
+
 
         /* Score
          * -----------------------------------------------------------
@@ -234,28 +246,27 @@ public class Training
         if(new File("//model//NeuralNetworkConfiguration.zip").exists())
         {
             model = ModelSerializer.restoreMultiLayerNetwork(new File("//model//NeuralNetworkConfiguration.zip"));
+        }else{
+            model.init();
         }
-        else
+        Evaluation eval;
+        long t1 = System.currentTimeMillis();
+        for (int i = 0; i < NUM_EPOCHS; i++)
         {
-            Evaluation eval;
-            long t1 = System.currentTimeMillis();
-            for (int i = 0; i < NUM_EPOCHS; i++)
-            {
-                model.fit(data);
-                //eval = model.evaluate(data);
-                eval = model.evaluate(testIter);
-                System.out.println(eval.stats(true));
-            }
-            long t2 = System.currentTimeMillis();
-            long time = t2 - t1;
-            ModelSerializer
-                    .writeModel(
-                            model,
-                            new File( "//model//NeuralNetworkConfiguration.zip"),
-                            true
-                    );
-            System.out.println("Done training, took: " + time + "ms");
+            model.fit(data);
+            //eval = model.evaluate(data);
+            eval = model.evaluate(testIter);
+            System.out.println(eval.stats(true));
         }
+        long t2 = System.currentTimeMillis();
+        long time = t2 - t1;
+        ModelSerializer
+                .writeModel(
+                        model,
+                        new File( "//model//NeuralNetworkConfiguration.zip"),
+                        true
+                );
+        System.out.println("Done training, took: " + time + "ms");
 
         /*
         File imageFile = new File("C:\Users\..."); //Image location
@@ -279,6 +290,12 @@ public class Training
         index++;
         System.out.println(index);
         */
+        if(!pretrain){
+            System.out.println("Purging directory");
+            purgeDirectory( new File("//data//training//"));
+            System.out.println("Done Purging...");
+        }
+
         return model;
     }
 }
