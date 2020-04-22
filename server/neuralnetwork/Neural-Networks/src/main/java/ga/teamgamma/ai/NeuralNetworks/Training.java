@@ -110,7 +110,7 @@ public class Training
      */
     public MultiLayerNetwork train(boolean pretrain, MultiLayerNetwork model)
     {
-        if((!pretrain && new File("//data//training//00//").listFiles().length >= 10) || (pretrain && new File("//data//pretraining//00//").listFiles().length >= 10)){
+        if((!pretrain && new File("//data//training//00//").listFiles().length >= 10) || (pretrain /*&& new File("//data//pretraining//00//").listFiles().length >= 10)*/)){
             System.out.println("Enough data...");
             try
             {
@@ -144,6 +144,9 @@ public class Training
      */
     private DataSetIterator getTrainingDataSetIterator(boolean pretrain) throws IOException
     {
+
+        if(true) return new MnistDataSetIterator(10, 50, true, true, true, RNG_SEED);
+
         File parentPath = new File("//data"
                                  /*
                                  System.getProperty("user.dir"),
@@ -209,10 +212,6 @@ public class Training
      */
     private MultiLayerNetwork train(MultiLayerNetwork model, DataSetIterator data,boolean pretrain) throws IOException
     {
-        //DataSetIterator mnistTest = new MnistDataSetIterator(10, 50, true, true, true, RNG_SEED);
-        //data = mnistTest;
-
-
         /* Score
          * -----------------------------------------------------------
          * This collects information, such as the loss, from the neural network and outputs them after a certain number of iterations.
