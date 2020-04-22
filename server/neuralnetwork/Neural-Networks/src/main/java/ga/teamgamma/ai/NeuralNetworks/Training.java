@@ -289,7 +289,9 @@ public class Training
         index++;
         System.out.println(index);
         */
-        if(!pretrain){
+        
+        if(!pretrain)
+        {
             System.out.println("Purging directory");
             purgeDirectory( new File("//data//training//"));
             System.out.println("Done Purging...");

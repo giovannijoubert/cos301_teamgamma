@@ -11,10 +11,8 @@ class NeuralNetworkTest
         assertNotNull(new NeuralNetwork().exportModel());
     }
 
-    @Test
-    void alexnetModel() {
-        assertNotNull(new NeuralNetwork().alexnetModel());
-    }
+    // @Test
+    // void alexnetModel() { assertNotNull(new NeuralNetwork().alexnetModel()); }
 
     @Test
     void lenetModel() {
