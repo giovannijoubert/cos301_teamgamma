@@ -17,16 +17,18 @@ import 'package:flutter/services.dart';
 class VoiceTrainingModel extends BaseModel {
 
   
- 
+  var test;
   
   Color wordColour = Colors.red;
   var arr = ["Apples", "Pears", "Peaches","New fruit"];   // Add words as required
   var index = 0;
 
   bool changeMode(bool mode) {
+    test = !mode;
     return !mode;
   }
 String getWord(){
+  test = arr[index];
   return arr[index];
 }
   String changeToNextWord(){

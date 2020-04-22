@@ -7,6 +7,7 @@ import '../models/mouthpack.dart';
 import 'base_model.dart';
 
 class HomeModel extends BaseModel {
+  var test;
   // final List<String> images = [];
   // // final List<String> colours = [];
   
@@ -47,18 +48,22 @@ class HomeModel extends BaseModel {
   static int index = 0;
 
   void setListeningModeImg(String img) {
+    test = "image setted";
     listeningModeImg = img;
   }
 
   String getListeningModeImg() {
+    test = "got image";
     return listeningModeImg;
   }
 
   void setListeningModeColour(String colour) {
+    test = "colour setted";
     listeningModeColour = colour;
   }
 
   String getListeningModeColour() {
+    test = "got colour";
     return listeningModeColour;
   }
 

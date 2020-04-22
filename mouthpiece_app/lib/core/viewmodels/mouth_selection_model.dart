@@ -4,6 +4,7 @@ import '../viewmodels/base_model.dart';
 import '../../locator.dart';
 
 class MouthSelectionModel extends BaseModel {
+  var test;
   static final List<String> images = [];
   static final List<bool> selected = List.generate(25, (i) => false);
   static final List<String> colours = List.generate(25, (i) => '0xFF303030');

@@ -8,23 +8,25 @@ import '../../locator.dart';
 
 
 class ChooseModeModel extends BaseModel  {
-  
+  var test;
 //bool isSet= getisVolSet();
  static Color volumeMode = Colors.black;
  static Color formantMode = Colors.black;
 
   void setIsVolSet(bool value) async{
-     SharedPreferences sp = await SharedPreferences.getInstance();
+    SharedPreferences sp = await SharedPreferences.getInstance();
     sp.setBool('isVolSet', value);
     if(value){
-    volumeMode=Colors.blue;
-    formantMode=Colors.black;
+      test = "vol set";
+      volumeMode=Colors.blue;
+      formantMode=Colors.black;
     }
     else
-{
-    volumeMode=Colors.black;
-    formantMode=Colors.blue;
-}
+    {
+      test = "vol not set";
+      volumeMode=Colors.black;
+      formantMode=Colors.blue;
+    }
     //isSet = value;
     
   }
@@ -33,6 +35,7 @@ class ChooseModeModel extends BaseModel  {
    SharedPreferences sp= await SharedPreferences.getInstance();
   bool isVSet=sp.getBool('isVolSet');
   print("Value from isVolset in sharedPref is :"+isVSet.toString());
+  test = isVSet;
   return isVSet;
   }
 
@@ -41,18 +44,24 @@ class ChooseModeModel extends BaseModel  {
 
   void updateUserMode(String newMode) async {
     // Update in .db  as well
-    if(newMode=="Volume") 
-    setIsVolSet(true);
-    else
-    setIsVolSet(false);
+    if(newMode=="Volume") {
+      test = "volume string";
+      setIsVolSet(true);
+    }
+    else 
+    {
+      test = "no volume string";
+      setIsVolSet(false);
+    }
     
   }
 
   Color getModeIconColorVol() {
-      
+      test = volumeMode;
       return volumeMode;
   }
   Color getModeIconColorFor(){
+      test = formantMode;
       return formantMode;
   }
 
