@@ -11,23 +11,22 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io' as io;
 import '../../locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 
 class VoiceTrainingModel extends BaseModel {
 
   
-  var test;
+ 
   
   Color wordColour = Colors.red;
   var arr = ["Apples", "Pears", "Peaches","New fruit"];   // Add words as required
   var index = 0;
 
   bool changeMode(bool mode) {
-    test = !mode;
     return !mode;
   }
 String getWord(){
-  test = arr[index];
   return arr[index];
 }
   String changeToNextWord(){
@@ -123,10 +122,10 @@ Future<String> record(String word) async {
          
          if(Microphonepermission && StoragePermission){
 
-          print("Entered record . . .");
+         // print("Entered record . . .");
       if (await FlutterAudioRecorder.hasPermissions) {
 
-      print("Permission granted");
+      //print("Permission granted");
       tempDir = await getApplicationDocumentsDirectory();
       String tempPath = tempDir.path + folderPath + word + i.toString();  // temp solution of file naming 
       //until Deleting of files in folder is implemented by converter team.

@@ -1,3 +1,4 @@
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:mouthpiece_app/ui/views/home_view.dart';
@@ -8,14 +9,13 @@ import '../../core/viewmodels/login_model.dart';
 import '../../ui/shared/app_colors.dart';
 import '../../ui/shared/text_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'base_view.dart';
- 
+
 class LoginView extends StatefulWidget {
   @override
   _LoginViewState createState() => _LoginViewState();
 }
- 
+
 class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 

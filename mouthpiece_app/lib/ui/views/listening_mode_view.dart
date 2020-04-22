@@ -56,13 +56,15 @@ class ActivateListeningMode extends StatefulWidget{
 
 class ActivateListeningModeState extends State<ActivateListeningMode> {
  // model is from choose mode view
- // String imgSrc = homeModel.getListeningModeImg() ;//= homeModel.getListeningModeImg() but not using for now;
+ // String imgSrc = homeModel.getListeningModeImg() ;//= homeModel.getListeningModeImg() fl
    String colour;
    int i=1;
 //-------------
   int _currIndex = 0;
   int test = homeModel.getIndex(); // Match below
-  String mouthIndex ="/data/user/0/com.example.mouthpiece_app/app_flutter/defaultMouthpacks/2-1.png";
+  String mouthIndex =homeModel.getListeningModeImg();//"/data/user/0/com.example.mouthpiece_app/app_flutter/defaultMouthpacks/2-1.png";
+  // Above code will give error occasionally about cannot open file path assets/images .. because path is an asset not from full
+  // directory path as required. 
   bool _isRecording = false;
   StreamSubscription<NoiseReading> _noiseSubscription;
   NoiseMeter _noiseMeter;
@@ -121,7 +123,9 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
   //choose mouth with decibel input
     int mouthImg = chooseMouth(noiseReading.db.round());
     
-    // Randomise value of test to check if different mouths come up.
+    // For now Randomise value of test to check if different mouths come up.
+    // it will be changed to selected mouthpack once mouthview/homeModel selection implements 
+    // the new method of accessing images.
     if(test>=5 || test==0)
     {
       final _random = new Random();
@@ -152,8 +156,8 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
          
          if(Microphonepermission && StoragePermission)
          {
-           print("Permission has been granted in ListeningMode");
-           print(mouthIndex);
+          // print("Permission has been granted in ListeningMode");
+          // print(mouthIndex);
          }
   } catch(err)
   {
@@ -169,11 +173,11 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
       //String mouthIndex ="/data/com.example.mouthpiece_app/app_flutter/defaultMouthpacks/2-1.png" ;
     //HomeModel homeModel = new HomeModel();
     //imgSrc = homeModel.getListeningModeImg();  // initial
-    print("in first build: "+mouthIndex);
+   // print("in first build: "+mouthIndex);
       var permission = checkPermission();
      if(!_isRecording){
         {
-           print("Recording not on so start");
+          // print("Recording not on so start");
             setState(() {
                             _currIndex = 1;
                           });
@@ -213,9 +217,9 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
       child: Container (
         margin: EdgeInsets.only(top: 30, left: 20),
         child: GestureDetector(
-          child: Icon(Icons.close, size: 35.0, color: (colour == '0xFFFFFFFF') ? Colors.black : Colors.red),
+          child: Icon(Icons.close, size: 35.0, color: (colour == '0xFFFFFFFF') ? Colors.black : Colors.red), // red because BG
           onTap: () { 
-            print("About to exit Listening mode");
+           // print("About to exit Listening mode");
             _isVisible = false;
             //_isRecording=false; <- Memory leak setState called after
                            try{                   
