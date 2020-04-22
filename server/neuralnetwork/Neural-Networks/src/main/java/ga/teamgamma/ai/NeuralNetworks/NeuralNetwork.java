@@ -47,9 +47,9 @@ public class NeuralNetwork
 	 * 			- Typically important in first layer, but it plays less of a role in fully connected layers towards the end.
 	 * 			- For images, it may actually be better not to use a bias at all.
 	 * 2.) Padding
-	 * 				- et to fit
+	 * 			- The amount of pixels added to an image when it is being processed by the kernel of a CNN
 	 * 3.) Stride
-	 * 				-
+	 * 			- Step of the convolution operation
 	 * 4.) Number of nodes
 	 * 			- Start with a minimum number of hidden nodes, increase the hidden nodes number until you get a good performance.
 	 * 			- Too few nodes 	-> high error as the predictive factors might be too complex for a small number of nodes to capture.
@@ -67,7 +67,7 @@ public class NeuralNetwork
 									.Builder(
 												kernel,			//kernel size
 												stride,			//stride
-												pad				//padding		-
+												pad				//padding
 											)
 									.name(name)					//name of the layer
 									.nIn(in)					//number of inputs to the layer (input size)
@@ -163,7 +163,7 @@ public class NeuralNetwork
 				.layer(
 						convInit(
 								"cnn1",
-								channels,									//channels - 1 because grey scale.
+								channels,								//channels - 1 because grey scale.
 							96,									//filters - 96 (of size 11x11) WHY!!!!
 								new int[]{11, 11},						//kernel - 11x11 window to capture objects
 								new int[]{4, 4},						//stride - 4 to reduce size
@@ -265,7 +265,7 @@ public class NeuralNetwork
 								"ffn2",
 								4096,							//output size/number of outputs of the layers
 								bias,								//bias - 1
-								dropOut,							//drop out -
+								dropOut,							//drop out - kills off neurons to accomplish local optimums
 								new NormalDistribution(
 										0,
 										0.005
@@ -297,7 +297,8 @@ public class NeuralNetwork
 		return new MultiLayerNetwork(conf);
 	}
 
-	/** lenet Model function, this returns a newly constructed neural network that follows the lenet model,
+	/**
+     * lenet Model function, this returns a newly constructed neural network that follows the lenet model,
 	 * this model is configured to train and run 100x100 spectrogram
 	 * @return multi layer network that follows the lenet model
 	 */
