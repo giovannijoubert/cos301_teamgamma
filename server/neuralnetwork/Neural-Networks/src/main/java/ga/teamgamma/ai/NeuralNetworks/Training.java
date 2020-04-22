@@ -63,26 +63,25 @@ public class Training
     /**
      * TRAINING
      * */
-    private int numRows     = 100,
-                numCols     = 100,
-                outputNum   = 12,
-                numSamples  = 36,//3 samples per formant, 12 formants
+    private int numRows     = 100, //Height
+                numCols     = 100, //Width
+                outputNum   = 12, //output labels
+                numSamples  = 36, //3 samples per formant, 12 formants
                 batchSize   = 100;
 
     /**
      * PRE-TRAINING
      */
 
-    private int NUM_ROWS    = 100,
-                NUM_COLUMNS = 100,
-                OUTPUT_NUMS = 12,//number of output classes
-                BATCH_SIZE  = 10,//batch size for each epoch
-                RNG_SEED    = 123,
-                NUM_EPOCHS  = 10;//number of epochs to perform
+    private int NUM_ROWS    = 100, //Height
+                NUM_COLUMNS = 100, //Height
+                OUTPUT_NUMS = 12, //number of output classes
+                BATCH_SIZE  = 10, //batch size for each epoch
+                RNG_SEED    = 123, //random seed
+                NUM_EPOCHS  = 10; //number of epochs to perform
 
-    private  double RATE = 0.0015;//learning rate
+    private  double RATE = 0.0015; //learning rate
 
-    //DataSetIterator trainingIter;
     DataSetIterator testIter;
 
     private Random rng = new Random(RNG_SEED);
@@ -96,8 +95,10 @@ public class Training
         statsStorage = new InMemoryStatsStorage(); //Alternative: new FileStatsStorage(File), for saving and loading later.
     }
 
-    private void purgeDirectory(File dir){
-        for (File file: dir.listFiles()){
+    private void purgeDirectory(File dir)
+    {
+        for (File file: dir.listFiles())
+        {
             if(file.isDirectory()) purgeDirectory(file);
             else file.delete();
         }
@@ -114,7 +115,7 @@ public class Training
             System.out.println("Enough data...");
             try
             {
-                return train(model, getTrainingDataSetIterator(pretrain), pretrain);
+                return train(model, getTrainingDataSetIterator(pretrain, true), pretrain, true);
             }
             catch(Exception e)
             {
@@ -142,10 +143,10 @@ public class Training
      * @param pretrain - boolean, to determine whether the pretraining or training dataset is to be used.
      * @return a DatasetIterator that contains the training or pretraining data.
      */
-    private DataSetIterator getTrainingDataSetIterator(boolean pretrain) throws IOException
+    private DataSetIterator getTrainingDataSetIterator(boolean pretrain, boolean tf) throws IOException
     {
 
-        if(true) return new MnistDataSetIterator(10, 50, true, true, true, RNG_SEED);
+        if(tf) return new MnistDataSetIterator(10, 50, true, true, true, RNG_SEED);
 
         File parentPath = new File("//data"
                                  /*
@@ -156,7 +157,6 @@ public class Training
         );
 
         ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
-        //FileSplit trainData = new FileSplit(parentPath, NativeImageLoader.ALLOWED_FORMATS, rng);
         FileSplit fileSplit = new FileSplit(parentPath, NativeImageLoader.ALLOWED_FORMATS, rng);
 
         int numExamples = ((int) fileSplit.length());
@@ -210,7 +210,7 @@ public class Training
      * @param data - DataSetIterator holding the training data.
      * @return a trained model(MultiLayerNetwork Java Object).
      */
-    private MultiLayerNetwork train(MultiLayerNetwork model, DataSetIterator data,boolean pretrain) throws IOException
+    private MultiLayerNetwork train(MultiLayerNetwork model, DataSetIterator data, boolean pretrain, boolean tf) throws IOException
     {
         /* Score
          * -----------------------------------------------------------
@@ -236,7 +236,7 @@ public class Training
         /*Attach the StatsStorage instance to the UI: this allows the contents of the StatsStorage to be visualized*/
         uiServer.attach(statsStorage);
 
-       /* File parentPath = new File(
+        /*File parentPath = new File(
                 System.getProperty("user.dir"),
                 "\\src\\main\\java\\ga\\teamgammma\\ai" + (pretrain ? "\\pretraining\\" : "\\training\\")
         );*/
@@ -245,20 +245,34 @@ public class Training
         if(new File("//model//NeuralNetworkConfiguration.zip").exists())
         {
             model = ModelSerializer.restoreMultiLayerNetwork(new File("//model//NeuralNetworkConfiguration.zip"));
-        }else{
+        }
+        else
+        {
             model.init();
         }
+
         Evaluation eval;
         long t1 = System.currentTimeMillis();
+
         for (int i = 0; i < NUM_EPOCHS; i++)
         {
             model.fit(data);
-            eval = model.evaluate(data);
-            //eval = model.evaluate(testIter);
+
+            if(tf)
+            {
+                eval = model.evaluate(data);
+            }
+            else
+            {
+                eval = model.evaluate(testIter);
+            }
+
             System.out.println(eval.stats(true));
         }
+
         long t2 = System.currentTimeMillis();
         long time = t2 - t1;
+
         ModelSerializer
                 .writeModel(
                         model,
@@ -289,7 +303,7 @@ public class Training
         index++;
         System.out.println(index);
         */
-        
+
         if(!pretrain)
         {
             System.out.println("Purging directory");
