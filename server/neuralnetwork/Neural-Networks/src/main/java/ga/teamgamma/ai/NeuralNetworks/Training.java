@@ -109,7 +109,7 @@ public class Training
      * @param model     - the model to train or pretrain.
      * @return a trained or pretrained neural network model(A MultilayerNetwork java object)
      */
-    public MultiLayerNetwork train(boolean pretrain, MultiLayerNetwork model)
+    public MultiLayerNetwork train(boolean pretrain, MultiLayerNetwork model, boolean tf)
     {
         if((!pretrain && new File("//data//training//00//").listFiles().length >= 10) || (pretrain /*&& new File("//data//pretraining//00//").listFiles().length >= 10)*/)){
             System.out.println("Enough data...");
