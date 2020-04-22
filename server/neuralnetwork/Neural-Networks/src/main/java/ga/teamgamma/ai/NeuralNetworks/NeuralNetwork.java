@@ -26,16 +26,21 @@ import java.util.*;
 public class NeuralNetwork
 {
 	int channels = 1;
-	static long seed = 123;
-	static Random rand = new Random(seed);
-	int height = /*100*/28;
-	int width = /*100*/28;
-	int numLabels = /*12*/10;
+    //int channels = 3;
+	int height = 28;
+	int width = 28;
+	int numLabels = 10;
+    //int height = 100;
+    //int width = 100;
+    //int numLabels = 12;
+    static long seed = 123;
+    static Random rand = new Random(seed);
 
 	/** Export model function, this will export the latest neural network
 	 * @return file that is a zip which contains the neural network
 	 */
-	public static File exportModel() {
+	public static File exportModel()
+    {
 		return new File("//model//NeuralNetworkConfiguration.zip");
 	}
 
@@ -320,7 +325,8 @@ public class NeuralNetwork
 						.nOut(numLabels)
 						.activation(Activation.SOFTMAX)
 						.build())
-				.setInputType(/*InputType.convolutional(height, width, channels*/InputType.convolutionalFlat(height,width,channels))
+				.setInputType(InputType.convolutionalFlat(height,width,channels))
+                //.setInputType(InputType.convolutional(height, width, channels))
 				.build();
 
 		return new MultiLayerNetwork(conf);

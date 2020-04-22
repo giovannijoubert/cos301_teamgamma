@@ -50,9 +50,11 @@ public class NeuralNetworksApplication
     @PostConstruct
     public void init()
     {
-        if(pretrain){
+        if(pretrain)
+        {
             deleteOldModel();
         }
+
         TimeZone.setDefault(TimeZone.getTimeZone("Africa/Johannesburg"));
     }
 

@@ -253,8 +253,8 @@ public class Training
         for (int i = 0; i < NUM_EPOCHS; i++)
         {
             model.fit(data);
-            //eval = model.evaluate(data);
-            eval = model.evaluate(/*testIter*/data);
+            eval = model.evaluate(data);
+            //eval = model.evaluate(testIter);
             System.out.println(eval.stats(true));
         }
         long t2 = System.currentTimeMillis();
