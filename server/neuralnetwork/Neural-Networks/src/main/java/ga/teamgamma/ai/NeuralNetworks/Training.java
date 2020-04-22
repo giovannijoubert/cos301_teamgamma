@@ -254,7 +254,7 @@ public class Training
         {
             model.fit(data);
             //eval = model.evaluate(data);
-            eval = model.evaluate(testIter);
+            eval = model.evaluate(/*testIter*/data);
             System.out.println(eval.stats(true));
         }
         long t2 = System.currentTimeMillis();

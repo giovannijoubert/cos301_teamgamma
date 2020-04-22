@@ -28,8 +28,8 @@ public class NeuralNetwork
 	int channels = 1;
 	static long seed = 123;
 	static Random rand = new Random(seed);
-	int height = 100;
-	int width = 100;
+	int height = /*100*/28;
+	int width = /*100*/28;
 	int numLabels = /*12*/10;
 
 	/** Export model function, this will export the latest neural network
@@ -320,7 +320,7 @@ public class NeuralNetwork
 						.nOut(numLabels)
 						.activation(Activation.SOFTMAX)
 						.build())
-				.setInputType(InputType.convolutional(height, width, channels))
+				.setInputType(/*InputType.convolutional(height, width, channels*/InputType.convolutionalFlat(height,width,channels))
 				.build();
 
 		return new MultiLayerNetwork(conf);
