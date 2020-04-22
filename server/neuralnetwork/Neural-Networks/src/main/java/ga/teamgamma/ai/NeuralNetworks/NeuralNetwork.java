@@ -5,6 +5,7 @@
  */
 package ga.teamgamma.ai.NeuralNetworks;
 
+import io.vertx.core.eventbus.impl.codecs.BooleanMessageCodec;
 import org.deeplearning4j.nn.conf.GradientNormalization;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
@@ -26,13 +27,9 @@ import java.util.*;
 public class NeuralNetwork
 {
 	int channels = 1;
-    //int channels = 3;
 	int height = 28;
 	int width = 28;
 	int numLabels = 10;
-    //int height = 100;
-    //int width = 100;
-    //int numLabels = 12;
     static long seed = 123;
     static Random rand = new Random(seed);
 
@@ -307,28 +304,61 @@ public class NeuralNetwork
 	 * this model is configured to train and run 100x100 spectrogram
 	 * @return multi layer network that follows the lenet model
 	 */
-	public MultiLayerNetwork lenetModel()
+	public MultiLayerNetwork lenetModel(Boolean mnist)
 	{
-		MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
-				.seed(seed)
-				.l2(0.005)
-				.activation(Activation.RELU)
-				.weightInit(WeightInit.XAVIER)
-				.updater(new AdaDelta())
-				.list()
-				.layer(0, convInit("cnn1", channels, 50 ,  new int[]{5, 5}, new int[]{1, 1}, new int[]{0, 0}, 0))
-				.layer(1, maxPool("maxpool1", new int[]{2,2}))
-				.layer(2, conv5x5("cnn2", 100, new int[]{5, 5}, new int[]{1, 1}, 0))
-				.layer(3, maxPool("maxool2", new int[]{2,2}))
-				.layer(4, new DenseLayer.Builder().nOut(500).build())
-				.layer(5, new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
-						.nOut(numLabels)
-						.activation(Activation.SOFTMAX)
-						.build())
-				.setInputType(InputType.convolutionalFlat(height,width,channels))
-                //.setInputType(InputType.convolutional(height, width, channels))
-				.build();
+		if(mnist)
+		{
+			height = 28;
+			width = 28;
+			numLabels = 10;
 
-		return new MultiLayerNetwork(conf);
+			MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
+					.seed(seed)
+					.l2(0.005)
+					.activation(Activation.RELU)
+					.weightInit(WeightInit.XAVIER)
+					.updater(new AdaDelta())
+					.list()
+					.layer(0, convInit("cnn1", channels, 50 ,  new int[]{5, 5}, new int[]{1, 1}, new int[]{0, 0}, 0))
+					.layer(1, maxPool("maxpool1", new int[]{2,2}))
+					.layer(2, conv5x5("cnn2", 100, new int[]{5, 5}, new int[]{1, 1}, 0))
+					.layer(3, maxPool("maxool2", new int[]{2,2}))
+					.layer(4, new DenseLayer.Builder().nOut(500).build())
+					.layer(5, new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
+							.nOut(numLabels)
+							.activation(Activation.SOFTMAX)
+							.build())
+					.setInputType(InputType.convolutionalFlat(height,width,channels))
+					.build();
+
+			return new MultiLayerNetwork(conf);
+		}
+		else
+		{
+			height = 100;
+			width = 100;
+			numLabels = 12;
+
+			MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
+					.seed(seed)
+					.l2(0.005)
+					.activation(Activation.RELU)
+					.weightInit(WeightInit.XAVIER)
+					.updater(new AdaDelta())
+					.list()
+					.layer(0, convInit("cnn1", channels, 50, new int[]{5, 5}, new int[]{1, 1}, new int[]{0, 0}, 0))
+					.layer(1, maxPool("maxpool1", new int[]{2, 2}))
+					.layer(2, conv5x5("cnn2", 100, new int[]{5, 5}, new int[]{1, 1}, 0))
+					.layer(3, maxPool("maxool2", new int[]{2, 2}))
+					.layer(4, new DenseLayer.Builder().nOut(500).build())
+					.layer(5, new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
+							.nOut(numLabels)
+							.activation(Activation.SOFTMAX)
+							.build())
+					.setInputType(InputType.convolutional(height, width, channels))
+					.build();
+
+			return new MultiLayerNetwork(conf);
+		}
 	}
 }
