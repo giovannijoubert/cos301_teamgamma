@@ -30,7 +30,7 @@ public class NeuralNetwork
 	static Random rand = new Random(seed);
 	int height = 100;
 	int width = 100;
-	int numLabels = 12;
+	int numLabels = /*12*/10;
 
 	/** Export model function, this will export the latest neural network
 	 * @return file that is a zip which contains the neural network
