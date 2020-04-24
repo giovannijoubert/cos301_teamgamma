@@ -26,7 +26,11 @@ class MouthPiece extends StatefulWidget {
 class _MouthPieceState extends State<MouthPiece> {
 
    Future<void>  createDir() async{  // Creates default directory for mouthpacks as well as prepopulates from assets
-  
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          bool isLogSet = prefs.getKeys().contains('loggedIn');
+          if(!isLogSet)
+           prefs.setBool('loggedIn', false);
+           
   var  permission= await requestPermission(); // get All permissions required from now
  final String path = await _localPath;
  final Directory dir = await Directory('$path/defaultMouthpacks').create(recursive: true);

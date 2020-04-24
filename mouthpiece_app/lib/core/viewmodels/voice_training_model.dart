@@ -1,5 +1,6 @@
 
 
+import 'package:file/record_replay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mouthpiece_app/ui/views/home_view.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -12,15 +13,52 @@ import 'dart:io' as io;
 import '../../locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import '../../ui/views/voice_training_view.dart';
 
 class VoiceTrainingModel extends BaseModel {
 
-  
+  static const platformMethodChannel =const MethodChannel('voiceTrainer');
+
+  Future<String> startNativeRec()async{
+    String msg;
+    isRecording=true;
+    try{
+      final String result= await platformMethodChannel.invokeMethod('startRecording');
+      msg=result;
+
+    } on PlatformException catch (e)
+    {
+      msg= "cant run native code ... ${e.message}.";
+    }
+    print(msg);
+   return msg;
+  }
+
+Future<String> stopNativeRec()async{
+    String msg;
+    isRecording=false;
+    try{
+      final String result= await platformMethodChannel.invokeMethod('stopRecording');
+      msg=result;
+
+    } on PlatformException catch (e)
+    {
+      msg= "cant run native code ... ${e.message}.";
+    }
+    
+   print(msg);
+   return msg;
+  }
+
+
+
+
+
+
+
   var test;
   
   Color wordColour = Colors.red;
-  var arr = ["Apples", "Pears", "Peaches","New fruit"];   // Add words as required
   var index = 0;
 
   bool changeMode(bool mode) {
@@ -28,16 +66,19 @@ class VoiceTrainingModel extends BaseModel {
     return !mode;
   }
 String getWord(){
-  test = arr[index];
-  return arr[index];
+  test = examples[index];
+  return examples[index];
 }
   String changeToNextWord(){
-    String word = arr[index];
+    String word = examples[index];
     index++;
 
-    if (index > arr.length-1) 
+    if (index > examples.length-1) {
       index = 0;
-    
+      // TODO: Completed voice training -> do not restart rather move onto next app page
+      // and in sharedPreference update that voiceTraining was completed
+      
+    }
     return word;
   }
   
@@ -68,7 +109,9 @@ String getWord(){
     return _requestPermission(PermissionGroup.storage);
   }
 
-  
+  Future<bool> requestInternetPermission() async {
+    return _requestPermission(PermissionGroup.phone);
+  }
 
 
    // Template code to check if app hasPermission
@@ -91,89 +134,53 @@ String getWord(){
 
 
   bool isRecording = false;
-  io.Directory tempDir;
-  FlutterAudioRecorder _recorder;
-  final String folderPath = '/TrainingAudio/';
-  final String _prefix = 'Recorder Manager:';
-  String currentPath;
-  String errorMessage;
-  int i=0;
+ 
 
-  void RecordAudio() async{
+  void recordAudio() async{
   print("Entered RecordAudio . . .");
       isRecording=true;
-    record(arr[index]);
+   // record(arr[index]);
+    startNativeRec();
   }
 
 
-  void StopRecordingAudio(){
+  void stopRecordingAudio(){
     
     print("Entered StopRecord . . .");
     isRecording=false;
-    stopRecorder();
+  //  stopRecorder();
+    stopNativeRec();
   }
 
 
+        var sounds = [
+            "Ah", "Eh", "I",
+            "El",
+            "Oh",
+            "Ceh", "Deh", "Geh", "Keh", "Neh", "Sss", "Teh", "X", "Yeh", "Zee",
+            "Fff", "Vvv",
+            "Q(cue)", "Weh",
+            "Beh", "Meh", "Peh",
+            "Uh",
+            "Ee",
+            "Reh",
+            "Th",
+            "Ch", "Jeh", "Sh"];
 
-
-Future<String> record(String word) async {
-    try {
-          bool StoragePermission = await requestStoragePermission();
-          
-          bool Microphonepermission = await requestMicrophonePermission();
-         
-         if(Microphonepermission && StoragePermission){
-
-         // print("Entered record . . .");
-      if (await FlutterAudioRecorder.hasPermissions) {
-
-      //print("Permission granted");
-      tempDir = await getApplicationDocumentsDirectory();
-      String tempPath = tempDir.path + folderPath + word + i.toString();  // temp solution of file naming 
-      //until Deleting of files in folder is implemented by converter team.
-      i++;
-      final io.Directory recordingDirectory = io.Directory(tempDir.path + folderPath);
-      if (!recordingDirectory.existsSync()) 
-        await recordingDirectory.create(recursive:true);
-       _recorder = FlutterAudioRecorder(tempPath, audioFormat: AudioFormat.WAV);
-        await _recorder.initialized;
-
-      await _recorder.start();
-      return folderPath + word + '.wav';
-      }
-    } }catch (e) {
-      print(e.toString());
-      return "";
-    }
-    return "";
-  }
-
-void stopRecorder() async {
-    try {
-      
-      if (await FlutterAudioRecorder.hasPermissions) {
-      print("Entered stopRecorder . . .");
-     
-      
-      print('$_prefix Recorder ending and saving recording...');
-      var result = await _recorder.stop();
-    print('$_prefix Recorder ended successfully!');
-    print('$_prefix Recording saved to: ' + result.path);
-
-      /*
-        TODO:
-          Add code for passing the audio wave file to the spectogram generator
-          Add code for deleting recorded wave files
-      */
-
-    } }catch (e) {
-      print('$_prefix Recorder was unable to save recording!');
-      print(e.toString());
-    }
-  }
-
-
-
+        var examples = [
+            "Apple", "Everyone", "I",
+            "Light",
+            "Orange",
+            "Candle", "Delta", "Get", "Candle", "Night", "Snake", "Terminal", "X-ray", "Yes", "Zebra",
+            "Free", "Very",
+            "Queue", "Win",
+            "Boy", "Maybe", "Pepper",
+            "Update",
+            "Tree",
+            "Red",
+            "This",
+            "Cheese", "Jam", "Shell"];
+        
 
 
 

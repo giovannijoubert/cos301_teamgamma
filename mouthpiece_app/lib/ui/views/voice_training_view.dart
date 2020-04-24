@@ -13,7 +13,7 @@ import '../../ui/shared/text_styles.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'base_view.dart';
-
+//import 'package:flutter/services.dart';
 class VoiceTrainingView extends StatefulWidget {
   @override
   _VoiceTrainingState createState() => _VoiceTrainingState();
@@ -24,8 +24,8 @@ class VoiceTrainingView extends StatefulWidget {
 class _VoiceTrainingState extends State<VoiceTrainingView> {
 
 
+  
   bool trainingMode = false;
-
   
   String ins = 'then read the word aloud';
 
@@ -97,7 +97,9 @@ class _VoiceTrainingState extends State<VoiceTrainingView> {
                                     model.wordColour=Colors.green;
                                     ins = "when you are done";
                                   });
-                                  model.RecordAudio();
+                                  model.startNativeRec();
+                                  //model.recordAudio();
+                                 
 
                                 } else {
                                   setState(() {
@@ -112,7 +114,8 @@ class _VoiceTrainingState extends State<VoiceTrainingView> {
                             IconButton(
                               icon: Icon(Icons.mic_off),
                               onPressed: (){ if (model.isRecording == true){
-                              model.StopRecordingAudio();
+                             // model.stopRecordingAudio();
+                              model.stopNativeRec();
                               setState(() {
                                 model.changeToNextWord();
                                 model.wordColour=Colors.red;

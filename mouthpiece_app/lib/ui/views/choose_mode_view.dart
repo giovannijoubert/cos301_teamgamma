@@ -88,8 +88,8 @@ Widget volumeButtonSection(BuildContext context, model) {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         new RawMaterialButton(
-          onPressed: () async {
-            model.setVolumeBased();    //setState needs to be called here to update  
+          onPressed: ()  async{ //onPressed: ()  {
+            model.setVolumeBased();     
             
             SharedPreferences prefs = await SharedPreferences.getInstance();
             if (!prefs.getBool('loggedIn')) {
