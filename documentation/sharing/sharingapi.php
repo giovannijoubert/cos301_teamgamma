@@ -87,18 +87,22 @@
                 foreach ($data["mouthImages"] as $datas)
                 {
                     $d = explode( ',', $datas["imageData"] );
-                    $filename_path = md5(time().uniqid()).".jpg"; 
+                    $filename_path = md5(time().uniqid()).".png"; 
+                    //$base64 = "data:image/png;base64,";
+                    //$base64 .= $d[1];
                     $decoded=base64_decode($d[1]);
                     $imageurl="../mouthpacks/".$data["title"]."/";
                     $destination_img = $imageurl.$filename_path;
                     $comp = standardiseImage($d[1]);
-                        
+                    imagealphablending($comp, false);
+                    imagesavealpha($comp, true);
+
                     $imageid=$data["title"].rand();
                     $imagePath="http://teamgamma.ga/mouthpacks/".$data["title"]."/".$filename_path;
 
                     $sql1 = "INSERT INTO MouthImage(image_id,image_URL) VALUES ('{$imageid}','{$imagePath}')";
                         
-                    if(imagejpeg($comp, $destination_img, 90) && $mysql->query($sql1))
+                    if(imagepng($comp, $destination_img, 9) && $mysql->query($sql1))
                     {
                         $myObj = new stdClass(); 
                         $myObj->status = "200 Ok";
@@ -364,6 +368,5 @@
         $img = imagecreatefromstring($data); // Image string to actual image
         
 		return $img;
-
 	}
 ?>
