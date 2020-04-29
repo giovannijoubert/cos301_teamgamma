@@ -1,15 +1,17 @@
 /**
  *  @file NeuralNetwork.java
  *  @class NeuralNetwork
- *  @author Dylan Krajnc, Pavlo Andrianatos, Rudo Janse van Rensburg, Brad Zietsman
+ *  @author Dylan Krajnc, Pavlo Andrianatos, Rudo Janse van Rensburg, Brad Zietsman, Nigel Mpofu
  */
 package ga.teamgamma.ai.NeuralNetworks;
 
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
+import org.json.JSONObject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.*;
 import java.nio.file.Files;
+import java.security.MessageDigest;
 import java.util.TimeZone;
 
 import org.springframework.core.io.FileSystemResource;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  * @author Aaron Phillip Facoline
@@ -202,5 +205,52 @@ public class NeuralNetworksApplication
     @ResponseBody
     public FileSystemResource apiGetNN() {
         return new FileSystemResource(NeuralNetwork.exportModel());
+    }
+
+    /**
+     * API to return the MD5, SHA1 and SHA256 checksum of the trained model
+     * @author Nigel Mpofu
+     * @return JSON string of Neural Network Model checksums
+     */
+    @RequestMapping(value = "/api/neuralNetwork/checksum", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String apiGetNNChecksum() {
+        try {
+            // Return MD5 Checksum
+            byte[] nnModelBytes = Files.readAllBytes(NeuralNetwork.exportModel().toPath());
+            byte[] nnMD5Digest = MessageDigest.getInstance("MD5").digest(nnModelBytes);
+            byte[] nnSHA1Digest = MessageDigest.getInstance("SHA-1").digest(nnModelBytes);
+            byte[] nnSHA256Digest = MessageDigest.getInstance("SHA-256").digest(nnModelBytes);
+
+            String nnMD5sum = DatatypeConverter.printHexBinary(nnMD5Digest).toLowerCase();
+            String nnSHA1sum = DatatypeConverter.printHexBinary(nnSHA1Digest).toLowerCase();
+            String nnSHA256sum = DatatypeConverter.printHexBinary(nnSHA256Digest).toLowerCase();
+
+            try {
+                return new JSONObject()
+                        .put("result", "0")
+                        .put("response", new JSONObject()
+                                .put("md5", nnMD5sum)
+                                .put("sha1", nnSHA1sum)
+                                .put("sha256", nnSHA256sum))
+                        .toString();
+            } catch (org.json.JSONException je) {
+                // Error creating JSON string
+                System.out.println("Error [apiGetNNChecksum]: " + je.getMessage());
+                return "{\"result\":\"1\",\"response\":\"Internal Server Error\"}";
+            }
+        } catch (Exception ex) {
+            System.out.println("Error [apiGetNNChecksum]: " + ex.getMessage());
+            try {
+                return new JSONObject()
+                        .put("result", "1")
+                        .put("response", "Internal Server Error")
+                        .toString();
+            } catch (org.json.JSONException je) {
+                // Error creating JSON string
+                System.out.println("Error [apiGetNNChecksum]: " + ex.getMessage());
+                return "{\"result\":\"1\",\"response\":\"Internal Server Error\"}";
+            }
+        }
     }
 }
