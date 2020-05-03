@@ -1,4 +1,4 @@
-package Gamma.mouthpiece_app.supportfiles;
+package com.example.mouthpiece.supportfiles;
 
 public class FFT {
     // compute the FFT of x[], assuming its length n is a power of 2

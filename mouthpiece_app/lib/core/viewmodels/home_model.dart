@@ -1,55 +1,70 @@
 import 'dart:convert';
-import '../../ui/views/home_view.dart';
+import 'dart:typed_data';
+import 'package:flutter/material.dart';
+import 'package:mouthpiece/core/enums/viewstate.dart';
+import 'package:mouthpiece/ui/shared/theme.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../viewmodels/collection_model.dart';
 
-import '../../locator.dart';
-import '../models/mouthpack.dart';
+import '../../ui/views/home_view.dart';
+import '../data/defaultmouthpacks.dart';
 
 import 'base_model.dart';
 
 class HomeModel extends BaseModel {
   var test;
-  // final List<String> images = [];
-  // // final List<String> colours = [];
-  
-  // void createImageList() {
-  //   for (var i = 1; i < 9; i++) {
-  //     images.add("assets/images/mouth-packs/mouth-"+ i.toString() +".png");
-  //   }
-  // }
-
-  // /* void createColourList() {
-  //   for (var i = 0; i < 9; i++) {
-  //     colours.add("0xFF303030");
-  //   }
-  // } */
-
-  // final List<String> colours = [
-  //   '0xFF303030',
-  //   '0xFFb1b4e5',
-  //   '0xFFf2929c',
-  //   '0xFF61a3ee',
-  //   '0xFFff8a8a',
-  //   '0xFFb1b4e5',
-  //   '0xFF8acdef',
-  //   '0xFFd2d2d3',
-  //   '0xFF303030',
-  // ];
-
-  // List<String> getImageList() {
-  //   return images;
-  // }
-
-  // List<String> getBgColourList() {
-  //   return colours;
-  // }
-
+  CollectionModel collectionModel = new CollectionModel();
   static String listeningModeImg;
+  static bool updateVal;
+
+  HomeModel() {
+    if (collectionModel.getImageList().length == 0 || updateVal) {
+      createCollection(); 
+      updateVal = false;
+    }
+  }
+
+  setUpdate(bool val) {
+    updateVal = val;
+  }
+
+  getUpdateVal() {
+    return updateVal;
+  }
+
+  setNavVal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("navVal", true);
+  }  
+
+  createCollection() async {
+    setState(ViewState.Busy);
+    await collectionModel.createCollection(); 
+    setState(ViewState.Idle);
+  }
+
+  static List<Uint8List> listeningModeImgList = List<Uint8List>();
   static String listeningModeColour;
   static int index = 0;
 
-  void setListeningModeImg(String img) {
-    test = "image setted";
-    listeningModeImg = img;
+  void createListeningModeImgList() {
+    listeningModeImgList.clear();
+    int length = defaultMouthpacks[0]["images"].length;
+    for (int i = 0; i < length; i++) {
+      if (getIndex() < defaultMouthpacks.length)
+        listeningModeImgList.add(base64.decode(defaultMouthpacks[getIndex()]["images"][i])); 
+      else {
+        int index = getIndex() - defaultMouthpacks.length;
+        listeningModeImgList.add(base64.decode(collectionModel.getCollection()[index][0]["images"][i]));  
+      }
+    }
+
+    test = "got image";
+  }
+
+  List<Uint8List> getListeningModeImgList() {
+    return listeningModeImgList;
   }
 
   String getListeningModeImg() {
@@ -57,8 +72,14 @@ class HomeModel extends BaseModel {
     return listeningModeImg;
   }
 
+  void setListeningModeImg(String img) {
+    test = "image set";
+    listeningModeImg = img;
+  }
+  
+
   void setListeningModeColour(String colour) {
-    test = "colour setted";
+    test = "colour set";
     listeningModeColour = colour;
   }
 

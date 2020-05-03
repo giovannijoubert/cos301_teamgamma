@@ -1,23 +1,18 @@
-package Gamma.mouthpiece_app;
+package com.example.mouthpiece;
 
+import com.example.mouthpiece.mainfiles.Recorder;
+import com.example.mouthpiece.mainfiles.SoundList;
+
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
-import Gamma.mouthpiece_app.mainfiles.Recorder;
-import Gamma.mouthpiece_app.mainfiles.SoundList;
 import io.flutter.embedding.android.FlutterActivity;
-
 import io.flutter.embedding.engine.FlutterEngine;
-
 import io.flutter.plugins.GeneratedPluginRegistrant;
-
-import android.os.Bundle;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
-
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity {
@@ -27,8 +22,7 @@ public class MainActivity extends FlutterActivity {
     new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
             .setMethodCallHandler(
                     (call, result) -> {
-                      // Note: this method is invoked on the main thread.
-                      // TODO
+
                       if (call.method.equals("startRecording")){
                         RecordPressed();
                         result.success("Result returned from startRecording in Main");

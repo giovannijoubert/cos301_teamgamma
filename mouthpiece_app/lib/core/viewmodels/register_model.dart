@@ -1,7 +1,7 @@
 import '../enums/viewstate.dart';
 import '../services/authentication/authentication_service.dart';
 import '../viewmodels/base_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../locator.dart';
 
@@ -15,17 +15,17 @@ class RegisterModel extends BaseModel {
   Future<bool> register(String username, String email, String pass) async {
     setState(ViewState.Busy);
 
-     //var success = await _registerAuthenticationService.register(username, email, pass);
+     var success = await _registerAuthenticationService.register(username, email, pass);
 
-      if(true && email != null && pass != null){
+      if (success) {
         // SharedPreferences prefs = await SharedPreferences.getInstance();
         // prefs.setBool('registered', true);
         // setState(ViewState.Idle);
         test = true;
-        return true;
-      }else{
+        return test;
+      } else {
         test = false;
-          return false;
+        return test;
       }
   }
 }

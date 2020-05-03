@@ -1,32 +1,48 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import '../../core/viewmodels/mouthpack_model.dart';
 import 'base_view.dart';
 import '../widgets/bottom_navigation.dart';
 
 class MouthpackView extends StatefulWidget {
+  final String title;
+  final String description;
+  final String date;
+  final int totalImages;
+  final String rating;
+  final String bgColour;
+  final List<dynamic> images;
+
+  MouthpackView(this.title, this.description, this.date, this.totalImages, this.rating, this.bgColour, this.images);
+
   @override
-  _MouthpackState createState() => _MouthpackState();
+  _MouthpackState createState() => _MouthpackState(this.title, this.description, this.date, this.totalImages, this.rating, this.bgColour, this.images);
 }
 
 class _MouthpackState extends State<MouthpackView> {
-  //int _currentTabIndex = 1;
+  final String title;
+  final String description;
+  final String date;
+  final int totalImages;
+  final String rating;
+  final String bgColour;
+  final List<dynamic> images;
+
+  _MouthpackState(this.title, this.description, this.date, this.totalImages, this.rating, this.bgColour, this.images);
 
   @override
-   Widget build(BuildContext context) {
-    //BottomNavigation bottomNavigation = new BottomNavigation();
-    //bottomNavigation.setIndex(_currentTabIndex);
-
-    return BaseView<MouthpackModel>(
+   Widget build(BuildContext context) { return BaseView<MouthpackModel>(
       builder: (context, model, child) => Scaffold(
         body: ListView(
         children: <Widget>[
           BackNavigator(),
-          TitleSection('Vampire Pack 1', 'Peter Davis', '2020/05/15', '4.5'),
-          ImageTitle('12'),
-          ImageSection(),
+          TitleSection(title, description, date, rating),
+          ImageTitle(totalImages.toString()),
+          ImageSection(images, bgColour),
         ],
       ),
-        // bottomNavigationBar: BottomNavigation(),
       ),
     );
   }
@@ -71,7 +87,7 @@ class _TitleSectionState extends State<TitleSection>  {
                     ),
                   ),
                   Text(
-                    rating + '/5',
+                    rating,
                     style: TextStyle(
                       fontSize: 20,
                     ),
@@ -114,7 +130,6 @@ class _TitleSectionState extends State<TitleSection>  {
 
 class ImageTitle extends StatefulWidget {
   final String totalImages;
-  //image src list
 
   ImageTitle(this.totalImages);
 
@@ -124,7 +139,6 @@ class ImageTitle extends StatefulWidget {
 
 class _ImageTitleState extends State<ImageTitle> {
   final String totalImages;
-  //image src list
 
   _ImageTitleState(this.totalImages);
 
@@ -147,28 +161,49 @@ class _ImageTitleState extends State<ImageTitle> {
 }
 
 class ImageSection extends StatefulWidget {
+  final List<dynamic> images;
+  final String bgColour;
+  ImageSection(this.images, this.bgColour);
+
   @override
-  _ImageSectionState createState() => _ImageSectionState();
+  _ImageSectionState createState() => _ImageSectionState(this.images, this.bgColour);
 }
 
 class _ImageSectionState extends State<ImageSection> {
+  final List<dynamic> images;
+  final String bgColour;
+  _ImageSectionState(this.images, this.bgColour);
+  
   @override
   Widget build(BuildContext context) {
+    var cardBgColour = int.parse(bgColour);
+    
     return GridView.count(
       crossAxisCount: 4,
       shrinkWrap: true,
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-      children: List.generate(12, (index) {
+      children: List.generate(this.images.length, (index) {
+        Uint8List decodedImgSrc = base64.decode(this.images[index]);
         return Center(
           child: Container(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: Container(
-                color: Color(0xFF8ACDEF),
+                decoration: BoxDecoration(
+                  color: Color(cardBgColour),
+                  boxShadow: [
+                  BoxShadow (
+                      color: Colors.white,
+                      offset: Offset(0.0, 1.0),
+                      blurRadius: 1.0,
+                      spreadRadius: 3,
+                    ),
+                  ],
+                ),
                 width: 80,
                 height: 80,
-                child: new Image.asset(
-                  "assets/images/mouth-packs/mouth-"+ (index+1).toString() +".png",
+                child: new Image.memory(
+                  decodedImgSrc,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -177,265 +212,6 @@ class _ImageSectionState extends State<ImageSection> {
         );
       }),
     );
-
-
-
-      /*padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-      child: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Text(
-                totalImages??'Default total' + ' images',
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-            ],
-          ),
-          Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Container(
-                            color: Color(0xFF8ACDEF),
-                            width: 90,
-                            height: 90,
-                            child: new Image.asset(
-                              '',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Container(
-                            color: Color(0xFF8ACDEF),
-                            width: 90,
-                            height: 90,
-                            child: new Image.asset(
-                              '',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Container(
-                            color: Color(0xFF8ACDEF),
-                            width: 90,
-                            height: 90,
-                            child: new Image.asset(
-                              '',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Container(
-                            color: Color(0xFF8ACDEF),
-                            width: 90,
-                            height: 90,
-                            child: new Image.asset(
-                              '',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Container(
-                            color: Color(0xFF8ACDEF),
-                            width: 90,
-                            height: 90,
-                            child: new Image.asset(
-                              '',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Container(
-                            color: Color(0xFF8ACDEF),
-                            width: 90,
-                            height: 90,
-                            child: new Image.asset(
-                              '',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Container(
-                            color: Color(0xFF8ACDEF),
-                            width: 90,
-                            height: 90,
-                            child: new Image.asset(
-                              '',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Container(
-                            color: Color(0xFF8ACDEF),
-                            width: 90,
-                            height: 90,
-                            child: new Image.asset(
-                              '',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Container(
-                            color: Color(0xFF8ACDEF),
-                            width: 90,
-                            height: 90,
-                            child: new Image.asset(
-                              '',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Container(
-                            color: Color(0xFF8ACDEF),
-                            width: 90,
-                            height: 90,
-                            child: new Image.asset(
-                              '',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Container(
-                            color: Color(0xFF8ACDEF),
-                            width: 90,
-                            height: 90,
-                            child: new Image.asset(
-                              '',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Container(
-                            color: Color(0xFF8ACDEF),
-                            width: 90,
-                            height: 90,
-                            child: new Image.asset(
-                              '',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),*/
-    //);
   }
 }
 

@@ -2,7 +2,7 @@
 
 import 'package:file/record_replay.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mouthpiece_app/ui/views/home_view.dart';
+import 'package:mouthpiece/ui/views/home_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../enums/viewstate.dart';
 import '../viewmodels/base_model.dart';

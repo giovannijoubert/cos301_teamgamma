@@ -9,20 +9,19 @@ class LoginModel extends BaseModel {
 
   String errorMessage;
 
-Future<bool> login(String email, String pass) async {
+  Future<bool> login(String _userName, String pass) async {
     setState(ViewState.Busy);
     
-    String userKey;
-    //var success = await _loginAuthenticationService.login(email, pass);
-     var success = true;
-    if(success && email != null && pass != null){
+    var success = await _loginAuthenticationService.login(_userName, pass);
+
+    if (success && _userName  != null && pass != null) {
       setState(ViewState.Idle);
       test = true;
-      return true;
-    }else{
+      return test;
+    } else {
       test = false;
-        return false;
+      return test;
     }
-
+    
   }
 }

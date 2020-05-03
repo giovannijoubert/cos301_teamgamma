@@ -1,4 +1,4 @@
-name: mouthpiece_app
+name: mouthpiece
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -39,6 +39,12 @@ dependencies:
   flappy_search_bar: ^1.7.2
   shared_preferences : 0.5.6+3 
   email_validator: "0.1.4"
+  image_cropper: ^1.2.1
+  image_picker: 
+  fluttertoast: ^4.0.0
+  image_downloader: ^0.19.2
+  utf: 0.9.0+5
+  mysql1: ^0.17.1
 
 dev_dependencies:
   flutter_test:
@@ -96,6 +102,7 @@ flutter:
    - assets/temp-package/mouth4.png
    - assets/temp-package/mouth5.png
    - assets/temp-package/mouth6.png
+   - assets/images/
 
   fonts:
     - family: Arciform

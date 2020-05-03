@@ -1,5 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:mouthpiece_app/core/viewmodels/mouth_selection_model.dart';
+import 'package:mouthpiece/core/enums/viewstate.dart';
+import 'package:mouthpiece/core/viewmodels/collection_model.dart';
+import 'package:mouthpiece/core/viewmodels/mouth_selection_model.dart';
+import 'package:mouthpiece/ui/shared/theme.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/viewmodels/home_model.dart';
 import '../ui/../shared/app_colors.dart';
 import 'base_view.dart';
@@ -15,27 +22,36 @@ List<String> images;
 List<String> colours;
 HomeModel homeModel = new HomeModel();
 MouthSelectionModel mouthSelectionModel = new MouthSelectionModel();
+CollectionModel collectionModel = new CollectionModel();
 
 class _HomeViewState extends State<HomeView> {
+  
   int _currentTabIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    precacheImage(AssetImage("assets/bill.png"), context);
+    // collectionModel.createCollection();
+    // precacheImage(AssetImage("assets/bill.png"), context);
     BottomNavigation bottomNavigation = new BottomNavigation();
     bottomNavigation.setIndex(_currentTabIndex);
-
-    mouthSelectionModel.createImageList();
-    images = mouthSelectionModel.getImageList();
-    colours = mouthSelectionModel.getColourList();
+    homeModel.setNavVal();
+    // homeModel.changeTheme(context);
     
+    images = collectionModel.getImageList();
+    colours = collectionModel.getColourList();  
 
-    return BaseView<HomeModel>(
-      builder: (context, model, child) => Scaffold(
-        backgroundColor: backgroundColor,
-        body: Home(),
-        bottomNavigationBar: BottomNavigation(),
-      ),
+    
+    // return FutureBuilder (
+    //   future: changeTheme(context),
+    //   builder: (context, snapshot) {
+        return BaseView<HomeModel>(
+          builder: (context, model, child) => Scaffold(
+          // backgroundColor: backgroundColor,
+            body: (model.state == ViewState.Busy) ? Center(child: CircularProgressIndicator()) : Home(),
+            bottomNavigationBar: BottomNavigation(),
+          ),
+      //   );
+      // }
     );
   }
 }
@@ -48,11 +64,12 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    
     Widget mouthSection = new Container (
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
+        // mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Expanded(
             child: IconButton(
@@ -142,9 +159,7 @@ class MouthSelectedBtn extends StatefulWidget {
   _MouthSelectedBtnState createState() => _MouthSelectedBtnState();
 }
 
-class _MouthSelectedBtnState extends State<MouthSelectedBtn> with TickerProviderStateMixin {List<String> images;
-  List<String> colours;
-
+class _MouthSelectedBtnState extends State<MouthSelectedBtn> with TickerProviderStateMixin {
   // static int index = 0;
 
   AnimationController _controller;
@@ -165,9 +180,8 @@ class _MouthSelectedBtnState extends State<MouthSelectedBtn> with TickerProvider
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        //
         Navigator.push(context, PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) => ListeningModeView(),
+          pageBuilder: (context, animation1, animation2) => ListeningModeView(),
         ),);
         _controller.reset();          
       }
@@ -181,17 +195,18 @@ class _MouthSelectedBtnState extends State<MouthSelectedBtn> with TickerProvider
 
   @override
   Widget build(BuildContext context) {
-    images = mouthSelectionModel.getImageList();
-    colours = mouthSelectionModel.getColourList();
-    // homeModel.createImageList();
+    images = collectionModel.getImageList();
+    colours = collectionModel.getColourList();
 
     return Material(
       child: GestureDetector(
         onTap: () {
           setState(() {
-            _controller.forward();
-            homeModel.setListeningModeImg(images[homeModel.getIndex()]);
+            homeModel.createListeningModeImgList();
             homeModel.setListeningModeColour(colours[homeModel.getIndex()]);
+            _controller.forward();
+            // homeModel.setListeningModeImg(images[homeModel.getIndex()]);
+            
           });
         },
         child: Hero(
@@ -221,9 +236,16 @@ class _MouthSelectedBtnState extends State<MouthSelectedBtn> with TickerProvider
               decoration: BoxDecoration(
                 color: Color(int.parse(colours[homeModel.getIndex()])),
                 shape: BoxShape.circle,
+                boxShadow: [
+                BoxShadow (
+                    color: Colors.grey,
+                    offset: Offset(0.0, 1.0),
+                    blurRadius: 1.0,
+                  ),
+                ],
               ),
               child: ClipOval (
-                child: Image.asset(images[homeModel.getIndex()], 
+                child: Image.memory(base64.decode(images[homeModel.getIndex()]), 
                 fit: BoxFit.contain, width: double.infinity, height: double.infinity,
                 )
               ),

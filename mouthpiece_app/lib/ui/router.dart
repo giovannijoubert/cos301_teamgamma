@@ -32,8 +32,6 @@ class Router {
         return MaterialPageRoute(builder: (_) => ListeningModeView());
       case 'collection':
         return MaterialPageRoute(builder: (_) => CollectionView());
-      case 'mouthpack':
-        return MaterialPageRoute(builder: (_) => MouthpackView());
       case 'profile':
         return MaterialPageRoute(builder: (_) => ProfileView());
       default:

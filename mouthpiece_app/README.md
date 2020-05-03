@@ -1,4 +1,4 @@
-# mouthpiece_app
+# mouthpiece
 
 A new Flutter project.
 

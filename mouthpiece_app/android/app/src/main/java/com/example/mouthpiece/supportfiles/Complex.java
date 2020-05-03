@@ -1,4 +1,4 @@
-package Gamma.mouthpiece_app.supportfiles;
+package com.example.mouthpiece.supportfiles;
 
 import java.util.Objects;
 

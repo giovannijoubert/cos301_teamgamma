@@ -1,4 +1,4 @@
-package Gamma.mouthpiece_app.mainfiles;
+package com.example.mouthpiece.mainfiles;
 
 import android.content.Context;
 import android.graphics.Bitmap;

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mouthpiece_app/ui/views/collection_view.dart';
-import 'package:mouthpiece_app/ui/views/home_view.dart';
-import 'package:mouthpiece_app/ui/views/profile_view.dart';
+import 'package:mouthpiece/ui/shared/theme.dart';
+import 'package:mouthpiece/ui/views/collection_view.dart';
+import 'package:mouthpiece/ui/views/home_view.dart';
+import 'package:mouthpiece/ui/views/profile_view.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 int _currentTabIndex = 0;
@@ -10,7 +12,7 @@ class BottomNavigation extends StatefulWidget {
   void setIndex(int index) {
     _currentTabIndex = index;
   }
-
+  
   @override
   BottomNavigationState createState() => BottomNavigationState();
 }
@@ -19,10 +21,16 @@ class BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    _onTap(int selectedIndex) async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      if (prefs.getInt('tabIndex') != selectedIndex) {
-        await prefs.setInt('tabIndex', selectedIndex);
+    _onTap(int selectedIndex) {
+      if (_currentTabIndex != selectedIndex) {
+      // setState(() {
+        _currentTabIndex = selectedIndex;
+     
+      // SharedPreferences prefs = await SharedPreferences.getInstance();
+      // print(prefs.getInt('tabIndex'));
+      
+      
+        // await prefs.setInt('tabIndex', selectedIndex);
         switch (selectedIndex) {
           case 0:
             Navigator.push(context, PageRouteBuilder(
@@ -40,9 +48,11 @@ class BottomNavigationState extends State<BottomNavigation> {
             ),);
             break;
         }
-      }
+      
+      //  });
+       }
     }
-
+    final theme = Provider.of<ThemeChanger>(context);
     return Container(
       child: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -51,7 +61,7 @@ class BottomNavigationState extends State<BottomNavigation> {
             title: Text('Home', 
               style: TextStyle(
                 fontSize: 15,
-                color: Color(0xff303030),
+                // color: Color(0xff303030),
                 fontFamily: 'Helvetica',
               ),
             ),
@@ -61,36 +71,28 @@ class BottomNavigationState extends State<BottomNavigation> {
             title: Text('Collection', 
               style: TextStyle(
                 fontSize: 15,
-                color: Color(0xff303030),
+                // color: Color(0xff303030),
                 fontFamily: 'Helvetica',
               ),
             ),
           ),
-          /* BottomNavigationBarItem(
-            icon: Icon(Icons.art_track ),
-            title: Text('Customise Mouth', 
-              style: TextStyle(
-                fontSize: 15,
-                color: Color(0xff303030),
-                fontFamily: 'Helvetica',
-              ),
-            ),
-          ), */
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             title: Text('Profile', 
               style: TextStyle(
                 fontSize: 15,
-                color: Color(0xff303030),
+                // color: Color(0xff303030),
                 fontFamily: 'Helvetica',
               ),
             ),
           ),
         ],
         selectedItemColor: Color(0xFFF2929C),
-        unselectedItemColor: Color(0xFF303030),
+        unselectedItemColor: (theme.getTheme() == lightTheme) ? Color(0xFF303030) : Colors.white,
         onTap: _onTap,
         currentIndex: _currentTabIndex,
+        backgroundColor: (theme.getTheme() == darkTheme) ? Color(0x11FFFFFF) : Color(0x00FFFFFF),
+        elevation: (theme.getTheme() == darkTheme) ? 3 : 0,
       ),
     );
   }

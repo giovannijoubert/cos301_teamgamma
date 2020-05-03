@@ -1,9 +1,10 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mouthpiece_app/ui/views/home_view.dart';
-import 'package:mouthpiece_app/ui/views/choose_mode_view.dart';
+import 'package:mouthpiece/ui/views/home_view.dart';
+import 'package:mouthpiece/ui/views/choose_mode_view.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -46,13 +47,13 @@ class _ListeningModeViewState extends State<ListeningModeView> {
 }
 
 class ActivateListeningMode extends StatefulWidget{
-  final String name; // or Imagesrc
-  ActivateListeningMode({this.name});
+  ActivateListeningMode();
   @override
   ActivateListeningModeState createState() => ActivateListeningModeState();
    
 }
 
+int mouthImg = 0;
 
 class ActivateListeningModeState extends State<ActivateListeningMode> {
  // model is from choose mode view
@@ -62,7 +63,11 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
 //-------------
   int _currIndex = 0;
   int test = homeModel.getIndex(); // Match below
-  String mouthIndex =homeModel.getListeningModeImg();//"/data/user/0/com.example.mouthpiece_app/app_flutter/defaultMouthpacks/2-1.png";
+  // String mouthIndex = homeModel.getListeningModeImg();
+  // String mouthIndex = homeModel.getListeningModeImg();
+  List<Uint8List> listeningModeImgList = homeModel.getListeningModeImgList();
+
+  //"/data/user/0/com.example.mouthpiece_app/app_flutter/defaultMouthpacks/2-1.png";
   // Above code will give error occasionally about cannot open file path assets/images .. because path is an asset not from full
   // directory path as required. 
   bool _isRecording = false;
@@ -73,8 +78,6 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
 
   //function that takes in dB reading and returns index
   int chooseMouth(var _db){
-
-    
     if(_db <= 45)
     {
       return 0; 
@@ -103,47 +106,51 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
     }
   }
 
-
   String numRead= 'Test';
-  void onData(NoiseReading noiseReading) async{
-     io.Directory newimg = await getApplicationDocumentsDirectory();
-     String newImgdir = join(newimg.path,"defaultMouthpacks");
-    // newImgdir=newImgdir;
-    this.setState(() {
-      widthv = noiseReading.db + 40;
-      if(!this._isRecording){
-        _isRecording=true;
-       
-      }
-    
+  void onData(NoiseReading noiseReading) async {
+    // io.Directory newimg = await getApplicationDocumentsDirectory();
+    // String newImgdir = join(newimg.path,"defaultMouthpacks");
+    if (mounted) {
+      setState(() {
+        widthv = noiseReading.db + 40;
+        if (!this._isRecording) {
+          _isRecording=true;
+        }
+      
 
-    print(noiseReading.toString());
-    numRead = noiseReading.toString();
-    
-  //choose mouth with decibel input
-    int mouthImg = chooseMouth(noiseReading.db.round());
-    
-    // For now Randomise value of test to check if different mouths come up.
-    // it will be changed to selected mouthpack once mouthview/homeModel selection implements 
-    // the new method of accessing images.
-    if(test>=5 || test==0)
-    {
-      final _random = new Random();
-      int next(int min, int max) => min + _random.nextInt(max - min);
-      test = next(1, 4);
-    }
-  //choose image
-    switch (mouthImg) {
-      case 0 : mouthIndex = newImgdir+"/"+test.toString()+"-"+1.toString()+".png"; print(mouthIndex); break;
-      case 1 : mouthIndex = newImgdir+"/"+test.toString()+"-"+2.toString()+".png"; print(mouthIndex); break;
-      case 2 : mouthIndex = newImgdir+"/"+test.toString()+"-"+3.toString()+".png"; print(mouthIndex); break;
-      case 3 : mouthIndex = newImgdir+"/"+test.toString()+"-"+4.toString()+".png"; print(mouthIndex); break;
-      case 4 : mouthIndex = newImgdir+"/"+test.toString()+"-"+5.toString()+".png"; print(mouthIndex); break;
-      case 5 : mouthIndex = newImgdir+"/"+test.toString()+"-"+6.toString()+".png"; print(mouthIndex); break;
-     
-    }
+        // print(noiseReading.toString());
+        // numRead = noiseReading.toString();
+        
+      //choose mouth with decibel input
+        if (noiseReading != null) {
+          mouthImg = chooseMouth(noiseReading.db.round());
+          print(noiseReading.toString());
+        } else {
+          mouthImg = 0;
+        }
+        
+        // For now Randomise value of test to check if different mouths come up.
+        // it will be changed to selected mouthpack once mouthview/homeModel selection implements 
+        // the new method of accessing images.
 
-  });
+        /* if(test>=5 || test==0)
+        {
+          final _random = new Random();
+          int next(int min, int max) => min + _random.nextInt(max - min);
+          test = next(1, 4);
+        } */
+
+      //choose image
+        /* switch (mouthImg) {
+          case 0 : mouthIndex = newImgdir+"/"+test.toString()+"-"+1.toString()+".png"; print(mouthIndex); break;
+          case 1 : mouthIndex = newImgdir+"/"+test.toString()+"-"+2.toString()+".png"; print(mouthIndex); break;
+          case 2 : mouthIndex = newImgdir+"/"+test.toString()+"-"+3.toString()+".png"; print(mouthIndex); break;
+          case 3 : mouthIndex = newImgdir+"/"+test.toString()+"-"+4.toString()+".png"; print(mouthIndex); break;
+          case 4 : mouthIndex = newImgdir+"/"+test.toString()+"-"+5.toString()+".png"; print(mouthIndex); break;
+          case 5 : mouthIndex = newImgdir+"/"+test.toString()+"-"+6.toString()+".png"; print(mouthIndex); break;
+        } */
+      });
+    }
   }
 
   Future<bool> checkPermission() async {
@@ -177,60 +184,63 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
       var permission = checkPermission();
      if(!_isRecording){
         {
-          // print("Recording not on so start");
-            setState(() {
-                            _currIndex = 1;
-                          });
-                           try{
-                            _noiseMeter = new NoiseMeter();
-                            _noiseSubscription = _noiseMeter.noiseStream.listen(onData);
-                          } on NoiseMeterException catch (exception) {
-                            print(exception);
-                          }
+          setState(() {
+            _currIndex = 1;
+          });
+            try{
+            _noiseMeter = new NoiseMeter();
+            _noiseSubscription = _noiseMeter.noiseStream.listen(onData);
+          } on NoiseMeterException catch (exception) {
+            print(exception);
+          }
          }
           
      
       }
-       Future<io.File> _getLocalFile(String path) async{
-          io.File f = new io.File(path);
-          return f; 
-       }
+      /* Future<io.File> _getLocalFile(String path) async {
+        io.File f = new io.File(path);
+        return f; 
+      } */
     //_update();
     colour = homeModel.getListeningModeColour();
     //isVolSet = modeChosen.getIsVolSet();
    // print("Volume is chosen = "+ isVolSet.toString()); // Test 
-     Widget mouthText = new Container(
-      child: Image.file(
-        io.File(mouthIndex),
-       width: 600, 
-          height: 600,
-          gaplessPlayback: true,
-      
-        ),
-      
-  
-    
+    /* Widget mouthText = new Container(
+    child: Image.file(
+      io.File(mouthIndex),
+      width: 600, 
+        height: 600,
+        gaplessPlayback: true,
+      ),
+    ); */
+
+    Widget mouthText = new Container(
+    child: Image.memory(
+      listeningModeImgList[mouthImg],
+      width: 600, 
+        height: 600,
+        gaplessPlayback: true,
+      ),
     );
 
-  
     Widget closeIcon = new Visibility (
       child: Container (
         margin: EdgeInsets.only(top: 30, left: 20),
         child: GestureDetector(
-          child: Icon(Icons.close, size: 35.0, color: (colour == '0xFFFFFFFF') ? Colors.black : Colors.red), // red because BG
+          child: Icon(Icons.close, size: 35.0, color: (colour == '0xFFFFFFFF') ? Colors.black : Colors.white),
           onTap: () { 
            // print("About to exit Listening mode");
             _isVisible = false;
             //_isRecording=false; <- Memory leak setState called after
-                           try{                   
-                            if(_noiseSubscription != null){
-                               _noiseSubscription.cancel();
-                              _noiseSubscription = null;
-                            }
-                            
-                          } catch (err){
-                            print('stopRecorder error: $err');
-                          } 
+            try{                   
+            if(_noiseSubscription != null){
+                _noiseSubscription.cancel();
+              _noiseSubscription = null;
+            }
+            
+          } catch (err){
+            print('stopRecorder error: $err');
+          } 
             Navigator.pop(context);
           },
         ),
@@ -252,7 +262,6 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
                 child: mouthText
               ),
               closeIcon
-              
             ]
           ),
         ),

@@ -1,4 +1,4 @@
-package Gamma.mouthpiece_app.mainfiles;
+package com.example.mouthpiece.mainfiles;
 
 public class SoundList {
     private String[] sounds =

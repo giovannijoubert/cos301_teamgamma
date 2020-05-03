@@ -1,7 +1,9 @@
-import 'dart:io';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:mouthpiece_app/ui/views/collection_view.dart';
+import 'package:mouthpiece/ui/views/collection_view.dart';
+import 'package:mouthpiece/ui/views/home_view.dart';
+import 'package:provider/provider.dart';
+import 'package:mouthpiece/ui/shared/theme.dart';
 import '../../core/viewmodels/mouth_selection_model.dart';
 import '../../ui/shared/app_colors.dart';
 import '../../ui/shared/text_styles.dart';
@@ -20,11 +22,11 @@ class _MouthSelectionState extends State<MouthSelectionView> {
   @override
   Widget build(BuildContext context) {
     BottomNavigation bottomNavigation = new BottomNavigation();
-    bottomNavigation.setIndex(_currentTabIndex);
+    // bottomNavigation.setIndex(_currentTabIndex);
 
     return BaseView<MouthSelectionModel>(
         builder: (context, model, child) => Scaffold(
-          backgroundColor: backgroundColor,
+          // backgroundColor: backgroundColor,
           body: Scaffold(
             body: Column(
               mainAxisSize: MainAxisSize.min,
@@ -58,8 +60,9 @@ class MouthNavigationBar extends StatefulWidget {
 class _MouthNavigationBarState extends State<MouthNavigationBar>  {
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
     return Container(
-      color: Color(0xFF303030),
+      color: (theme.getTheme() == lightTheme) ? Color(0xFF303030) : Color(0xFAFFFFFF),
       height: 80,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,7 +86,7 @@ class _MouthNavigationBarState extends State<MouthNavigationBar>  {
                     "My Collection",
                     style: TextStyle(
                       fontSize: 18,
-                      color: Color(0xFFFFFFFF),
+                      color: (theme.getTheme() == darkTheme) ? Color(0xFF303030) : Color(0xEFFFFFFF),
                       fontFamily: 'Arciform', 
                     ),
                   ),
@@ -100,10 +103,10 @@ class _MouthNavigationBarState extends State<MouthNavigationBar>  {
                     bottom: 10, // space between underline and text
                   ),
                   decoration: BoxDecoration(
-                      border: Border(bottom: BorderSide(
-                        color: Color(0xFF8ACDEF),  // Text colour here
-                        width: 3.0, // Underline width
-                      ))
+                    border: Border(bottom: BorderSide(
+                      color: Color(0xFF8ACDEF),  // Text colour here
+                      width: 3.0, // Underline width
+                    ))
                   ),
                   child: Text(
                     "Customise Mouth",
@@ -130,7 +133,7 @@ Widget selectMouthText = Container(
     'Select Mouth',
     style: TextStyle(
       fontSize: 20,
-      color: Color(0xff303030),
+      // color: Color(0xff303030),
     ),
     textAlign: TextAlign.center,
   ),
@@ -142,7 +145,7 @@ Widget titleSection = Container(
     'Choose Background Colour',
     style: TextStyle(
       fontSize: 20,
-      color: Color(0xff303030),
+      // color: Color(0xff303030),
     ),
     textAlign: TextAlign.center,
   ),
@@ -156,12 +159,11 @@ class MouthSelectionGrid extends StatefulWidget {
   _MouthSelectionGridState createState() => _MouthSelectionGridState();
 }
 
-MouthSelectionModel mouthSelectionModel = new MouthSelectionModel();
-
 class _MouthSelectionGridState extends State<MouthSelectionGrid> {
   @override
   Widget build(BuildContext context) {
-    images = mouthSelectionModel.getImageList();
+    images = collectionModel.getImageList();
+    colours = collectionModel.getColourList();
 
     return Scaffold(
       body: Stack(
@@ -180,18 +182,16 @@ class _MouthSelectionGridState extends State<MouthSelectionGrid> {
                     crossAxisCount: 3,
                       children: List.generate(images.length, (index) {
                         return Card(
-                          shape: Border.all(color: (mouthSelectionModel.getSelectedListAtIndex(index)) ? Color(0xffffb8b8) : Colors.transparent, width: 3),
+                          shape: Border.all(color: (mouthSelectionModel.getSelectedIndex() == index) ? Color(0xFFFFB8B8) : Color(0xAAE0E0E0), width: (mouthSelectionModel.getSelectedIndex() == index) ? 3 : 0.5),
                             child: InkWell(
                               onTap: (() {
                                 setState(() {
-                                  mouthSelectionModel.setMouthIndex(index);
-                                  mouthSelectionModel.clearSelectedList();
-                                  mouthSelectionModel.setSelectedListAtIndex(index, true);
+                                  mouthSelectionModel.setSelectedIndex(index);
                                 });
                               }), 
-                              child: Image.asset(images[index]), 
+                              child: Image.memory(base64.decode(images[index])), 
                             ),
-                          color: Color(int.parse(mouthSelectionModel.getColoursListAtIndex(index)))
+                          color: Color(int.parse(colours[index]))
                         );
                       }),
                   ),
@@ -218,7 +218,6 @@ class ColourSelectionGrid extends StatefulWidget {
 class _ColourSelectionGridState extends State<ColourSelectionGrid> {
   @override
   Widget build(BuildContext context) {
-    // MouthSelectionModel mouthSelectionModel = new MouthSelectionModel();
     bgColours = mouthSelectionModel.getBgColourList();
 
     return Scaffold(
@@ -239,11 +238,13 @@ class _ColourSelectionGridState extends State<ColourSelectionGrid> {
                     crossAxisCount: 6,
                       children: List.generate(bgColours.length, (index) {
                         return Card(
+                          shape: Border.all(color: Color(0xAAE0E0E0), width: 0.5),
                           color: Color(int.parse(bgColours[index])),
                           child: InkWell(
                             onTap: () { 
                               setState(() {
-                                mouthSelectionModel.setColoursListAtIndex(mouthSelectionModel.getMouthIndex(), bgColours[index]);
+                                collectionModel.setColoursListAtIndex(mouthSelectionModel.getSelectedIndex(), bgColours[index]);
+                                collectionModel.updateMouthpackBgColour(mouthSelectionModel.getSelectedIndex(), bgColours[index]);
                                 widget.updateState();
                               });
                             },

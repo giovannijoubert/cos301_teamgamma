@@ -1,7 +1,7 @@
-package Gamma.mouthpiece_app.mainfiles;
+package com.example.mouthpiece.mainfiles;
 
-import Gamma.mouthpiece_app.supportfiles.Complex;
-import Gamma.mouthpiece_app.supportfiles.FFT;
+import com.example.mouthpiece.supportfiles.Complex;
+import com.example.mouthpiece.supportfiles.FFT;
 
 public class FFTProcessor {
     public double[] calculateFFT(byte[] stream) {

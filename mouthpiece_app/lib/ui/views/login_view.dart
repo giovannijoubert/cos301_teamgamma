@@ -1,91 +1,94 @@
-
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:mouthpiece_app/ui/views/home_view.dart';
-import 'package:mouthpiece_app/ui/views/register_view.dart';
-import 'package:mouthpiece_app/ui/views/voice_training_view.dart';
+import 'package:mouthpiece/ui/views/choose_mode_view.dart';
+import 'package:mouthpiece/ui/views/home_view.dart';
+import 'package:mouthpiece/ui/views/register_view.dart';
+import 'package:mouthpiece/ui/views/voice_training_view.dart';
 import '../../core/enums/viewstate.dart';
 import '../../core/viewmodels/login_model.dart';
 import '../../ui/shared/app_colors.dart';
 import '../../ui/shared/text_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'base_view.dart';
-
+ 
 class LoginView extends StatefulWidget {
   @override
   _LoginViewState createState() => _LoginViewState();
 }
-
+ 
 class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  String _email;
+  String _userName;
   String _password;
+  bool circularDisplay = false;
 
-Widget _buildEmail() {
+  Widget _buildName() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Email'),
-      validator: (String value) {
+      decoration: InputDecoration(labelText: 'Username'),
+      // maxLength: 10,
+      /* validator: (String value) {
         if (value.isEmpty) {
-          return 'Email is required';
+          return 'Username is Required';
         }
-
-        /* if(EmailValidator.Validate(value, true))
-        {
-          return 'Please enter a valid email Address';
-        } */
-
-        if (!RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?").hasMatch(value)) {
-          return 'Please enter a valid email address';
-        }
-
         return null;
-      },
+      }, */
       onSaved: (String value) {
-        _email = value;
+        _userName = value;
       },
     );
   }
 
-Widget _buildPassword() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Password'),
-      keyboardType: TextInputType.visiblePassword,
-      obscureText: true,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Password is required';
-        }
-        if (value.length < 4 ) {
-          return 'Password is too short';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        _password = value;
-      },
-    );
-  }
-
+  Widget _buildPassword() {
+      return TextFormField(
+        decoration: InputDecoration(labelText: 'Password'),
+        keyboardType: TextInputType.visiblePassword,
+        obscureText: true,
+        /* validator: (String value) {
+          if (value.isEmpty) {
+            return 'Password is required';
+          }
+          if (value.length < 4 ) {
+            return 'Password is too short';
+          }
+          
+          return null;
+        }, */
+        onSaved: (String value) {
+          _password = value;
+        },
+      );
+    }
 
   Future _loginCommand(model) async{
-      var loginSuccess = await model.login(_email, _password);
-      if(loginSuccess){
-           SharedPreferences prefs = await SharedPreferences.getInstance();
-           prefs.setBool('loggedIn', true);
-           Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
-       }else{
-            Navigator.push(context, PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) => LoginView(),
-            ),);
-            throw Exception('Invalid email or Invalid password provided'); 
-           
-        }
+    var loginSuccess = await model.login("john123", "John123");
+    if(loginSuccess){
+      Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
+    } else {
+      /* Navigator.push(context, PageRouteBuilder(
+        pageBuilder: (context, animation1, animation2) => LoginView(),
+      ),); */
+      setState(() {
+        circularDisplay = false;
+      });
+
+      Fluttertoast.showToast(
+        msg: "Incorrect username or password.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Color(0xff303030),
+        textColor: Colors.white,
+        fontSize: 16.0
+      );
+    }
   }
+
   @override
    Widget build(BuildContext context) {
-    precacheImage(AssetImage("assets/images/wave.png"), context);
+    // precacheImage(AssetImage("assets/images/wave.png"), context);
+
     return BaseView<LoginModel>(
       builder: (context, model, child) => Scaffold(
         body: Padding(
@@ -94,44 +97,58 @@ Widget _buildPassword() {
             children: <Widget>[
               LoginHeader(),
               Container(
-                  child: Form(
-                      key: formKey,
-                      child: Column(
-                        children: <Widget> [ 
-                            _buildEmail(),
-                            _buildPassword()
-                        ],
-                      ),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: <Widget> [ 
+                      _buildName(),
+                      _buildPassword()
+                    ],
                   ),
+                ),
               ),
               ForgotPassword(),
-              model.state == ViewState.Busy ? 
-              Center (child: CircularProgressIndicator()) :  
-              Container(
-                height: 50,
-                width: 325,
-                margin: const EdgeInsets.only(top: 20.0),
-                  padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
-                  child: RaisedButton(
-                    textColor: Colors.white,
-                    color: mainTextColor,
-                    child: Text(
-                    'Login',
-                    style: TextStyle(fontSize: 15,
-                    fontFamily: 'Arciform'),
-                  ),
-                  onPressed: (){
-                      final form = formKey.currentState;
+              Visibility(
+                child: Center(child: CircularProgressIndicator()),
+                visible: circularDisplay, 
+              ),
+              Visibility(
+                visible: !circularDisplay,
+                child: Container(
+                  height: 50,
+                  width: 325,
+                  margin: const EdgeInsets.only(top: 20.0),
+                    padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
+                    child: RaisedButton(
+                      textColor: Colors.white,
+                      color: mainTextColor,
+                      child: Text(
+                      'Login',
+                      style: TextStyle(fontSize: 15,
+                      fontFamily: 'Arciform'),
+                    ),
+                    onPressed: (){
+                      setState(() {
+                        circularDisplay = true;
+                      });
+                        FocusScopeNode currentFocus = FocusScope.of(context);
 
-                      if(form.validate()){
-                        form.save();
-                        _loginCommand(model);
-                      }
-                  },
-                    shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(10.0),
+                        if (!currentFocus.hasPrimaryFocus) {
+                          currentFocus.unfocus();
+                        }
+
+                        final form = formKey.currentState;
+
+                        if(form.validate()){
+                          form.save();
+                          _loginCommand(model);
+                        }
+                    },
+                      shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10.0),
+                    )
                   )
-                )
+                ),
               ),
               SkipLink(),  
               SignUpAccountLink(),
@@ -279,7 +296,7 @@ class SkipLink extends StatelessWidget {
               ),
               onPressed: () {
                 Navigator.push(context, PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
+                    pageBuilder: (context, animation1, animation2) => ChooseModeView(),
                 ),);
               },
             )

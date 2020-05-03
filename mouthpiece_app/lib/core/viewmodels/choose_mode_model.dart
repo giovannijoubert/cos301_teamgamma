@@ -1,4 +1,5 @@
 import 'package:http/http.dart';
+import 'package:mouthpiece/core/services/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../ui/views/choose_mode_view.dart';
 import '../enums/viewstate.dart';
@@ -9,39 +10,37 @@ import '../../locator.dart';
 
 class ChooseModeModel extends BaseModel  {
   var test;
-//bool isSet= getisVolSet();
- static Color volumeMode = Colors.black;
- static Color formantMode = Colors.black;
+  //bool isSet= getisVolSet();
+  static Color volumeMode = Colors.black;
+  static Color formantMode = Colors.black;
+  Api _api = locator<Api>();
 
   void setIsVolSet(bool value) async{
     SharedPreferences sp = await SharedPreferences.getInstance();
     sp.setBool('isVolSet', value);
     if(value){
       test = "vol set";
-      volumeMode=Colors.blue;
-      formantMode=Colors.black;
+      volumeMode = Colors.blue;
+      formantMode = Colors.black;
     }
     else
     {
       test = "vol not set";
-      volumeMode=Colors.black;
-      formantMode=Colors.blue;
+      volumeMode = Colors.black;
+      formantMode = Colors.blue;
     }
     //isSet = value;
     
   }
 
   Future<bool> getIsVolSet() async  {
-   SharedPreferences sp= await SharedPreferences.getInstance();
-  bool isVSet=sp.getBool('isVolSet');
-  print("Value from isVolset in sharedPref is :"+isVSet.toString());
-  test = isVSet;
-  return isVSet;
+    SharedPreferences sp= await SharedPreferences.getInstance();
+    bool isVSet=sp.getBool('isVolSet');
+    print("Value from isVolset in sharedPref is :"+isVSet.toString());
+    test = isVSet;
+    return isVSet;
   }
-
-
-
-
+  
   void updateUserMode(String newMode) async {
     // Update in .db  as well
     if(newMode=="Volume") {
@@ -50,9 +49,22 @@ class ChooseModeModel extends BaseModel  {
     }
     else 
     {
+      newMode = "Formants";
       test = "no volume string";
       setIsVolSet(false);
     }
+
+    SharedPreferences sp= await SharedPreferences.getInstance();
+    String url = 'http://teamgamma.ga/api/umtg/update';
+
+    Map map = {
+      "option": "listening-mode",
+      "username" : sp.getString("username"),
+      "jwt" : sp.getString("jwt"),
+      "listening_mode" : newMode
+    };
+
+    await _api.updateImage(url, map);
     
   }
 
