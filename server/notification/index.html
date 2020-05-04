@@ -8,10 +8,10 @@
         <script src="js/jsMethods.js"></script>
     </head>
     <body onload="loadTemplates()">
-        Testing notification login
+       <!-- Testing notification login
         Feel free to delete this file
         <button onclick="">Test</button>
-
+-->
     <table>
         <th colspan="2">Send a Notification</th>
         <tr>
@@ -36,9 +36,10 @@
                 </span>
 
             </td>
-            <td>
-                <select id="headings" required>
+            <td id="headingCell">
+                <select id="headings" onchange="headSelector()">
                     <option value="0">Please select a heading</option>
+                    <option value="Custom">Custom</option>
                 </select>
             </td>
         </tr>
@@ -48,9 +49,10 @@
                     <a class="required">*</a>
                 </span>
             </td>
-            <td>
-                <select id="message" required>
-                    <option value="0">Please select a heading</option>
+            <td id="messageCell">
+                <select id="message" onchange="msgSelector()">
+                    <option value="0">Please select a message</option>
+                    <option value="Custom">Custom</option>
                 </select>
             </td>
         </tr>

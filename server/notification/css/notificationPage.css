@@ -17,7 +17,8 @@ table{
   border-width: 4px;
   padding: 25px;
   display:inline-block;
-  position: relative;
+  position: absolute;
+  left: 20%;
 }
 
 td{
@@ -27,6 +28,7 @@ td{
   height: 70px;
   border-bottom-color: limegreen; 
   border-bottom-style: outset;
+  width:350px;
 }
 
 .required{
@@ -35,7 +37,7 @@ td{
 }
 span{
   color: cyan;
-  text-align: center;
+  text-align: right;
   display: block;
   right: 0px;
 }
@@ -47,4 +49,14 @@ button{
   font-size: 105%;
   border-radius: 10px;
   margin: 5px;
+}
+
+select,input,textarea{
+  width: 300px;
+  max-width: 300px;
+}
+
+.inputBox{
+  margin-top: 10px;
+  height:50px;
 }
