@@ -1,10 +1,11 @@
 <?php
-    if (array_key_exists("api", $_POST))//&& trim($_GET["q"]) == 'link1');
+
+    if (isset($_POST["key"]))//=="3e30630d-239b-488d-8938-b9305dff3e54"))//&& trim($_GET["q"]) == 'link1');
     {
-        $key =  "kd*&TG>LO(*hfksvbs.,sybKUHNUI^*87y*&6T.l(8yhngbt7u,7ubtgfr7r666ol.0p9n";
-        $api = $_POST['api'];
+       // session_start();
+        $key =  "3e30630d-239b-488d-8938-b9305dff3e54";
+        $api = $_POST["key"];
         if($api===$key) {
-            $email = $_POST['email'];
 
             if (isset($_POST['getMessages'])) {
                 $filename = "template notifications.json";
@@ -22,22 +23,36 @@
             } else if (isset($_POST["type"])) {
 
                 $notificationType = $_POST["type"];
+               // $email = $_POST['email'];
+                if ($notificationType === 1 && !isset($_POST['email']))
+                {
 
-                if ($notificationType === 1 && !isset($_POST['email'])) {
-
-                    echo "Error! Please Enter an email address";
-                } else if ($notificationType === 2 && !isset($_POST['deviceID'])) {
+                    echo json_encode(array("Message"=>"Error! Please Enter an email address"));
+                }
+                else if ($notificationType === 2 && !isset($_POST['deviceID']))
+                {
                     echo "Error! Please Enter a device ID";
-                } else if ($notificationType > 2) {
-                    if (!isset($_POST['email'])) {
+                }
+                else if ($notificationType > 2) //Both
+                {
+                    if (!isset($_POST['email']))
+                    {
                         header("HTTP/1.1 200 Success",true,200);
                         header('Content-Type: text/json');
-                        echo "Error! Please Enter an email address";
-                    }
+                        echo json_encode(array("Message"=> "Error! Please Enter an email address"));
+                    }else
                     if (!isset($_POST['deviceID'])) {
                         header("HTTP/1.1 200 Success",true,200);
                         header('Content-Type: text/json');
-                        echo "Error! Please Enter a device ID";
+                        echo json_encode(array("Message"=> "Error! Please Enter a device ID"));
+                    }
+                    else{
+                        $email = $_POST['email'];
+                        $message = $_POST['msg'];
+                        $deviceID = $_POST['deviceID'];
+                        $heading = $_POST['heading'];
+
+                        sendNotification($notificationType, $email, $message, $heading, $deviceID);
                     }
                 } else {
                     $email = $_POST['email'];
@@ -47,6 +62,9 @@
 
                     sendNotification($notificationType, $email, $message, $heading, $deviceID);
                 }
+            }
+            else{
+                echo json_encode(array("Message"=> "What's happening?"));
             }
 
             /**
@@ -100,10 +118,10 @@
                 //if (isset("testEmail",$_POST))
             {
                 if ($email == "") {
-                    echo "Please enter email as 1st param";
+                    echo json_encode(array("Message"=> "Please enter email as 1st param"));
                     die("Please enter email as 1st param");
                 } else if ($msg == "") {
-                    echo "Please enter message as 2nd param";
+                    echo json_encode(array("Message"=> "Please enter message as 2nd param"));
                     die("Please enter email as 2nd param");
                 } else {
                     $emailaddr = 'u15175295@tuks.co.za';
@@ -120,9 +138,7 @@
                     $headers .= 'From: <mail.teamgamma.ga>' . "\r\n";
                     $headers .= 'Cc: mail.teamgamma.ga' . "\r\n";
                     mail($email, $subject, $msg, $headers);
-
                 }
-
             }
 
             /**
@@ -135,7 +151,7 @@
             {
                 echo "<b><i>Sending Network notification</i></b>";
                 if ($message == "") {
-                    echo "Please enter email as 2nd param";
+                    echo json_encode(array("Message"=> "Please enter email as 2nd param"));
                     die("Please enter email as 2nd param");
                 }
                 $url = 'https://fcm.googleapis.com/fcm/send';
@@ -166,7 +182,7 @@
                 $result = curl_exec($ch);
                 if ($result === FALSE) {
                     die('FCM Send Error: ' . curl_error($ch));
-                    echo('FCM Send Error: ' . curl_error($ch));
+                    echo json_encode(array("Message"=>('FCM Send Error: ' . curl_error($ch))));
                 }
                 curl_close($ch);
                 echo $result;
@@ -183,12 +199,12 @@
         else{
             header("HTTP/1.1 401 Unauthorized",true,401);
             //header('Content-Type: text/json');
-            echo "Incorrect API key";
+            echo json_encode(array("Message"=> "Incorrect API key"));
         }
 
     }
     else{
         header("HTTP/1.1 403 Forbidden",true,403);
         //header('Content-Type: text/json');
-        echo "Error Incorrect parameters";
+        echo json_encode(array("Message"=> "Error Incorrect parameters"));
     }
