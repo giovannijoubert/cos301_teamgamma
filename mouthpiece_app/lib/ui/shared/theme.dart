@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 final darkTheme = ThemeData(
@@ -41,13 +42,19 @@ final lightTheme = ThemeData(
 
 class ThemeChanger with ChangeNotifier {
   ThemeData _themeData;
+  // final SharedPreferences prefs;
 
-  ThemeChanger(this._themeData);
+  ThemeChanger(this._themeData) {
+    // print("start_up");
+    // if(prefs.getKeys().contains('isVolSet'))
+    //   _themeData = prefs.getString("theme") == "Light" ? lightTheme : darkTheme;
+    // else 
+    //   _themeData = lightTheme;
+  }
 
   getTheme() => _themeData;
   setTheme(ThemeData theme) {
     _themeData = theme;
-
     notifyListeners();
   }
 }

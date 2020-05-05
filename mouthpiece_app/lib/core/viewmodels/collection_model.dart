@@ -17,6 +17,7 @@ class CollectionModel extends BaseModel {
   SharedPreferences prefs;
 
   static List<dynamic> collection;
+  static List<dynamic> collectionURL= List<dynamic>();
   static List<String> colourList = List<String>();
   static List<String> imageList = List<String>();
   static List<String> idList = List<String>();
@@ -27,8 +28,8 @@ class CollectionModel extends BaseModel {
     if (prefs.getBool("loggedIn") ?? false) {
       idList = await getProfileMouthpackIdList();
       List<dynamic> mouthpacks = await getUserMouthpacks(idList);
-      // print(mouthpacks);
-      collection = jsonDecode(mouthpacks.toString());
+      // prRint(mouthpacks);
+      collection = await jsonDecode(mouthpacks.toString());
       // print(collection);
 
       await encodeImages();
@@ -105,15 +106,19 @@ class CollectionModel extends BaseModel {
     List<String> mouthpackCollection = List<String>();
 
     for (int i = 0; i < idList.length; i++) {
-      String mouthpack = await _sharingapi.getMouthpack(idList[i]);
-      mouthpackCollection.add(mouthpack);
+      // String mouthpack = await _sharingapi.getMouthpack(idList[i]);
+      // print(mouthpack);
+      mouthpackCollection.add(await _sharingapi.getMouthpack(idList[i]));
+      // mouthpackCollection.add(mouthpack);
     }
 
     return mouthpackCollection;
   }
 
   Future<void> encodeImages() async {
+    // print(collection);
     for (int i = 0; i < collection.length; i++) {
+      collectionURL.add(collection[i][0]["images"]);
       for (int j = 0; j < collection[i][0]["images"].length; j++) {
         print(collection[i][0]["images"][j]);
         await http.get(
@@ -124,6 +129,14 @@ class CollectionModel extends BaseModel {
       }
     }
   }
+
+  Future<String> getCollectionURLAtIndex(int row, int col) async{
+
+    String url = collectionURL[row-defaultMouthpacks.length][col];
+    // print(url);
+   return url;
+  // 
+}
 
   String getColoursListAtIndex(int index) {
     return colourList[index];

@@ -484,7 +484,8 @@ class _MouthCardState extends State<MouthCard> {
                                     for (int i = 0; i < totalImages; i++) {
                                       // print(base64.decode(images[0]));
                                       var index = i+1;
-                                      await ImageDownloader.downloadImage(images[i],
+                                      String url = await collectionModel.getCollectionURLAtIndex(mouthpackIndex, i);
+                                      await ImageDownloader.downloadImage(url,
                                       destination: AndroidDestinationType.directoryDownloads..subDirectory('$title/mouth-$index.png')); 
                                     }
                                   },

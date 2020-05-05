@@ -13,9 +13,14 @@ import 'core/models/user.dart';
 import 'core/services/Permissions/permissionRequest.dart';
 import 'dart:typed_data';
 import 'package:file_utils/file_utils.dart';
+
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
+  // final prefs = await SharedPreferences.getInstance();
   runApp(
+    // MouthPiece()
     ChangeNotifierProvider<ThemeChanger>(
       builder: (_) => ThemeChanger(lightTheme),
       child: new MouthPiece(),
@@ -23,35 +28,35 @@ void main() async {
   );
 }
 
-changeTheme() async {
-    
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // final theme = Provider.of<ThemeChanger>(context);
-    bool loggedIn = await getLoggedIn();
-    if (!loggedIn)
-      return "Light";
-    else
-      return prefs.getString("theme");
-    
-  }
+// changeTheme(BuildContext context) async {
+//   final theme = Provider.of<ThemeChanger>(context);  
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   bool loggedIn = await getLoggedIn();
+//   if (!loggedIn) 
+//     theme.setTheme(lightTheme);
+//   else
+//     theme.setTheme(prefs.getString("theme") == "Light" ? lightTheme : darkTheme);  
+// }
 
 
 // ThemeChanger theme;
 
 class MouthPiece extends StatefulWidget {
+  // final ThemeChanger theme;
+  // const MouthPiece(Key key, this.theme) : super(key: key);
   @override
   _MouthPieceState createState() => _MouthPieceState();
 }
 
 class _MouthPieceState extends State<MouthPiece> {
 
-  Future<void>  createDir() async {  // Creates default directory for mouthpacks as well as prepopulates from assets
+  Future<void> createDir() async {  // Creates default directory for mouthpacks as well as prepopulates from assets
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLogSet = prefs.getKeys().contains('loggedIn');
   if(!isLogSet)
     prefs.setBool('loggedIn', false);
           
-  var  permission= await requestPermission(); // get All permissions required from now
+  await requestPermission(); // get All permissions required from now
   // final String path = await _localPath;
   // final Directory dir = await Directory('$path/defaultMouthpacks').create(recursive: true);
 
@@ -78,14 +83,14 @@ class _MouthPieceState extends State<MouthPiece> {
     return dir.path;
   } */
 
-   static  Future<bool>  requestPermission() async {
+  static  Future  requestPermission() async {
     permissionRequest pR = new permissionRequest();
       
     try {
-      bool StoragePermission = await  pR.requestStoragePermission();
-      bool Microphonepermission = await pR.requestMicrophonePermission();
+      bool storagePermission = await  pR.requestStoragePermission();
+      bool microphonepermission = await pR.requestMicrophonePermission();
       // Add other permissions as needed
-      if(Microphonepermission && StoragePermission)
+      if(microphonepermission && storagePermission)
       {
         print("Permission for microphone and Storage has been granted from main");
       }
@@ -93,15 +98,13 @@ class _MouthPieceState extends State<MouthPiece> {
       {
         await new Future.delayed(new Duration(seconds : 1));
         print("Full permission not granted in main");
-        bool StoragePermission = await  pR.requestStoragePermission();
-        bool Microphonepermission = await pR.requestMicrophonePermission();
+        storagePermission = await  pR.requestStoragePermission();
+        microphonepermission = await pR.requestMicrophonePermission();
       }
       await new Future.delayed(new Duration(seconds : 1));
-  } catch(err)
-  {
-    print ("Permission error"+err);
-  }
-  
+    } catch(err) {
+      print ("Permission error"+err);
+    }
   }
 
 
@@ -109,14 +112,13 @@ class _MouthPieceState extends State<MouthPiece> {
   @override
   void initState() {
     //var  permission=  requestPermission(); 
-     
     super.initState();
     createDir(); 
   }
   
   Widget build(BuildContext context) {
-    precacheImage(AssetImage("assets/images/wave.png"), context);
-    final theme = Provider.of<ThemeChanger>(context);
+    
+    final theme = Provider.of<ThemeChanger>(context);  
     return FutureBuilder<bool>(
       future: getLoggedIn(),
       builder: (context, snapshot){
@@ -149,12 +151,7 @@ Future<bool> getLoggedIn() async {
   bool loggedIn = prefs.getBool('loggedIn');
   // bool loggedIn = false;
   await prefs.setInt('tabIndex', 0);
-  await prefs.setString('theme', "Light");
-  await prefs.setBool('navVal', loggedIn);
-  // if (prefs.getString("theme") == "Light")
-  //   theme.setTheme(lightTheme);
-  // else
-  //   theme.setTheme(darkTheme);
+
   
   bool isModeSet = prefs.getKeys().contains('isVolSet');
   if(!isModeSet)
