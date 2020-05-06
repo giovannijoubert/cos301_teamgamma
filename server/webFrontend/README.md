@@ -1,13 +1,14 @@
 # COS301 Team Gamma
-<http://www.teamgamma.ga>
+<http://www.teamgamma.ga/webfrontend/html/Explore>
 
 ## **Web Frontend**
 
 **Documentation**
 * See documentaion folder in master branch
 
-**Project Managment Board**
-:https://app.clickup.com/2502552/v/l/6-15286536-1
+**Project Managment Tools**
+Clickup: https://app.clickup.com/2502552/v/b/li/15286536
+Slack: https://app.slack.com/client/TUXPQA0NR/CUZKK2R71
 
 **Requirement Overview**
 * We are required to design and implement the frontend website for the mouthpiece application. The website needs to be easy to navigate as well as being visually appealing. The website will interact thorugh API calls with the user manangement module, to validate that users exist as well as confirm the relevant security information. 
@@ -22,6 +23,7 @@
 |**Position** |Final year BSc Computer Science|
 |**Interests** |Graphic Development, Gaming, Mountain Biking, General Computer Technological Developments|
 |**Skills**|C++, Java, Test Driven Development, 3DS Max, Web Development: HTML, CSS, AJAX, JSON, Mongo DB, Bootstrap, JavaScript, SQL|
+|**Project Tasks**| ... |
 
 |Team Member | Details | 
 | :---         | :---         |  
@@ -31,6 +33,7 @@
 |**Position** |Final year BSc Information and Knowledge Systems|
 |**Interests** |Data Science, Data Analysis, Reading, Exercising|
 |**Skills**|C++, Java, Web Development: HTML, CSS, AJAX, JSON, Mongo DB, Bootstrap, JavaScript, SQL|
+|**Project Tasks**| Collections page, Login and Register pages, made small changes to all pages when necessary|
 
 |Team Member | Details | 
 | :---         | :---         |  
@@ -39,6 +42,7 @@
 |**Overview**|I am an outgoing person who enjoys trying new things. I am a hard worker and I am always eager to learn something new.|
 |**Interests** |Website Development, Content Creation|
 |**Skills**|C++, Java,Web Development: HTML, CSS, PHP, Bootstrap, JavaScript, SQL|
+|**Project Tasks**| ... |
 
 |Team Member | Details | 
 | :---         | :---         |   
@@ -48,6 +52,7 @@
 |**Position** |Final year BSc Computer Science|
 |**Interests** |Web Development, UX/UI (Web Design), Reading|
 |**Skills**|C++, Java, Web Development: HTML, CSS, Bootstrap, VueJS, JavaScript, PHP, SQL, Mongo DB|
+|**Project Tasks**| ... |
 
 |Team Member | Details | 
 | :---         | :---         |   
@@ -56,7 +61,8 @@
 |**Overview**|I am a self motivated and hardworking computer science student with a longtime passion for technology. |
 |**Position** |Final year BSc Computer Science|
 |**Interests** |Web Development, Android development|
-|**Skills**|C++, Java, Web Development: HTML, CSS, JavaScript, PHP, SQL
+|**Skills**|C++, Java, Web Development: HTML, CSS, JavaScript, PHP, SQL|
+|**Project Tasks**| ... |
 
 
 |Team Member | Details | 
@@ -66,4 +72,5 @@
 |**Overview**|I am a passionate, hard working and dependable person. I love experimenting with code and trying out new amazing things I can do especially with JavaScript. |
 |**Position** |Final year BSc Computer Science|
 |**Interests** |Web Development, Android development|
-|**Skills**|C++, Java, Web Development: HTML, CSS, JavaScript, PHP, SQL
+|**Skills**|C++, Java, Web Development: HTML, CSS, JavaScript, PHP, SQL |
+|**Project Tasks**| ... |
