@@ -28,8 +28,8 @@ class CollectionModel extends BaseModel {
     if (prefs.getBool("loggedIn") ?? false) {
       idList = await getProfileMouthpackIdList();
       List<dynamic> mouthpacks = await getUserMouthpacks(idList);
-      // print(mouthpacks);
-      collection = jsonDecode(mouthpacks.toString());
+      // prRint(mouthpacks);
+      collection = await jsonDecode(mouthpacks.toString());
       // print(collection);
 
       await encodeImages();
@@ -91,7 +91,7 @@ class CollectionModel extends BaseModel {
   Future<List> getProfileMouthpackIdList() async {
     prefs = await SharedPreferences.getInstance();
     var requestInfo = prefs.getString('userInfo');
-    var userInfo = jsonDecode(requestInfo);
+    var userInfo = await jsonDecode(requestInfo);
 
     List<String> idList = List<String>();
 
@@ -106,13 +106,14 @@ class CollectionModel extends BaseModel {
     List<String> mouthpackCollection = List<String>();
 
     for (int i = 0; i < idList.length; i++) {
-      String mouthpack = await _sharingapi.getMouthpack(idList[i]);
-      mouthpackCollection.add(mouthpack);
+      // String mouthpack = await _sharingapi.getMouthpack(idList[i]);
+      // print(mouthpack);
+      mouthpackCollection.add(await _sharingapi.getMouthpack(idList[i]));
+      // mouthpackCollection.add(mouthpack);
     }
 
     return mouthpackCollection;
   }
-
   Future<void> encodeImages() async {
     for (int i = 0; i < collection.length; i++) {
       collectionURL.add(collection[i][0]["images"]);
@@ -185,7 +186,7 @@ class CollectionModel extends BaseModel {
 
         String url = 'https://teamgamma.ga/api/umtg/login';
         await _api.fetchUser(url, map, prefs.getString("username"));
-        homeModel.setUpdate(true);
+        homeModel.setUpdateVal(true);
       });
     }
   }
@@ -204,7 +205,7 @@ class CollectionModel extends BaseModel {
 
         String url = 'https://teamgamma.ga/api/umtg/login';
         await _api.fetchUser(url, map, prefs.getString("username"));
-        homeModel.setUpdate(true);
+        homeModel.setUpdateVal(true);
         result = true;
       });
     } 

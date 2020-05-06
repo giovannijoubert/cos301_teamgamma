@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -48,7 +49,8 @@ class _HomeViewState extends State<HomeView> {
         return BaseView<HomeModel>(
           builder: (context, model, child) => Scaffold(
           // backgroundColor: backgroundColor,
-            body: (model.state == ViewState.Busy) ? Center(child: CircularProgressIndicator()) : Home(),
+            body: (model.state == ViewState.Busy) ? Container(
+              child: Center(child: CircularProgressIndicator())) : Home(),
             bottomNavigationBar: BottomNavigation(),
           ),
       //   );
@@ -165,10 +167,13 @@ class _MouthSelectedBtnState extends State<MouthSelectedBtn> with TickerProvider
 
   AnimationController _controller;
   Animation _widthAnimation;
+  Timer timer;
 
   @override
   void initState() {
     super.initState();
+
+    
 
     _controller = AnimationController(
       vsync: this,
@@ -194,6 +199,7 @@ class _MouthSelectedBtnState extends State<MouthSelectedBtn> with TickerProvider
     ));
   }
 
+
   @override
   Widget build(BuildContext context) {
     images = collectionModel.getImageList();
@@ -211,7 +217,7 @@ class _MouthSelectedBtnState extends State<MouthSelectedBtn> with TickerProvider
           });
         },
         child: Hero(
-          tag: '',
+          tag: DateTime.now().toIso8601String(),
           flightShuttleBuilder: (
             BuildContext flightContext,
             Animation<double> animation,

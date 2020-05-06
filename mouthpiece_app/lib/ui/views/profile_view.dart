@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:mouthpiece/core/viewmodels/choose_mode_model.dart';
 import 'package:mouthpiece/core/viewmodels/collection_model.dart';
 import 'package:mouthpiece/ui/shared/theme.dart';
 import 'package:mouthpiece/ui/views/choose_mode_view.dart';
@@ -33,6 +34,7 @@ bool editingBool = false;
 _ProfileViewState globalParent;
 var bytes;
 BottomNavigation bottomNavigation = new BottomNavigation();
+ChooseModeModel modeModel = new ChooseModeModel();
 
 class ProfileView extends StatefulWidget {
   @override
@@ -485,20 +487,22 @@ class SignOutButton extends StatelessWidget {
       child: RaisedButton(
         onPressed: () async {
           CollectionModel collectionModel = new CollectionModel();
-          // collectionModel.clearLists();
-          bottomNavigation.setIndex(0);
           prefs = await SharedPreferences.getInstance();
-          prefs.remove('username');
-          prefs.remove('email');
-          prefs.remove('theme');
-          prefs.remove('pass');
-          prefs.remove('profile_image');
-          prefs.remove('loggedIn');
-          prefs.remove('userInfo');
+          await prefs.remove('isVolSet');
+          await prefs.remove('username');
+          await prefs.remove('email');
+          await prefs.remove('pass');
+          await prefs.remove('profile_image');
+          await prefs.remove('userInfo');
           prefs.remove('jwt');
+          bottomNavigation.setIndex(0);
           await prefs.setInt('tabIndex', 0);
-          prefs.setBool('navVal', false);
-          // await _theme.setTheme(lightTheme);
+          await prefs.setBool('loggedIn', false);
+          await prefs.setBool('navVal', false);
+          await prefs.setString("theme", "Light");
+          await _theme.setTheme(lightTheme);
+          await collectionModel.clearLists();
+          modeModel.clearMode();
           Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => LoginView()), (Route<dynamic> route) => false);
         },
         // padding: EdgeInsets.all(15),
@@ -531,8 +535,14 @@ class SignOutButton2 extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(95, 0, 95, 0),
       child: RaisedButton(
         onPressed: () async {
+          prefs = await SharedPreferences.getInstance();
           bottomNavigation.setIndex(0);
-          prefs.setBool('navVal', false);
+          await prefs.setInt('tabIndex', 0);
+          await prefs.setBool('navVal', false);
+          await prefs.setString("theme", "Light");
+          await _theme.setTheme(lightTheme);
+          prefs.remove('isVolSet');
+          modeModel.clearMode();
           Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => RegisterView()), (Route<dynamic> route) => false);
         },
         // padding: EdgeInsets.all(15),
@@ -608,10 +618,10 @@ class _BuildEmailState extends State<BuildEmail> {
           border: OutlineInputBorder(), 
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.grey,
+              color: Colors.blue,
             )
           ),
-          focusColor: Colors.grey
+          focusColor: Colors.blue
         ),
         initialValue: email,
         validator: (String value) {

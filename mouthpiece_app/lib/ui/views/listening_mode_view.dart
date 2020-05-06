@@ -251,7 +251,7 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
 
     return Material(
       child: Hero(
-        tag: 'blackBox',
+        tag: DateTime.now().toIso8601String(),
         createRectTween: _createRectTween,
         child: Container(
           color: Color(int.parse(colour)),

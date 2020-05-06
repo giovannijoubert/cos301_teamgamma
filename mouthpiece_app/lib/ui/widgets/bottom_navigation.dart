@@ -4,33 +4,32 @@ import 'package:mouthpiece/ui/views/collection_view.dart';
 import 'package:mouthpiece/ui/views/home_view.dart';
 import 'package:mouthpiece/ui/views/profile_view.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-int _currentTabIndex = 0;
 
 class BottomNavigation extends StatefulWidget {
+  static int _currentTabIndex = 0;
   void setIndex(int index) {
     _currentTabIndex = index;
   }
   
   @override
-  BottomNavigationState createState() => BottomNavigationState();
+  BottomNavigationState createState() => BottomNavigationState(_currentTabIndex);
 }
 
 class BottomNavigationState extends State<BottomNavigation> {
+  int _currentTabIndex;
+  BottomNavigationState(this._currentTabIndex);
+  BottomNavigation model = new BottomNavigation();
 
+  
   @override
   Widget build(BuildContext context) {
+    
     _onTap(int selectedIndex) {
       if (_currentTabIndex != selectedIndex) {
-      // setState(() {
-        _currentTabIndex = selectedIndex;
-     
-      // SharedPreferences prefs = await SharedPreferences.getInstance();
-      // print(prefs.getInt('tabIndex'));
-      
-      
-        // await prefs.setInt('tabIndex', selectedIndex);
+      setState(() {
+        model.setIndex(selectedIndex);
+    
         switch (selectedIndex) {
           case 0:
             Navigator.push(context, PageRouteBuilder(
@@ -49,7 +48,7 @@ class BottomNavigationState extends State<BottomNavigation> {
             break;
         }
       
-      //  });
+       });
        }
     }
     final theme = Provider.of<ThemeChanger>(context);
@@ -61,7 +60,6 @@ class BottomNavigationState extends State<BottomNavigation> {
             title: Text('Home', 
               style: TextStyle(
                 fontSize: 15,
-                // color: Color(0xff303030),
                 fontFamily: 'Helvetica',
               ),
             ),
@@ -71,7 +69,6 @@ class BottomNavigationState extends State<BottomNavigation> {
             title: Text('Collection', 
               style: TextStyle(
                 fontSize: 15,
-                // color: Color(0xff303030),
                 fontFamily: 'Helvetica',
               ),
             ),
@@ -81,7 +78,6 @@ class BottomNavigationState extends State<BottomNavigation> {
             title: Text('Profile', 
               style: TextStyle(
                 fontSize: 15,
-                // color: Color(0xff303030),
                 fontFamily: 'Helvetica',
               ),
             ),
