@@ -16,9 +16,9 @@
 			$response = $client->request('POST', 'http://teamgamma.ga/api/sharingapi.php', ['json' => 
 				[
 					'requestType' => 'upload',
-					'title' => 'UnitTestJared',
-					'category'=> 'TestJad',
-					'description'=> 'Unit testing upload',
+					'title' => 'UploadUnitTest',
+					'category'=> 'UnitTest',
+					'description'=> 'Uploading two images to test the APIs upload functionality.',
 					'mouthImages'=>
 					[
 						[
@@ -27,12 +27,43 @@
 						],
 						[
 							'formantLetters'=> 'ghf',
-							'imageData'=> $base64Image				]
+							'imageData'=> $base64Image
+						]
 					]
 				]			
 			]);
 			$this->assertEquals(200, $response->getStatusCode());
 			//Note that the API will still accept upload requests if no data is provided for: title, category, description and mouthImages.
+		}
+		
+		public function testPostDownload()
+		{
+			$client = new \GuzzleHttp\Client();
+			
+			$response = $client->request('POST', 'http://teamgamma.ga/api/sharingapi.php', ['json' => 
+				[
+					'requestType' => 'getAllMouthpacks'
+				]			
+			]);
+			$this->assertEquals(200, $response->getStatusCode());
+			//uncomment to view result
+			//echo $response->getBody();
+			
+			$response = $client->request('POST', 'http://teamgamma.ga/api/sharingapi.php', ['json' => 
+				[
+					'requestType' => 'getAllMouthpacks',
+					'filter'=>
+					[
+						'criteria'=> 'mouthpack_name',
+						'like'=> 'UploadUnitTest'							
+					],
+					'sort_by' => 'mouthpack_id',
+					'order' => 'desc'
+				]			
+			]);
+			$this->assertEquals(200, $response->getStatusCode());
+			//uncomment to view result			
+			//echo $response->getBody();
 		}
 	}
 ?>
