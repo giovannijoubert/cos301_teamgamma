@@ -3,9 +3,6 @@
 
 ## **Web Frontend**
 
-**Documentation**
-* See documentaion folder in master branch
-
 **Project Managment Tools**
 Clickup: https://app.clickup.com/2502552/v/b/li/15286536
 Slack: https://app.slack.com/client/TUXPQA0NR/CUZKK2R71
