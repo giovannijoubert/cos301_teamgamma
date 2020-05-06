@@ -8,6 +8,7 @@ import '../models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'db.dart';
+import 'package:http_client/http_client.dart';
 
 /// The service responsible for networking requests
 class Api {
@@ -71,7 +72,7 @@ class Api {
       "location" : image
     };
 
-    String url = 'http://teamgamma.ga/api/umtg/update';
+    String url = 'https://teamgamma.ga/api/umtg/update';
     getImage(url, map);
 
     ChooseModeModel modeModel = new ChooseModeModel();
@@ -215,7 +216,5 @@ class Api {
     for (var row in userId) {
       result = await conn.query('delete from UserMouthpack where mouthpack_id = $id and user_id = ${row[0]}');
     }
-    // print("Result: {$result}");
-    // return result;
   }
 }

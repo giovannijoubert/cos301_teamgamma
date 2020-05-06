@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class SharingApi {
   static const url = 'http://teamgamma.ga/api/sharingapi.php';
 
-  HttpClient httpClient = new HttpClient();
+  static HttpClient httpClient = new HttpClient();
 
   Future<String> getMouthpack(id) async {
     Map map = {
@@ -20,7 +20,7 @@ class SharingApi {
 
   Future<String> apiRequest(String url, Map jsonMap) async {
     HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
-
+    
     request.headers.set('content-type', 'application/json');
     request.add(utf8.encode(json.encode(jsonMap)));
 

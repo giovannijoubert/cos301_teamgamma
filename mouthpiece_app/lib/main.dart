@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mouthpiece/core/services/notifications/push_notification_service.dart';
 import 'package:mouthpiece/ui/shared/theme.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,8 @@ import 'core/models/user.dart';
 import 'core/services/Permissions/permissionRequest.dart';
 import 'dart:typed_data';
 import 'package:file_utils/file_utils.dart';
+import 'package:device_id/device_id.dart';
+
 void main() async {
   setupLocator();
   runApp(
@@ -21,10 +24,20 @@ void main() async {
       child: new MouthPiece(),
     ),
   );
+  await initDeviceId();
+}
+
+Future<void> initDeviceId() async {
+  String _deviceid = 'Unknown';
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String deviceid;
+
+  deviceid = await DeviceId.getID;
+  
+  prefs.setString("device-id", deviceid);
 }
 
 changeTheme() async {
-    
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // final theme = Provider.of<ThemeChanger>(context);
     bool loggedIn = await getLoggedIn();
@@ -32,7 +45,6 @@ changeTheme() async {
       return "Light";
     else
       return prefs.getString("theme");
-    
   }
 
 

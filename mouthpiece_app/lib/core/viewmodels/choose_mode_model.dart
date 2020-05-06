@@ -55,7 +55,7 @@ class ChooseModeModel extends BaseModel  {
     }
 
     SharedPreferences sp= await SharedPreferences.getInstance();
-    String url = 'http://teamgamma.ga/api/umtg/update';
+    String url = 'https://teamgamma.ga/api/umtg/update';
 
     Map map = {
       "option": "listening-mode",

@@ -28,12 +28,18 @@ class _LoginViewState extends State<LoginView> {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Username'),
       // maxLength: 10,
-      /* validator: (String value) {
+      validator: (String value) {
+        
+
         if (value.isEmpty) {
+          setState(() {
+            circularDisplay = false;
+          });
           return 'Username is Required';
         }
+        
         return null;
-      }, */
+      },
       onSaved: (String value) {
         _userName = value;
       },
@@ -45,16 +51,24 @@ class _LoginViewState extends State<LoginView> {
         decoration: InputDecoration(labelText: 'Password'),
         keyboardType: TextInputType.visiblePassword,
         obscureText: true,
-        /* validator: (String value) {
+        validator: (String value) {
+          
+
           if (value.isEmpty) {
+            setState(() {
+              circularDisplay = false;
+            });
             return 'Password is required';
           }
           if (value.length < 4 ) {
+            setState(() {
+              circularDisplay = false;
+            });
             return 'Password is too short';
           }
-          
+
           return null;
-        }, */
+        },
         onSaved: (String value) {
           _password = value;
         },
@@ -62,7 +76,8 @@ class _LoginViewState extends State<LoginView> {
     }
 
   Future _loginCommand(model) async{
-    var loginSuccess = await model.login("john123", "John123");
+    // var loginSuccess = await model.login("john123", "John123");
+    var loginSuccess = await model.login(_userName, _password);
     if(loginSuccess){
       Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
     } else {
@@ -177,41 +192,6 @@ class LoginHeader extends StatelessWidget {
   }
 }
 
-class LoginInputFields extends StatelessWidget {
-
-  final formKey;
-  String email;
-  String password;
-  LoginInputFields({@required this.formKey,@required this.email, @required this.password});
-
-  @override
-  Widget build(BuildContext context) {
-      return Container(
-          child: Form(
-              key: formKey,
-              child: Column(
-                children: [ 
-                    TextFormField(
-                        decoration: InputDecoration(labelText: 'Email'),
-                        validator: (val) => EmailValidator.Validate(val,true)
-                        ? 'Please provide a valid email.'
-                        : null,
-                        onSaved: (val) => email = val,
-                    ),
-                    TextFormField(
-                        decoration: InputDecoration(labelText: 'Password'),
-                        validator: (val) => val.length < 4 
-                        ? 'Your password is too short.'
-                        : null,
-                        onSaved: (val) => password = val,
-                        obscureText: true,
-                    ),
-                ],
-              ),
-          ),
-      );
-  }
-}
 
 class TextInputField extends StatelessWidget {
   final TextEditingController controller;
@@ -247,6 +227,7 @@ class TextInputField extends StatelessWidget {
 }
 
 class ForgotPassword extends StatelessWidget {
+  LoginModel loginModel = LoginModel();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -264,8 +245,8 @@ class ForgotPassword extends StatelessWidget {
                   decoration: TextDecoration.underline,
                 ),
               ),
-              onPressed: () {
-                //forgot password
+              onPressed: () async {
+                await loginModel.resetPasswordNotification();
               },
             )
           ],

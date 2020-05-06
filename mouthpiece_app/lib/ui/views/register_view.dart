@@ -85,33 +85,35 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
-  Future _registerCommand(model) async{
-        bool loginSuccess = await model.register(_userName,_email,_password);
-        if(loginSuccess){
-          SharedPreferences prefs = await SharedPreferences.getInstance(); 
-          if (prefs.getBool('loggedIn'))
-            Navigator.push(context, PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
-            ),);
-          else
-             Navigator.push(context, PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) => ChooseModeView(),
-            ),);
-        }else{
-            Navigator.push(context, PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) => RegisterView(),
-            ),);  
-            Fluttertoast.showToast(
-              msg: "Registration Failed",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.white,
-              textColor: Colors.black,
-              fontSize: 16.0
-          );
-        }
+  Future _registerCommand(model) async {
+    var successfulRegistration = await model.register(_userName,_email,_password);
+    if (successfulRegistration) {
+      SharedPreferences prefs = await SharedPreferences.getInstance(); 
+      await model.sendSuccessfulRegisterNotification();
+      if (prefs.getBool('loggedIn'))
+        Navigator.push(context, PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
+        ),);
+      else
+        Navigator.push(context, PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => ChooseModeView(),
+        ),);
+    } else {
+        Navigator.push(context, PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => RegisterView(),
+        ),);  
+        Fluttertoast.showToast(
+          msg: "Registration Failed",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.white,
+          textColor: Colors.black,
+          fontSize: 16.0
+      );
+    }
   }
+
   @override
    Widget build(BuildContext context) {
     return BaseView<RegisterModel>(
@@ -149,12 +151,12 @@ class _RegisterViewState extends State<RegisterView> {
                         fontFamily: 'Arciform'),
                       ),
                       onPressed: () async {
-                              final form = form_Key.currentState;
-                              if(form.validate())
-                              {
-                                form.save();
-                                _registerCommand(model);
-                              }
+                        final form = form_Key.currentState;
+                        if(form.validate())
+                        {
+                          form.save();
+                          _registerCommand(model);
+                        }
                       },
                         shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(10.0),

@@ -17,6 +17,7 @@ class CollectionModel extends BaseModel {
   SharedPreferences prefs;
 
   static List<dynamic> collection;
+  static List<dynamic> collectionURL= List<dynamic>();
   static List<String> colourList = List<String>();
   static List<String> imageList = List<String>();
   static List<String> idList = List<String>();
@@ -114,6 +115,7 @@ class CollectionModel extends BaseModel {
 
   Future<void> encodeImages() async {
     for (int i = 0; i < collection.length; i++) {
+      collectionURL.add(collection[i][0]["images"]);
       for (int j = 0; j < collection[i][0]["images"].length; j++) {
         print(collection[i][0]["images"][j]);
         await http.get(
@@ -123,6 +125,13 @@ class CollectionModel extends BaseModel {
         });
       }
     }
+  }
+
+  Future<String> getCollectionURLAtIndex(int row, int col) async{
+    String url = collectionURL[row-defaultMouthpacks.length][col];
+    // print(url);
+    return url;
+  // 
   }
 
   String getColoursListAtIndex(int index) {
@@ -174,7 +183,7 @@ class CollectionModel extends BaseModel {
           "password": prefs.getString("pass"),
         };
 
-        String url = 'http://teamgamma.ga/api/umtg/login';
+        String url = 'https://teamgamma.ga/api/umtg/login';
         await _api.fetchUser(url, map, prefs.getString("username"));
         homeModel.setUpdate(true);
       });
@@ -193,7 +202,7 @@ class CollectionModel extends BaseModel {
           "password": prefs.getString("pass"),
         };
 
-        String url = 'http://teamgamma.ga/api/umtg/login';
+        String url = 'https://teamgamma.ga/api/umtg/login';
         await _api.fetchUser(url, map, prefs.getString("username"));
         homeModel.setUpdate(true);
         result = true;

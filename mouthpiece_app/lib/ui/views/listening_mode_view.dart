@@ -216,8 +216,9 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
 
     Widget mouthText = new Container(
     child: Image.memory(
-      listeningModeImgList[mouthImg],
-      width: 600, 
+        listeningModeImgList[mouthImg],
+        fit: BoxFit.contain,
+        width: 600, 
         height: 600,
         gaplessPlayback: true,
       ),

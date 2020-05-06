@@ -567,7 +567,7 @@ Future setTheme(String theme) async{
       "jwt" : authkey,
       "theme" : theme  
     };
-    String url = 'http://teamgamma.ga/api/umtg/update';
+    String url = 'https://teamgamma.ga/api/umtg/update';
     _api.updateTheme(url, map);
     prefs.setString('theme', theme);
 }
@@ -582,7 +582,7 @@ Future setImage(File _image) async{
     "jwt" : authkey,
     "image" : base
   };
-  String url = 'http://teamgamma.ga/api/umtg/update';
+  String url = 'https://teamgamma.ga/api/umtg/update';
   _api.updateImage(url,map);
 }
 
@@ -636,7 +636,7 @@ class _BuildEmailState extends State<BuildEmail> {
             "jwt" : authkey,
             "email" : value
           };
-          String url = 'http://teamgamma.ga/api/umtg/update';
+          String url = 'https://teamgamma.ga/api/umtg/update';
           await _api.updateMail(url, map).then((response) {
               if (response == false) {
                 Fluttertoast.showToast(

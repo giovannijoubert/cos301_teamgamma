@@ -16,7 +16,7 @@ class AuthenticationService {
       "password": pass,
     };
 
-    String url = 'http://teamgamma.ga/api/umtg/login';
+    String url = 'https://teamgamma.ga/api/umtg/login';
     bool userExists = await _api.fetchUser(url, map, userName);
     // await collectionModel.createCollection();
 
@@ -32,7 +32,7 @@ class AuthenticationService {
       "password": password
     };
 
-    String url = 'http://teamgamma.ga/api/umtg/register';
+    String url = 'https://teamgamma.ga/api/umtg/register';
     User user = await _api.createUser(url, map, userName);
 
     if (user != null) {
