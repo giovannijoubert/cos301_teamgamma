@@ -49,7 +49,7 @@ function sendEmail($email = "", $msg = "", $subject = "", $network = false)
         echo json_encode(array("Message"=> "Please enter message as 2nd param"));
         die("Please enter email as 2nd param");
     } else {
-        $emailaddr = 'u15175295@tuks.co.za';
+        
         /*$msg = "Congratulations! You have successfully signed up for MouthPiece\n
             Have fun with our range of exciting mouthpieces to play with.\n
             With love from the MouthPiece Team :)";*/
@@ -83,18 +83,23 @@ function sendNetworkNotification($deviceID = "", $message = "",$subject)
     $url = 'https://fcm.googleapis.com/fcm/send';
 
     $fields = array(
-        'registration_ids' => array($deviceID),
+        //'registration_ids' => array($deviceID),
+        'to' => json_encode($deviceID),
         'priority' => "high",
         'data' => array(
             "message" => $message
         )
     );
-    $api_key = "AAAALQ1KC18:APA91bGg7iuimXlkzx90JtVrLHLyIbbMuWGRaBcYoG8IpiK-hqQKVhvoj3KafCQfvNDnQ7sK9blEBWz3GPXkX86Fe-tjXf2fsNHHjw3gaY9Z59iViVuZcSPmB_AP1KsuQv11cP6p0JFA";
+    //Integration's Firebase key
+    $api_key = "AAAAPDuMMk8:APA91bEGTm5df7sn0shq88tGMWcUOkWidRlNE13m7YI1McSZfBJTcT2whSwH3WbUec9vdsWBgBQVnFn44N7I6snccPOOi4eymJZuDyjk4pEV_P1wGxyY1E7b4azBbnUrCFCbLCxTs_U7";
+    //$api_key = "AAAAPDuMMk8:APA91bH-Cu39_4NCIeENsvHdo6ANeyVKLNapcXOjRec_-X8GIZ0rpST736yWTaEhtLSdjAbGB5qRziseBWyzFYDW1sZ1KRP3EYHk7VgEhYQQFc29KEysTUyp46NLb74N8l0c62bSTmuG";
+    //Notification Team firebase key
+    //$api_key = "AAAALQ1KC18:APA91bGg7iuimXlkzx90JtVrLHLyIbbMuWGRaBcYoG8IpiK-hqQKVhvoj3KafCQfvNDnQ7sK9blEBWz3GPXkX86Fe-tjXf2fsNHHjw3gaY9Z59iViVuZcSPmB_AP1KsuQv11cP6p0JFA";
     // "BETr3AbYVksWTs_JIoHuuNnp9lfp3q9f1E9fBebkV6MQNMYuLWWWyOepQ9rEFUYWIYnb02XKcddQp7_9D2XCrr0";
 
     $headers = array(
         'Content-Type:application/json',
-        'Authorization:key=' . $api_key
+        'Authorization: key=' . $api_key
     );
 
     $ch = curl_init();
@@ -108,10 +113,11 @@ function sendNetworkNotification($deviceID = "", $message = "",$subject)
     $result = curl_exec($ch);
     if ($result === FALSE) {
         die('FCM Send Error: ' . curl_error($ch));
-        echo json_encode(array("Message"=>('FCM Send Error: ' . curl_error($ch))));
+        return false;
+        //echo json_encode(array("Message"=>('FCM Send Error: ' . curl_error($ch))));
     }
     curl_close($ch);
-    echo $result;
+    echo json_encode(array("Message"=>($result)));
     return $result;
 
     /*

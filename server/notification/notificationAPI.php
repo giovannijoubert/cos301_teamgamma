@@ -3,7 +3,7 @@
     /** PARAMETERS:
      * 1. key: required = API key
      * 2. getMessages (**optional** type must be sent if getMessages not sent) = for retrieving template data
-     * 2. type (**optional** getMessages must be sent if type not sent ) = Message type: email, push, both
+     * 2. type (**optional** getMessages must be sent if type not sent ) = Message type: [1] email, [2] push,[3] both
      * 3. email (optional) = User's email
      * 4. deviceID (optional) = User's device ID
      * 5. msg (required if type is sent) = Message body of notification
@@ -104,6 +104,6 @@
     }
     else{
         header("HTTP/1.1 403 Forbidden",true,403);
-        //header('Content-Type: text/json');
+        header('Content-Type: text/json');
         echo json_encode(array("message"=> "Error Incorrect parameters"));
     }

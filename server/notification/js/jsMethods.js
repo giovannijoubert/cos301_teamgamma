@@ -194,7 +194,7 @@ function clearPage() {
 function sendData() {
     var subject="",message="",email="",deviceID="";
     type = document.getElementById("notificationType").value;
-
+    deviceID = document.getElementById("deviceID").value;
     if(msgBoxHead){
         subject = document.getElementById("headingMsgBox").value;
     }
