@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:mouthpiece/ui/shared/theme.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:mouthpiece/core/viewmodels/choose_mode_model.dart';
 import 'core/services/authentication/authentication_service.dart';
 import 'locator.dart';
 import 'ui/router.dart';
@@ -18,11 +19,11 @@ import 'package:file_utils/file_utils.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
-  // final prefs = await SharedPreferences.getInstance();
+  final prefs = await SharedPreferences.getInstance();
   runApp(
     // MouthPiece()
     ChangeNotifierProvider<ThemeChanger>(
-      builder: (_) => ThemeChanger(lightTheme),
+      builder: (_) => ThemeChanger(prefs),
       child: new MouthPiece(),
     ),
   );
@@ -117,7 +118,7 @@ class _MouthPieceState extends State<MouthPiece> {
   }
   
   Widget build(BuildContext context) {
-    
+    precacheImage(AssetImage("assets/images/wave.png"), context);
     final theme = Provider.of<ThemeChanger>(context);  
     return FutureBuilder<bool>(
       future: getLoggedIn(),
@@ -148,14 +149,20 @@ class _MouthPieceState extends State<MouthPiece> {
 
 Future<bool> getLoggedIn() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  ChooseModeModel modeModel = new ChooseModeModel();
   bool loggedIn = prefs.getBool('loggedIn');
-  // bool loggedIn = false;
-  await prefs.setInt('tabIndex', 0);
-
   
   bool isModeSet = prefs.getKeys().contains('isVolSet');
-  if(!isModeSet)
-    prefs.setBool('isVolSet', true); 
-    // Default Vol
+  if (isModeSet) {
+    if (prefs.getBool('isVolSet')) {
+        modeModel.setVolumeBased();
+      } else {
+        modeModel.setFormantBased();
+    }
+  }
+  // bool isModeSet = prefs.getKeys().contains('isVolSet');
+  // if(!isModeSet)
+  //   prefs.setBool('isVolSet', true); 
   return loggedIn;
+  // return false;
 }

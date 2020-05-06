@@ -15,6 +15,8 @@ class AuthenticationService {
       "username": userName,
       "password": pass,
     };
+    print(userName);
+    print(pass);
 
     String url = 'http://teamgamma.ga/api/umtg/login';
     bool userExists = await _api.fetchUser(url, map, userName);

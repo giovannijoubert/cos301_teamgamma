@@ -102,7 +102,7 @@ class _RegisterViewState extends State<RegisterView> {
                 pageBuilder: (context, animation1, animation2) => RegisterView(),
             ),);  
             Fluttertoast.showToast(
-              msg: "Registration Failed",
+              msg: "Registration Failed.",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
@@ -149,12 +149,17 @@ class _RegisterViewState extends State<RegisterView> {
                         fontFamily: 'Arciform'),
                       ),
                       onPressed: () async {
-                              final form = form_Key.currentState;
-                              if(form.validate())
-                              {
-                                form.save();
-                                _registerCommand(model);
-                              }
+                        FocusScopeNode currentFocus = FocusScope.of(context);
+
+                        if (!currentFocus.hasPrimaryFocus) {
+                          currentFocus.unfocus();
+                        }
+                        final form = form_Key.currentState;
+                        if(form.validate())
+                        {
+                          form.save();
+                          _registerCommand(model);
+                        }
                       },
                         shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(10.0),

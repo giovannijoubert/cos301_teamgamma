@@ -17,6 +17,7 @@ class CollectionModel extends BaseModel {
   SharedPreferences prefs;
 
   static List<dynamic> collection;
+  static List<dynamic> collection2;
   static List<dynamic> collectionURL= List<dynamic>();
   static List<String> colourList = List<String>();
   static List<String> imageList = List<String>();
@@ -91,7 +92,7 @@ class CollectionModel extends BaseModel {
   Future<List> getProfileMouthpackIdList() async {
     prefs = await SharedPreferences.getInstance();
     var requestInfo = prefs.getString('userInfo');
-    var userInfo = jsonDecode(requestInfo);
+    var userInfo = await jsonDecode(requestInfo);
 
     List<String> idList = List<String>();
 
@@ -115,23 +116,47 @@ class CollectionModel extends BaseModel {
     return mouthpackCollection;
   }
 
-  Future<void> encodeImages() async {
-    // print(collection);
-    for (int i = 0; i < collection.length; i++) {
-      collectionURL.add(collection[i][0]["images"]);
-      for (int j = 0; j < collection[i][0]["images"].length; j++) {
-        print(collection[i][0]["images"][j]);
-        await http.get(
-          collection[i][0]["images"][j],
-        ).then((resp){
-          collection[i][0]["images"][j] = base64.encode(resp.bodyBytes);
+  encodeImages() async {
+    collection2 = collection;
+    for (int i = 0; i < collection2.length; i++) {
+      collectionURL.add(collection2[i][0]["images"]);
+      // for (int j = 0; j < collection2[i][0]["images"].length; j++) {
+        // print(collection[i][0]["images"][j]);
+        print(collection[i][0]["images"]);
+        // await convertToBase64(collection2[i][0]["images"][j], i, j);
+        int j = -1;
+        await Future.forEach(collection2[i][0]["images"], (imageUrl) async {
+          j++;
+          await http.get(imageUrl).then((response) => collection[i][0]["images"][j] = base64.encode(response.bodyBytes));
         });
-      }
+        
+        // final resp = await http.get(collection2[i][0]["images"][j]);
+        // if (resp.statusCode == 200) {
+        //   collection[i][0]["images"][j] = base64.encode(resp.bodyBytes);
+        // }
+        // await http.get(
+        //   collection[i][0]["images"][j],
+        // ).then((resp){
+        //   if (resp.statusCode == 200) {
+        //     collection[i][0]["images"][j] = base64.encode(resp.bodyBytes);
+        //   }
+        // });
+      // }
     }
   }
 
-  Future<String> getCollectionURLAtIndex(int row, int col) async{
+  // Future<void> convertToBase64(String imageUrl, int row, int col) async {
+  //   await http.get(
+  //     imageUrl,
+  //   ).then((resp) async {
+  //     if (resp.statusCode == 200) {
+  //       collection[row][0]["images"][col] = base64.encode(resp.bodyBytes);
+  //     }
+  //   });
+  // }
 
+  Future<String> getCollectionURLAtIndex(int row, int col) async{
+    print(collectionURL);
     String url = collectionURL[row-defaultMouthpacks.length][col];
     // print(url);
    return url;
@@ -189,7 +214,7 @@ class CollectionModel extends BaseModel {
 
         String url = 'http://teamgamma.ga/api/umtg/login';
         await _api.fetchUser(url, map, prefs.getString("username"));
-        homeModel.setUpdate(true);
+        homeModel.setUpdateVal(true);
       });
     }
   }
@@ -208,7 +233,7 @@ class CollectionModel extends BaseModel {
 
         String url = 'http://teamgamma.ga/api/umtg/login';
         await _api.fetchUser(url, map, prefs.getString("username"));
-        homeModel.setUpdate(true);
+        homeModel.setUpdateVal(true);
         result = true;
       });
     } 

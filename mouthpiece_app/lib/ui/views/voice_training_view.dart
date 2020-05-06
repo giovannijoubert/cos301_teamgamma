@@ -181,7 +181,7 @@ Widget captionSection = Container(
 
 Widget navigationSection(BuildContext context) { 
   return FutureBuilder<bool>(
-    future: getCheck(),
+    // future: getCheck(),
     builder: (context, snapshot){
       return Container(
         padding: const EdgeInsets.only(left:32, right: 32, top: 50),
@@ -209,7 +209,7 @@ Widget navigationSection(BuildContext context) {
               ],
             ),
             Visibility(
-              visible: !check,
+              visible: true,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -242,6 +242,6 @@ Widget navigationSection(BuildContext context) {
 
 Future<bool> getCheck() async {
   SharedPreferences prefs = await SharedPreferences.getInstance(); 
-  check = prefs.getBool('navVal'); 
+  bool check = prefs.getBool('navVal') ?? false; 
   return check;
 }

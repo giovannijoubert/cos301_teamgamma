@@ -54,41 +54,49 @@ class ChooseModeModel extends BaseModel  {
       setIsVolSet(false);
     }
 
-    SharedPreferences sp= await SharedPreferences.getInstance();
-    String url = 'http://teamgamma.ga/api/umtg/update';
+    SharedPreferences sp = await SharedPreferences.getInstance();
 
-    Map map = {
-      "option": "listening-mode",
-      "username" : sp.getString("username"),
-      "jwt" : sp.getString("jwt"),
-      "listening_mode" : newMode
-    };
+    if (sp.getBool("loggedIn")) {
+      String url = 'http://teamgamma.ga/api/umtg/update';
 
-    await _api.updateImage(url, map);
+      Map map = {
+        "option": "listening-mode",
+        "username" : sp.getString("username"),
+        "jwt" : sp.getString("jwt"),
+        "listening_mode" : newMode
+      };
+
+      await _api.updateMode(url, map);
+    }
     
   }
 
   Color getModeIconColorVol() {
-      test = volumeMode;
-      return volumeMode;
+    test = volumeMode;
+    return volumeMode;
   }
+
   Color getModeIconColorFor(){
-      test = formantMode;
-      return formantMode;
+    test = formantMode;
+    return formantMode;
   }
 
   void setVolumeBased(){
-  
     print("Volume chosen!"); 
     updateUserMode("Volume");
     volumeMode=Colors.blue;
-     }
+  }
+
   void setFormantBased(){
-  
     print("Formant chosen!"); 
     formantMode=Colors.blue;
     updateUserMode("Formant");
-     }
+  }
+
+  void clearMode() {
+    volumeMode=Colors.black;
+    formantMode=Colors.black;
+  }
 
   
 

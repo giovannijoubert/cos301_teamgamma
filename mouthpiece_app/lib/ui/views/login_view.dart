@@ -1,9 +1,11 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:mouthpiece/ui/shared/theme.dart';
 import 'package:mouthpiece/ui/views/choose_mode_view.dart';
 import 'package:mouthpiece/ui/views/home_view.dart';
 import 'package:mouthpiece/ui/views/register_view.dart';
 import 'package:mouthpiece/ui/views/voice_training_view.dart';
+import 'package:provider/provider.dart';
 import '../../core/enums/viewstate.dart';
 import '../../core/viewmodels/login_model.dart';
 import '../../ui/shared/app_colors.dart';
@@ -28,12 +30,18 @@ class _LoginViewState extends State<LoginView> {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Username'),
       // maxLength: 10,
-      /* validator: (String value) {
+      validator: (String value) {
         if (value.isEmpty) {
+          setState(() {
+            circularDisplay = false;
+          });
           return 'Username is Required';
         }
+        setState(() {
+            circularDisplay = false;
+          });
         return null;
-      }, */
+      }, 
       onSaved: (String value) {
         _userName = value;
       },
@@ -45,25 +53,41 @@ class _LoginViewState extends State<LoginView> {
         decoration: InputDecoration(labelText: 'Password'),
         keyboardType: TextInputType.visiblePassword,
         obscureText: true,
-        /* validator: (String value) {
+        validator: (String value) {
+          // String message = "";
           if (value.isEmpty) {
+            setState(() {
+              circularDisplay = false;
+            });
             return 'Password is required';
           }
           if (value.length < 4 ) {
+            setState(() {
+              circularDisplay = false;
+            });
             return 'Password is too short';
           }
+
+          setState(() {
+            circularDisplay = false;
+          });
           
           return null;
-        }, */
+        }, 
         onSaved: (String value) {
           _password = value;
         },
       );
     }
 
-  Future _loginCommand(model) async{
-    var loginSuccess = await model.login("john123", "John123");
+  Future _loginCommand(model, theme) async{
+    final prefs = await SharedPreferences.getInstance();
+    var loginSuccess = await model.login(_userName, _password);
     if(loginSuccess){
+      ThemeData themeVal = prefs.getString("theme") == "Light" ? lightTheme : darkTheme;
+      if (themeVal == null)
+        themeVal = lightTheme;
+      await theme.setTheme(themeVal);
       Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
     } else {
       /* Navigator.push(context, PageRouteBuilder(
@@ -88,7 +112,7 @@ class _LoginViewState extends State<LoginView> {
   @override
    Widget build(BuildContext context) {
     // precacheImage(AssetImage("assets/images/wave.png"), context);
-
+    final theme = Provider.of<ThemeChanger>(context);  
     return BaseView<LoginModel>(
       builder: (context, model, child) => Scaffold(
         body: Padding(
@@ -127,8 +151,11 @@ class _LoginViewState extends State<LoginView> {
                       style: TextStyle(fontSize: 15,
                       fontFamily: 'Arciform'),
                     ),
-                    onPressed: (){
+                    onPressed: () async {
                       setState(() {
+                        // final prefs = await SharedPreferences.getInstance();
+                        // ThemeData themeVal = prefs.getString("theme") == "Light" ? lightTheme : darkTheme;
+                        // theme.setTheme(themeVal);
                         circularDisplay = true;
                       });
                         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -139,9 +166,9 @@ class _LoginViewState extends State<LoginView> {
 
                         final form = formKey.currentState;
 
-                        if(form.validate()){
+                        if (form.validate()) {
                           form.save();
-                          _loginCommand(model);
+                          await _loginCommand(model, theme);
                         }
                     },
                       shape: new RoundedRectangleBorder(

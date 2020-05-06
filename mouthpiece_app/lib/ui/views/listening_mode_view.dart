@@ -215,9 +215,10 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
     ); */
 
     Widget mouthText = new Container(
-    child: Image.memory(
-      listeningModeImgList[mouthImg],
-      width: 600, 
+      child: Image.memory(
+        listeningModeImgList[mouthImg],
+        fit: BoxFit.contain,
+        width: 600, 
         height: 600,
         gaplessPlayback: true,
       ),
@@ -250,7 +251,7 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
 
     return Material(
       child: Hero(
-        tag: 'blackBox',
+        tag: DateTime.now().toIso8601String(),
         createRectTween: _createRectTween,
         child: Container(
           color: Color(int.parse(colour)),

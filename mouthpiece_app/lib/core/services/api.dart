@@ -27,7 +27,7 @@ class Api {
       prefs.setString('pass', map["password"]);
       var userInfo = jsonEncode(body);
       prefs.setString("userInfo", userInfo);
-      setPref(body['username'], body['email'], body['JWT'], body['theme'], body['listening_mode'], body['profile_image']);
+      await setPref(body['username'], body['email'], body['JWT'], body['theme'], body['listening_mode'], body['profile_image']);
       return true;
     }
     else {
@@ -37,6 +37,7 @@ class Api {
   }
 
   Future<User> createUser(String url, Map map, String user) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     var body = jsonEncode(map);
     final http.Response response = await http.post(
       url,
@@ -45,8 +46,15 @@ class Api {
     );
 
     if (response.statusCode == 200) {
-      var body = json.decode(response.body);
-      setPref(body['username'], body['email'], body['JWT'], body['theme'], body['listening_mode'], body['profile_image']);
+      Map mapFetchUser = {
+        "username": map["username"],
+        "password": map["password"],
+      };
+
+      String url = 'http://teamgamma.ga/api/umtg/login';
+      await prefs.setBool("register", true);
+      await fetchUser(url, map, map["username"]);
+
       User userVar = new User();
       return userVar;
     } else {
@@ -54,7 +62,7 @@ class Api {
     }
   }
 
-  setPref(String user, String email, String jwt, String theme, String mode, String image ) async{
+  setPref(String user, String email, String jwt, String theme, String mode, String image ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('username');
     prefs.remove('email');
@@ -62,6 +70,8 @@ class Api {
     prefs.remove('theme');
     prefs.remove('profile_image');
     prefs.remove('loggedIn');
+    prefs.remove('isVolSet');
+    prefs.remove('navVal');
     // print("----------------------------21");
 
     Map map = {
@@ -71,19 +81,24 @@ class Api {
       "location" : image
     };
 
-    String url = 'http://teamgamma.ga/api/umtg/update';
-    getImage(url, map);
+    String url = 'https://teamgamma.ga/api/umtg/update';
+    await getImage(url, map);
 
     ChooseModeModel modeModel = new ChooseModeModel();
     prefs.setString("username", user);
     prefs.setString("email", email);
     prefs.setString("jwt", jwt);
     prefs.setString("theme", theme);
-    if (mode == "Volume")
-      modeModel.setVolumeBased();
-    else 
-      modeModel.setFormantBased();
-
+    bool registered = prefs.getBool("register") ?? false;
+    print(registered);
+    if (!registered) {
+      if (mode == "Volume") {
+        modeModel.setVolumeBased();
+      } else {
+        modeModel.setFormantBased();
+      }
+    }
+    prefs.remove("register");
     prefs.setBool("loggedIn", true);
   }
  

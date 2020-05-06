@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
@@ -17,15 +18,22 @@ class HomeModel extends BaseModel {
   CollectionModel collectionModel = new CollectionModel();
   static String listeningModeImg;
   static bool updateVal;
+  Timer timer;
 
   HomeModel() {
     if (collectionModel.getImageList().length == 0 || updateVal) {
       createCollection(); 
-      updateVal = false;
+    //   updateVal = false;
+      // if (collectionModel.getImageList().length == 0 || getUpdateVal()) {
+        // timer = Timer.periodic(Duration(seconds: 20), (Timer t) { if (state == ViewState.Busy) { createCollection(); }}); 
+        setUpdateVal(false);
+      // }
     }
   }
 
-  setUpdate(bool val) {
+ 
+
+  setUpdateVal(bool val) {
     updateVal = val;
   }
 
