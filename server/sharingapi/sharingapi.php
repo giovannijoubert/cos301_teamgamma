@@ -121,6 +121,7 @@
                         $myObj->status = "200 Ok";
                         $myObj->extra = $imagePath;
                         $myObj->message="MouthPack ".$data["title"]." uploaded correctly";
+			$myObj->mouthpackID = $packid;
                         $myJSON = json_encode($myObj); 
                         echo $myJSON;
                     }
