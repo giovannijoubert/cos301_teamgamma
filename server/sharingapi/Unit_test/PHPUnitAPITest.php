@@ -15,6 +15,7 @@
 			$client = new \GuzzleHttp\Client();
 			
 			//Test to upload a request containing two images to the server
+			echo "\nTest 1: Upload request with two images \n";
 			$response = $client->request('POST', 'http://teamgamma.ga/api/sharingapi.php', ['json' => 
 				[
 					'requestType' => 'upload',
@@ -35,14 +36,33 @@
 				]			
 			]);
 			$this->assertEquals(200, $response->getStatusCode());
+			//uncomment to view result
+			echo json_encode(json_decode($response->getBody()), JSON_PRETTY_PRINT);
+			echo "\nTest 1: done\n";
 			//Note that the API will still accept upload requests if no data is provided for: title, category, description and mouthImages.
+					
+		//Test to upload a rating
+			echo "\nTest 2: Upload rating\n";
+			$response = $client->request('POST', 'http://teamgamma.ga/api/sharingapi.php', ['json' => 
+				[
+					'requestType' => 'rate',
+					'value' => '3',
+					'userID' => '9999',
+					'mouthpackID' => '777501182'
+				]			
+			]);
+			$this->assertEquals(200, $response->getStatusCode());
+			//uncomment to view result
+			echo json_encode(json_decode($response->getBody()), JSON_PRETTY_PRINT);
+			echo "\nTest 2: done\n";
 		}
 		
 		public function testPostDownload()
 		{
 			$client = new \GuzzleHttp\Client();
 			
-		//Test to get all mouthpacks
+		 //Test to get all mouthpacks
+			echo "\nTest 3: Download all mouthpacks\n";
 			$response = $client->request('POST', 'http://teamgamma.ga/api/sharingapi.php', ['json' => 
 				[
 					'requestType' => 'getAllMouthpacks'
@@ -50,9 +70,11 @@
 			]);
 			$this->assertEquals(200, $response->getStatusCode());
 			//uncomment to view result
-			//echo $response->getBody();
+			//echo json_encode(json_decode($response->getBody()), JSON_PRETTY_PRINT);
+			echo "\nTest 3: done\n";
 			
 		//Test to get all mouthpacks according to a filter criteria
+			echo "\nTest 4: Download all mouthpacks according to criteria (mouthpack_name = UploadUnitTest)\n";
 			$response = $client->request('POST', 'http://teamgamma.ga/api/sharingapi.php', ['json' => 
 				[
 					'requestType' => 'getAllMouthpacks',
@@ -67,9 +89,11 @@
 			]);
 			$this->assertEquals(200, $response->getStatusCode());
 			//uncomment to view result			
-			//echo $response->getBody();
-			
+			echo json_encode(json_decode($response->getBody()), JSON_PRETTY_PRINT);
+			echo "\nTest 4: done\n";
+			 
 		//Test to get all mouthpacks by a category
+			echo "\nTest 5: Download all mouthpacks in a category (category = UnitTest)\n";
 			$response = $client->request('POST', 'http://teamgamma.ga/api/sharingapi.php', ['json' => 
 				[
 					'requestType' => 'getMouthpacksByCategory',
@@ -78,19 +102,12 @@
 			]);
 			$this->assertEquals(200, $response->getStatusCode());
 			//uncomment to view result
-			//echo $response->getBody();
+			echo json_encode(json_decode($response->getBody()), JSON_PRETTY_PRINT);
+			echo "\nTest 5: done";
 			
-		//Test to upload a rating
-			$response = $client->request('POST', 'http://teamgamma.ga/api/sharingapi.php', ['json' => 
-				[
-					'requestType' => 'rate',
-					'value' => '3',
-					'userID' => '9999',
-					'mouthpackID' => '777501182'
-				]			
-			]);
-			$this->assertEquals(200, $response->getStatusCode());
-			//uncomment to view result
+			//unused code
+			//$data = json_decode($response->getBody());
+			//echo $data[0]->id;
 			//echo $response->getBody();
 		}
 	}
