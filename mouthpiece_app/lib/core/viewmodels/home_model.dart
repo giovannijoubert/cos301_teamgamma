@@ -10,6 +10,7 @@ import '../viewmodels/collection_model.dart';
 
 import '../../ui/views/home_view.dart';
 import '../data/defaultmouthpacks.dart';
+import 'package:http/http.dart' as http;
 
 import 'base_model.dart';
 
@@ -52,25 +53,32 @@ class HomeModel extends BaseModel {
     setState(ViewState.Idle);
   }
 
+  // static List<String> listeningModeImgList = List<String>();
   static List<Uint8List> listeningModeImgList = List<Uint8List>();
   static String listeningModeColour;
   static int index = 0;
 
-  void createListeningModeImgList() {
+  Future<void> createListeningModeImgList() async {
     listeningModeImgList.clear();
     int length = defaultMouthpacks[0]["images"].length;
     for (int i = 0; i < length; i++) {
       if (getIndex() < defaultMouthpacks.length)
+        // listeningModeImgList.add(defaultMouthpacks[getIndex()]["images"][i]); 
         listeningModeImgList.add(base64.decode(defaultMouthpacks[getIndex()]["images"][i])); 
       else {
         int index = getIndex() - defaultMouthpacks.length;
-        listeningModeImgList.add(base64.decode(collectionModel.getCollection()[index][0]["images"][i]));  
+        await http.get(
+          collectionModel.getCollection()[index][0]["images"][i]
+        ).then((resp) {
+          listeningModeImgList.add(base64.decode(base64.encode(resp.bodyBytes)));
+        });
       }
     }
 
     test = "got image";
   }
 
+  // List<String> getListeningModeImgList() {
   List<Uint8List> getListeningModeImgList() {
     return listeningModeImgList;
   }

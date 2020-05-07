@@ -8,8 +8,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 class PushNotificationService {
   final FirebaseMessaging _fcm = FirebaseMessaging();
-  GlobalKey<NavigatorState> _navigationKey = GlobalKey<NavigatorState>();
-  GlobalKey<NavigatorState> get navigationKey => _navigationKey;
+  // GlobalKey<NavigatorState> _navigationKey = GlobalKey<NavigatorState>();
+  // GlobalKey<NavigatorState> get navigationKey => _navigationKey;
   
   // final NavigationService _navigationService = locator<NavigationService>();
 
@@ -47,10 +47,10 @@ class PushNotificationService {
     
   }
 
-  Future<dynamic> navigateTo(String routeName, {dynamic arguments}) {
+  /* Future<dynamic> navigateTo(String routeName, {dynamic arguments}) {
     return _navigationKey.currentState
     .pushNamed(routeName, arguments: arguments);
-  }
+  } */
 
   void _serialiseAndNavigate(Map<String, dynamic> message) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -65,7 +65,7 @@ class PushNotificationService {
       // Navigate to the create post view
       if (fireBaseDeviceId == deviceId) {
         print("success");
-        navigateTo('/');
+        // navigateTo('/');
       }
     }
   }

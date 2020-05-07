@@ -50,6 +50,7 @@ dependencies:
   device_id: ^0.2.0
   flutter_cache_manager: ^1.2.2
   cached_network_image: ^2.2.0+1
+  connectivity: ^0.4.8+5
 
 dev_dependencies:
   flutter_test:

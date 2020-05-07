@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mouthpiece/core/enums/viewstate.dart';
 import 'package:mouthpiece/core/viewmodels/collection_model.dart';
@@ -50,7 +51,7 @@ class _HomeViewState extends State<HomeView> {
           builder: (context, model, child) => Scaffold(
           // backgroundColor: backgroundColor,
             body: (model.state == ViewState.Busy) ? Container(
-              child: Center(child: CircularProgressIndicator())) : Home(),
+              child: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue)))) : Home(),
             bottomNavigationBar: BottomNavigation(),
           ),
       //   );
@@ -207,9 +208,9 @@ class _MouthSelectedBtnState extends State<MouthSelectedBtn> with TickerProvider
 
     return Material(
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
+          await homeModel.createListeningModeImgList();
           setState(() {
-            homeModel.createListeningModeImgList();
             homeModel.setListeningModeColour(colours[homeModel.getIndex()]);
             _controller.forward();
             // homeModel.setListeningModeImg(images[homeModel.getIndex()]);
@@ -251,11 +252,19 @@ class _MouthSelectedBtnState extends State<MouthSelectedBtn> with TickerProvider
                   ),
                 ],
               ),
-              child: ClipOval (
+              child: (images[homeModel.getIndex()].contains("http")) ? 
+              ClipOval (
+                child: CachedNetworkImage(
+                  imageUrl: images[homeModel.getIndex()],
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  fit: BoxFit.contain, width: double.infinity, height: double.infinity,
+                ),
+              ) :
+              ClipOval(
                 child: Image.memory(base64.decode(images[homeModel.getIndex()]), 
                 fit: BoxFit.contain, width: double.infinity, height: double.infinity,
-                )
-              ),
+              )),
             ),
           ),
         ),

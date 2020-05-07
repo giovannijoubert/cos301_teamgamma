@@ -1,5 +1,8 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:mouthpiece/core/services/sharing_api.dart';
+import 'package:mouthpiece/locator.dart';
 import 'package:mouthpiece/ui/shared/theme.dart';
 import 'package:mouthpiece/ui/views/choose_mode_view.dart';
 import 'package:mouthpiece/ui/views/home_view.dart';
@@ -13,6 +16,7 @@ import '../../ui/shared/text_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'base_view.dart';
+import '../../core/services/sharing_api.dart';
  
 class LoginView extends StatefulWidget {
   @override
@@ -21,6 +25,7 @@ class LoginView extends StatefulWidget {
  
 class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  SharingApi _sharingapi = locator<SharingApi>();
 
   String _userName;
   String _password;
@@ -31,15 +36,12 @@ class _LoginViewState extends State<LoginView> {
       decoration: InputDecoration(labelText: 'Username'),
       // maxLength: 10,
       validator: (String value) {
-        if (value.isEmpty) {
+        /* if (value.isEmpty) {
           setState(() {
             circularDisplay = false;
           });
           return 'Username is Required';
-        }
-        setState(() {
-            circularDisplay = false;
-          });
+        } */
         return null;
       }, 
       onSaved: (String value) {
@@ -54,7 +56,7 @@ class _LoginViewState extends State<LoginView> {
         keyboardType: TextInputType.visiblePassword,
         obscureText: true,
         validator: (String value) {
-          if (value.isEmpty) {
+          /* if (value.isEmpty) {
             setState(() {
               circularDisplay = false;
             });
@@ -65,11 +67,7 @@ class _LoginViewState extends State<LoginView> {
               circularDisplay = false;
             });
             return 'Password is too short';
-          }
-
-          setState(() {
-            circularDisplay = false;
-          });
+          } */
           
           return null;
         }, 
@@ -79,28 +77,74 @@ class _LoginViewState extends State<LoginView> {
       );
     }
 
+  var subscription;
+
+  @override
+  initState() {
+    super.initState();
+
+    subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      print("connectivity: $result");
+      if (result == ConnectivityResult.none) {
+        Fluttertoast.showToast(
+          msg: "Please check your internet connectivity",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 2,
+          backgroundColor: Color(0xff303030),
+          textColor: Colors.white,
+          fontSize: 16.0
+        );
+      } 
+    });
+  }
+
+  // Be sure to cancel subscription after you are done
+  @override
+  dispose() {
+    super.dispose();
+
+    subscription.cancel();
+  }
+
   Future _loginCommand(model, theme) async{
     final prefs = await SharedPreferences.getInstance();
-    var loginSuccess = await model.login(_userName, _password);
-    if(loginSuccess){
-      ThemeData themeVal = prefs.getString("theme") == "Light" ? lightTheme : darkTheme;
-      if (themeVal == null)
-        themeVal = lightTheme;
-      await theme.setTheme(themeVal);
-      Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
+    bool connectivity = await _sharingapi.checkConnectivity();
+
+    if (connectivity) {
+      var loginSuccess = await model.login("john123", "John123");
+      // var loginSuccess = await model.login(_userName, _password);
+      if(loginSuccess) {
+        ThemeData themeVal = prefs.getString("theme") == "Light" ? lightTheme : darkTheme;
+        if (themeVal == null)
+          themeVal = lightTheme;
+        await theme.setTheme(themeVal);
+        Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
+      } else {
+        setState(() {
+          circularDisplay = false;
+        });
+
+        Fluttertoast.showToast(
+          msg: "Incorrect username or password.",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Color(0xff303030),
+          textColor: Colors.white,
+          fontSize: 16.0
+        );
+      }
     } else {
-      /* Navigator.push(context, PageRouteBuilder(
-        pageBuilder: (context, animation1, animation2) => LoginView(),
-      ),); */
       setState(() {
         circularDisplay = false;
       });
 
       Fluttertoast.showToast(
-        msg: "Incorrect username or password.",
+        msg: "Please check your internet connectivity",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
+        timeInSecForIosWeb: 3,
         backgroundColor: Color(0xff303030),
         textColor: Colors.white,
         fontSize: 16.0

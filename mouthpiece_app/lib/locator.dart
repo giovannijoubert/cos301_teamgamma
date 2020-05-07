@@ -4,7 +4,6 @@ import 'core/services/sharing_api.dart';
 import 'core/services/notifications_api.dart';
 import 'core/services/authentication/authentication_service.dart';
 import 'core/services/notifications/push_notification_service.dart';
-import 'core/services/navigation/navigation_service.dart';
 import 'core/viewmodels/home_model.dart';
 import 'core/viewmodels/login_model.dart';
 import 'core/viewmodels/register_model.dart';
@@ -24,7 +23,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => SharingApi());
   locator.registerLazySingleton(() => NotificationsApi());
   locator.registerLazySingleton(() => PushNotificationService());
-  locator.registerLazySingleton(() => NavigationService());
 
   locator.registerFactory(() => LoginModel());
   locator.registerFactory(() => RegisterModel());

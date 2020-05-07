@@ -199,10 +199,11 @@ class _CollectionSearchBarState extends State<CollectionSearchBar> {
     if (prefs.getBool("loggedIn") ?? false) {
       List<dynamic> collection = await collectionModel.getCollection();
       for (int i = 0; i < collection.length; i++) {
-        if (collection[i][0]["ratings"].length == 0)
+        if (collection[i][0]["ratings"].length == 0) {
           rating = "No rating";
-        else
-          rating = collection[i][0]["ratings"][0]["total"].toString()  + '/5';
+        } else {
+          rating = collection[i][0]["ratings"][0]["total"].round().toString()  + '/5';
+        }
 
         setState(() {
           packs.add(MouthCard(collection[i][0]["images"][0], collection[i][0]["name"], collection[i][0]["description"], collection[i][0]["date"], collection[i][0]["images"].length, rating, bgColour[bgColourindex], collection[i][0]["images"], false, mouthpackIndex, parent));
@@ -362,7 +363,7 @@ class MouthCard extends StatefulWidget {
 }
 
 class _MouthCardState extends State<MouthCard> {
-  var imgSrc;
+  String imgSrc;
   final String title;
   final String description;
   final String date;
@@ -384,8 +385,11 @@ class _MouthCardState extends State<MouthCard> {
     if (imgSrc == null) {
       return new Container();
     }
-     
-    Uint8List decodedImgSrc = base64.decode(imgSrc);
+
+    Uint8List decodedImgSrc;
+    if (title.contains("Default")) {
+      decodedImgSrc = base64.decode(imgSrc);
+    } 
     
 
     return Container(
@@ -394,6 +398,7 @@ class _MouthCardState extends State<MouthCard> {
       child: new GestureDetector(
         onTap: (){
           print('pressed card');
+          print('length: ${imgSrc.substring(0,3)}');
           Navigator.push(context, PageRouteBuilder(
             pageBuilder: (context, animation1, animation2) => MouthpackView(title, description, date, totalImages, rating, bgColour, images),
           ),);
@@ -409,15 +414,16 @@ class _MouthCardState extends State<MouthCard> {
                       color: Color(cardBgColour),
                       width: 80,
                       height: 80,
-                      child: Image.memory(
-                        decodedImgSrc,
-                        fit: BoxFit.contain,
-                      ),
-                      /* child: CachedNetworkImage(
-                        imageUrl: "http://via.placeholder.com/350x150",
+                      child: (imgSrc.contains("http")) ? 
+                      CachedNetworkImage(
+                        imageUrl: imgSrc,
                         placeholder: (context, url) => CircularProgressIndicator(),
                         errorWidget: (context, url, error) => Icon(Icons.error),
-                      ), */
+                      ) :
+                      Image.memory(
+                        decodedImgSrc,
+                        fit: BoxFit.contain,
+                      )
                     ),
                   ),
                 ),

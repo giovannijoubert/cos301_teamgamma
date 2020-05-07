@@ -32,7 +32,7 @@ class CollectionModel extends BaseModel {
       collection = await jsonDecode(mouthpacks.toString());
       // print(collection);
 
-      await encodeImages();
+      // await encodeImages();
       await createImageList();
       await createColourList();
     } else {
@@ -106,10 +106,7 @@ class CollectionModel extends BaseModel {
     List<String> mouthpackCollection = List<String>();
 
     for (int i = 0; i < idList.length; i++) {
-      // String mouthpack = await _sharingapi.getMouthpack(idList[i]);
-      // print(mouthpack);
       mouthpackCollection.add(await _sharingapi.getMouthpack(idList[i]));
-      // mouthpackCollection.add(mouthpack);
     }
 
     return mouthpackCollection;

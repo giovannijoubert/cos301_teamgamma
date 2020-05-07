@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
+import '../../core/services/sharing_api.dart';
 
 Api _api = locator<Api>();
 SharedPreferences prefs;
@@ -35,6 +36,7 @@ _ProfileViewState globalParent;
 var bytes;
 BottomNavigation bottomNavigation = new BottomNavigation();
 ChooseModeModel modeModel = new ChooseModeModel();
+SharingApi _sharingapi = locator<SharingApi>();
 
 class ProfileView extends StatefulWidget {
   @override
@@ -124,17 +126,19 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
   Widget text() {
     if(editingBool == false)
       return textField();
+      
     else
       return textInput();
   }
+  
 
   @override
   Widget build(BuildContext context) {
     
     return FutureBuilder<bool>(
         future: getLoggedIn(),
-        builder: (context, snapshot){
-          if(loggedIn == true){
+        builder: (context, snapshot) {
+          if(loggedIn == true) {
             return BaseView<ProfileModel>(
               builder: (context, model, child) => Scaffold(
                 body: ListView(

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mouthpiece/ui/views/collection_view.dart';
 import 'package:mouthpiece/ui/views/home_view.dart';
@@ -189,7 +190,13 @@ class _MouthSelectionGridState extends State<MouthSelectionGrid> {
                                   mouthSelectionModel.setSelectedIndex(index);
                                 });
                               }), 
-                              child: Image.memory(base64.decode(images[index])), 
+                              child: (images[index].contains("http")) ? 
+                              CachedNetworkImage(
+                                imageUrl: images[index],
+                                placeholder: (context, url) => CircularProgressIndicator(),
+                                errorWidget: (context, url, error) => Icon(Icons.error),
+                              ) :
+                              Image.memory(base64.decode(images[index])) 
                             ),
                           color: Color(int.parse(colours[index]))
                         );

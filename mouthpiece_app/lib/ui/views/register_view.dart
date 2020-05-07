@@ -1,4 +1,6 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:mouthpiece/locator.dart';
 //import 'package:email_validator/email_validator.dart';
 import 'package:mouthpiece/ui/views/login_view.dart';
 import 'package:mouthpiece/ui/views/voice_training_view.dart';
@@ -8,7 +10,7 @@ import '../../core/viewmodels/register_model.dart';
 import '../../ui/shared/app_colors.dart';
 import '../../ui/shared/text_styles.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import '../../core/services/sharing_api.dart';
 import 'base_view.dart';
 import 'choose_mode_view.dart';
 
@@ -18,8 +20,8 @@ class RegisterView extends StatefulWidget {
 }
  
 class _RegisterViewState extends State<RegisterView> {
- 
   final GlobalKey<FormState> form_Key = GlobalKey<FormState>();
+  SharingApi _sharingapi = locator<SharingApi>();
   String _email; 
   String _password;
   String _userName;
@@ -85,33 +87,69 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
+  var subscription;
+
+  @override
+  initState() {
+    super.initState();
+
+    subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      print("connectivity: $result");
+      if (result == ConnectivityResult.none) {
+        Fluttertoast.showToast(
+          msg: "Please check your internet connectivity",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Color(0xff303030),
+          textColor: Colors.white,
+          fontSize: 16.0
+        );
+      } 
+    });
+  }
+
   Future _registerCommand(model) async{
-        bool loginSuccess = await model.register(_userName,_email,_password);
-        if(loginSuccess){
-          SharedPreferences prefs = await SharedPreferences.getInstance(); 
-          await model.sendSuccessfulRegisterNotification();
-          if (prefs.getBool('loggedIn'))
+    bool connectivity = await _sharingapi.checkConnectivity();
+    if (connectivity) {
+      bool loginSuccess = await model.register(_userName,_email,_password);
+      if(loginSuccess){
+        SharedPreferences prefs = await SharedPreferences.getInstance(); 
+        await model.sendSuccessfulRegisterNotification();
+        if (prefs.getBool('loggedIn'))
+          Navigator.push(context, PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
+          ),);
+        else
             Navigator.push(context, PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
-            ),);
-          else
-             Navigator.push(context, PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) => ChooseModeView(),
-            ),);
-        }else{
-            Navigator.push(context, PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) => RegisterView(),
-            ),);  
-            Fluttertoast.showToast(
-              msg: "Registration Failed",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.white,
-              textColor: Colors.black,
-              fontSize: 16.0
-          );
-        }
+              pageBuilder: (context, animation1, animation2) => ChooseModeView(),
+          ),);
+      } else {
+        Navigator.push(context, PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => RegisterView(),
+        ),);  
+
+        Fluttertoast.showToast(
+          msg: "Registration Failed",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.white,
+          textColor: Colors.black,
+          fontSize: 16.0
+        );
+      }
+    } else {
+      Fluttertoast.showToast(
+        msg: "Please check your internet connectivity",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Color(0xff303030),
+        textColor: Colors.white,
+        fontSize: 16.0
+      );
+    }
       
   }
 

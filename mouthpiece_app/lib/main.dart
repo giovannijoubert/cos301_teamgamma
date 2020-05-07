@@ -27,7 +27,7 @@ void main() async {
       child: new MouthPiece(),
     ),
   );
-  await initDeviceId();
+  // await initDeviceId();
 }
 
 Future<void> initDeviceId() async {
@@ -152,6 +152,7 @@ Future<bool> getLoggedIn() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   ChooseModeModel modeModel = new ChooseModeModel();
   bool loggedIn = prefs.getBool('loggedIn');
+  // bool loggedIn = false;
   
   bool isModeSet = prefs.getKeys().contains('isVolSet');
   if (isModeSet) {
