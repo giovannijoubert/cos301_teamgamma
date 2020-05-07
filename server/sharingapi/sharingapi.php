@@ -4,7 +4,7 @@
     header("Access-Control-Allow-Credentials: true");
     header('Access-Control-Allow-Methods: *');
     header('Access-Control-Allow-Headers: *');
-    header("Content-Type: *");
+    header('Content-type:application/json');
 
 	define("SERVER","teamgamma.ga");
 	define("USER","teamgamma_ga");
@@ -75,13 +75,26 @@
 			$packdescription=$data["description"];
 			$packdate=date("Y/m/d");
 			$sql2 = "INSERT INTO Mouthpack(mouthpack_id,mouthpack_name,description,date) VALUES ('{$packid}','{$packname}','{$packdescription}','{$packdate}')";
-			$catid=rand();
+			$catid; //this is a change
 			$catname=$data["category"];
-			$sql3 = "INSERT INTO Category(category_id,category_name) VALUES ('{$catid}','{$catname}')";
+			
+			 //added this
+            		$sqlQuery = "SELECT * FROM Category WHERE category_name = '{$catname}'";
+			$r = mysqli_query($conn,$sqlQuery);
+		    	if (mysqli_num_rows($r) > 0) {
+				while ($rw = mysqli_fetch_assoc($r)) {
+			    		$catid = $rw["category_id"];
+				}
+			} else {
+				$catid = rand();
+				$sql3 = "INSERT INTO Category(category_id,category_name) VALUES ('{$catid}','{$catname}')";
+				$mysql->query($sql3 );
+		    	}
+		    	//until here
 			$sql4 = "INSERT INTO MouthpackCategory(category_id,mouthpack_id) VALUES ('{$catid}','{$packid}')";
 
             //send data to Mouthpack, mouthpackCategory and Category
-			if($mysql->query($sql2) && $mysql->query($sql3 ) && $mysql->query($sql4 ))
+			if($mysql->query($sql2) && $mysql->query($sql4 ))
             {   
                 //upload each image and send details to db 
                 foreach ($data["mouthImages"] as $datas)
@@ -346,7 +359,122 @@
                 echo json_encode($downloadData);
             }
         }
+ 	else if ($data["requestType"] == "getMouthpacksByCategory")
+        {
+          $cat = $data["category"];
+          $sql7 = "SELECT category_id FROM Category WHERE category_name = '".$cat."'";
+          $rslt = mysqli_query($conn,$sql7);
+          if (mysqli_num_rows($rslt) > 0) {
+            while ($row = mysqli_fetch_assoc($rslt)) {
+              $cat = $row["category_id"];
+            }
 
+            $sql7 = "SELECT mouthpack_id FROM MouthpackCategory WHERE category_id = '".$cat."'";
+
+            $rslt1 = mysqli_query($conn,$sql7);
+            if (mysqli_num_rows($rslt1) > 0) {
+              while ($row = mysqli_fetch_assoc($rslt1)) {
+                $m = $row["mouthpack_id"];
+                $sql7 = "SELECT * FROM Mouthpack WHERE mouthpack_id = '".$m."'";
+                $rslt2 = mysqli_query($conn,$sql7);
+                if (mysqli_num_rows($rslt2) > 0) {
+                  while ($row2 = mysqli_fetch_assoc($rslt2)) {
+                    //details from mouthpack table
+                    $id = $row2['mouthpack_id'];
+                    $name = $row2['mouthpack_name'];
+                    $descr = $row2['description'];
+                    $date = $row2['date'];
+                    $categories = array();
+                    $images = array();
+                    $ratings = array();
+
+                    //get categories
+                    $MPCQuery = "SELECT * FROM MouthpackCategory WHERE mouthpack_id='".$id."'";
+                    $MPCResult = mysqli_query($conn,$MPCQuery); //execute query to get mouthpackcategory
+                    if (mysqli_num_rows($MPCResult) > 0) {
+                      while ($MPCRow = mysqli_fetch_assoc($MPCResult)) {
+                        $catID = $MPCRow["category_id"];
+                        $CatQuery = "SELECT * FROM Category WHERE category_id='".$catID."'";
+
+                        $CatResult = mysqli_query($conn,$CatQuery);
+                        if (mysqli_num_rows($CatResult) > 0) {
+                          while ($CatRow = mysqli_fetch_assoc($CatResult)) {
+                            array_push($categories,$CatRow["category_name"]);
+                          }
+                        }
+                      }
+                    }
+
+                    //get image urls
+                    $ImageQuery = "SELECT * FROM MouthImage WHERE mouthpack_id='".$id."'";
+                    $ImageResult = mysqli_query($conn,$ImageQuery); //execute query to get 
+                    if (mysqli_num_rows($ImageResult) > 0) {
+                      while ($ImageRow = mysqli_fetch_assoc($ImageResult)) {
+                        array_push($images,$ImageRow["image_URL"]);
+                      }
+                    }
+
+                    //get ratings
+                    $RateQuery = "SELECT * FROM Rating WHERE mouthpack_id='".$id."'";
+                    $RateResult = mysqli_query($conn,$RateQuery); //execute query to get 
+                    $rateUser;
+                    $rateValue;
+                    $rateTotal = 0;
+                    if (mysqli_num_rows($RateResult) > 0) {
+                      $i = 1;
+                      while ($RateRow = mysqli_fetch_assoc($RateResult)) {
+                        $rateUser = $RateRow["user_id"];
+                        $rateValue = intval($RateRow["value"]);
+                        $rateTotal = ($rateTotal + $rateValue)/$i;
+
+                        $newRating = ["user_id"=>$rateUser,"value"=>$rateValue];
+                        array_push($ratings,$newRating);
+                        $i++;
+                      }
+                      $tot = ["total"=>$rateTotal];
+                      array_unshift($ratings,$tot);
+                    }
+                    
+                    $newObj = ['id'=>$id,'name'=>$name,
+                      'description'=>$descr,'date'=>$date,
+                      'categories'=>$categories,'images'=>$images,'ratings'=>$ratings];
+                    array_push($downloadData,$newObj);
+                  }
+                }
+              }
+              http_response_code(200);
+              echo json_encode($downloadData);
+            } else {
+              http_response_code(200);
+              $res = ["message"=>"No mouthpacks found in that category"];
+              echo json_encode($res);
+            }
+            //$s = ["message"=>$sql7];
+            //echo json_encode($s);
+          } else {
+            http_response_code(200);
+            $res = ["message"=>"Category not found"];
+            echo json_encode($res);
+          }
+        }
+	else if ($data["requestType"] == "rate") 
+        {
+            $val = $data["value"];
+            $usr = $data["userID"];
+            $mID = $data["mouthpackID"];
+
+            $sql6 = "INSERT INTO Rating(value,user_id,mouthpack_id) VALUES (".$val.",".$usr.",".$mID.")";
+
+            if (mysqli_query($conn,$sql6)) {
+                http_response_code(200);
+                $res = ["message"=>"Successfully added rating"];
+                echo json_encode($res);
+            } else {
+                http_response_code(200);
+                $res = ["message"=>mysqli_error($conn)];
+                echo json_encode($res);
+            }
+        }
         else 
         {
             http_response_code(400);
