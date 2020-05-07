@@ -85,56 +85,59 @@ class _VoiceTrainingState extends State<VoiceTrainingView> {
                       child: Container(
                         height: 80,
                         width: 112,
-                          child: Row(children: <Widget>[
+                          child: 
                             IconButton(
-                              icon: Icon(Icons.mic_none),
+                              icon: Icon(model.isRecording ? Icons.mic_off : Icons.mic_none),
                               color: Color(0xff303030),
-                              onPressed:(){ 
+                              onPressed:(){  
                                 if(model.isRecording == false) {
                                   setState(() {
                                     model.wordColour = Colors.green;
                                     ins = "when you are done";
                                   });
-                                  model.startNativeRec();
+                                 // model.startNativeRec();
                                   //model.recordAudio();
                                 } else {
                                   setState(() {
-                                    ins = "when you are done";
+                                    model.changeToNextWord();
+                                model.wordColour=Colors.red;
+                                ins = "then read the word aloud";
+                                    //ins = "when you are done";
                                   });
-                                } 
+                                }
+                                model.isRecording ? model.stopNativeRec() : model.startNativeRec(); 
                               },  
                               // color: Color(0xff303030),
                               iconSize: 40.0, 
                             ),
-                            IconButton(
-                              icon: Icon(Icons.mic_off),
-                              onPressed: (){ if (model.isRecording == true){
+                           // IconButton(
+                            //  icon: Icon(Icons.mic_off),
+                            //  onPressed: (){ if (model.isRecording == true){
                              // model.stopRecordingAudio();
-                              model.stopNativeRec();
-                              setState(() {
-                                model.changeToNextWord();
-                                model.wordColour=Colors.red;
-                                ins = "then read the word aloud";
-                              });}
-                               else{
-                                print("Not recording, dont press button.");
-                              }
-                              }
-                             ,  
-                              color: Color(0xff123456),
-                              iconSize: 40.0, 
-                            ),
-                          ],
-                        ),
+                            //  model.stopNativeRec();
+                             // setState(() {
+                             //   model.changeToNextWord();
+                              //  model.wordColour=Colors.red;
+                              //  ins = "then read the word aloud";
+                           //   });}
+                            //   else{
+                            //    print("Not recording, dont press button.");
+                            //  }
+                           //   }
+                           //  ,  
+                           //   color: Color(0xff123456),
+                           //   iconSize: 40.0, 
+                          //  ),
+                         
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          shape: BoxShape.rectangle,
+                          shape: BoxShape.circle,
                           
                           boxShadow: [
                             BoxShadow(
-                              color: Color(0xffffb8b8),                
-                              blurRadius: 4.0,
-                              spreadRadius: 3.0,
+                             color: Color(0xffffb8b8),
+                            blurRadius: 5.0,
+                            spreadRadius: 0.5,
                               
                             ),
                           ],
