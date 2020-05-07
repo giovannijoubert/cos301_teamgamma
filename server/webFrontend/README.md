@@ -42,7 +42,7 @@ Slack: https://app.slack.com/client/TUXPQA0NR/CUZKK2R71
 |**Overview**|I am an outgoing person who enjoys trying new things. I am a hard worker and I am always eager to learn something new.|
 |**Interests** |Website Development, Content Creation|
 |**Skills**|C++, Java,Web Development: HTML, CSS, PHP, Bootstrap, JavaScript, SQL|
-|**Project Tasks**| ... |
+|**Project Tasks**| Explor and SpecificMouth pages. Unit Testing.|
 
 |Team Member | Details | 
 | :---         | :---         |   
