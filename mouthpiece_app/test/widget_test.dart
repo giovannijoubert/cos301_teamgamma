@@ -30,9 +30,9 @@ void main() {
 
       //expect(test.test, null);
 
-      LoginModel test = new LoginModel();    
+      /*LoginModel test = new LoginModel();    
       Future future = test.login(null, null);
-      expect(future, completion(equals(false)));
+      expect(future, completion(equals(false)));*/
       
     });
 
@@ -43,10 +43,27 @@ void main() {
 
       expect(test.test, null);*/
 
-      LoginModel test = new LoginModel();    
+      /*LoginModel test = new LoginModel();    
       Future future = test.login("test_email", "test_pass");
-      expect(future, completion(equals(false)));
+      expect(future, completion(equals(false)));*/
     });
+
+    /*test('testing reset password notification', () async {
+      locator.registerLazySingleton(() => PushNotificationService());
+      LoginModel test = new LoginModel();
+
+      SharedPreferences.setMockInitialValues({}); //set values here
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String email = "email";
+      String deviceId = '1';
+      pref.setString('email', email);
+      pref.setString('deviceId', deviceId);
+
+      Future future = test.resetPasswordNotification();
+
+      expect(pref.getString('email'), email);
+      expect(pref.getString('deviceId'), '1');
+    });*/
   });
 
   group('Register', () {
@@ -58,12 +75,18 @@ void main() {
       expect(test.test, null);
     });
 
-    test('testing string', () {
+    test('testing string', () async {
       final test = RegisterModel();
 
-      test.register("test_name","test_email","test_pass");
+      await test.register("test_name","test_email","test_pass");
 
-      expect(test.test, null);
+      expect(test.test, false);
+
+      /*final test = RegisterModel();
+
+      await test.register("test_name","test_email","test_pass");
+
+      expect(test.test, true);*/
     });
   });
 
@@ -304,6 +327,14 @@ void main() {
       expect(test.createCollection(), completes);
     });
 
+    test('create collection test', () async {
+      CollectionModel test = CollectionModel();
+      await test.createCollection();
+      List<String> list = test.getImageList();
+      //print(list[1]);
+      //expect(test.getImageList(), list);
+    });
+
     test('create image list', () async {
       CollectionModel test = CollectionModel();
       expect(test.createImageList(), completes);
@@ -351,7 +382,8 @@ void main() {
 
     test('remove mouthpack', () async {
       CollectionModel test = CollectionModel();
-      expect(test.removeMouthpack(0), completes);
+      //await test.removeMouthpack(1);
+      expect(await test.removeMouthpack(1), false);
     });
     
   });
