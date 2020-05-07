@@ -1,41 +1,60 @@
 <!DOCTYPE html>
 <html lang="en-za">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Mouth Pack</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/Light-Theme.css">
+    <!-- toastify -->
+    <link rel="stylesheet" href="../css/lib/toastify.css">
+    <link rel="shortcut icon" href="https://teamgamma.ga/webfrontend/images/favicon.png" />
+    <script src="../js/lib/toastify.js"></script>
     <script src="../vendor/jquery/jquery.min.js" defer></script>
     <script src="../vendor/bootstrap/js/bootstrap.min.js" defer></script>
     <script src="../js/ui.js" defer></script>
     <script src="../js/Upload.js" defer></script>
+    <script type="text/javascript" src="../js/Profile.js"></script>
+    <script type="text/javascript" src="../js/DarkTheme.js"></script>
+
+    <?php 
+        //dark theme
+       if(isset($_COOKIE["theme"]))
+           if($_COOKIE["theme"] == "Dark")
+                echo '<link rel="stylesheet" href="../css/Dark-Theme.css">';
+    ?>
 </head>
+
 <body>
     <div class="header"></div>
     <!-- NAVBAR CODE BEGIN HERE -->
     <nav class="navbar navbar-expand-sm navbar-light bg-light" id="navbar">
         <div class="container-fluid">
-            <a href="Explore.html" class="navbar-brand">
-                <img src="../Assets/Logo/logo.png" alt="Mouth Piece Logo" class="img-responsive" style="height: 30px;">
+            <a class="navbar-brand">
+                <span class="mp_logo"  href="Explore">MouthPiece</span>
             </a>
             <div class="nav navbar-nav ml-auto mr-2 user-prefs" id="user-prefs-1">
                 <a href="javascript: void(0)" data-toggle="collapse" data-target="#user-preferences-section" class="nav-item nav-link"><i class="fa fa-user"></i></a>
             </div>
-            <button class="navbar-toggler" data-toggle="collapse" data-target="#mp-nav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+
             <div class="navbar-collapse collapse flex-row" id="mp-nav">
                 <div class="nav navbar-nav">
-                    <a class ="not" href="Explore.html" class="nav-item nav-link text-dark">Explore</a>
-                    <a class="active" href="Upload.html" class="nav-item nav-link text-dark">Upload</a>
-                    <a class ="not" href="Collections.html" class="nav-item nav-link text-dark">Collections</a>
+                    <a class="not" href="Explore" class="nav-item nav-link text-dark">Explore</a>
+                    <a class="active" href="Upload" class="nav-item nav-link text-dark">Upload</a>
+                    <a class="not" href="Collections" class="nav-item nav-link text-dark">Collections</a>
                 </div>
             </div>
+            <a class="nav_login_btn" href="Login" class="nav-item nav-link text-dark"><i class="fa fa-user"></i> Login</a>
+
             <div class="nav navbar-nav ml-auto user-prefs" id="user-prefs-2">
                 <a href="javascript: void(0)" data-toggle="collapse" data-target="#user-preferences-section" class="nav-item nav-link"><i class="fa fa-user"></i></a>
             </div>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#mp-nav">
+                <span class="navbar-toggler-icon"></span>
+           </button>
         </div>
     </nav>
     <section class="row collapse" id="user-preferences-section">
@@ -49,21 +68,29 @@
             <div class="col-12 flex-row">
                 <div class="text-muted user-prefs-header pb-1">Account Preferences</div>
                 <div class="preference-option m-2">
+                    <div class="profilepictureholder img">
+                       
+                    </div>
+                     <div>
+                        <button data-toggle="modal" data-target="#update-user-prefs" id="updateProfilePicBtn" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+                      </div>
+                 </div>
+                <div class="preference-option m-2">
                     <div>
                         <h5 class="mb-0">Username</h5>
-                        <p class="small text-muted">Lindo Mlambo</p>
+                        <p class="small text-muted username_display">Username</p>
                     </div>
                     <div>
-                        <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdateUsername()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+                        <button data-toggle="modal" data-target="#update-user-prefs" id="updateUsernameBtn" class="btn btn-outline-secondary bg-white text-dark">Change</button>
                     </div>
                 </div>
                 <div class="preference-option m-2">
                     <div>
                         <h5 class="mb-0">Email Address</h5>
-                        <p class="small text-muted">mlambolindo6@gmail.com</p>
+                        <p class="small text-muted email_display">Email</p>
                     </div>
                     <div>
-                        <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdateEmail()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+                        <button data-toggle="modal" data-target="#update-user-prefs" id="updateEmailBtn" class="btn btn-outline-secondary bg-white text-dark">Change</button>
                     </div>
                 </div>
                 <div class="preference-option m-2">
@@ -72,28 +99,27 @@
                         <p class="small text-muted">Change your password</p>
                     </div>
                     <div>
-                        <button data-toggle="modal" data-target="#update-user-prefs" onclick="getUpdatePassword()" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+                        <button data-toggle="modal" data-target="#update-user-prefs" id="updatePasswordBtn" class="btn btn-outline-secondary bg-white text-dark">Change</button>
                     </div>
                 </div>
-                <!-- Not a necessary feature at the moment, can be done if the time allows -->
+
                 <!-- <div class="text-muted user-prefs-header pb-1">Theme Preferences</div>
-                <div class="preference-option m-2">
-                    <div>
-                        <h5 class="mb-0">Dark Mode</h5>
-                        <p class="small text-muted">Coming Soon</p>
-                    </div>
-                    <div>
-                        <div class="custom-control custom-switch float-right">
-                            <input type="checkbox" class="custom-control-input" id="switch-theme">
-                            <label class="custom-control-label" for="switch-theme"></label>
-                        </div>
-                    </div>
-                </div> -->
+        <div class="preference-option m-2">
+            <div>
+                <h5 class="mb-0">Dark Mode</h5>
+            </div>
+            <div>
+                <div class="custom-control custom-switch float-right">
+                    <input type="checkbox" class="custom-control-input" id="switch-theme">
+                    <label class="custom-control-label" for="switch-theme"></label>
+                </div>
+            </div>
+        </div> -->
 
                 <div class="mt-3 mb-1 text-center">
-                    <button class="mx-auto btn btn-outline-secondary bg-white text-dark" onclick="logout()" style="border-radius: 40px"><i class="fa fa-sign-out"></i> Logout</button><br>
+                    <button class="mx-auto btn btn-outline-secondary bg-white text-dark" id="logoutBtn" style="border-radius: 40px"><i class="fa fa-sign-out"></i> Logout</button><br>
 
-                    <button class="btn btn-link text-secondary mt-2"  data-toggle="collapse" data-target="#user-preferences-section">&times; close</button>
+                    <button class="btn btn-link text-secondary mt-2" data-toggle="collapse" data-target="#user-preferences-section">&times; close</button>
                 </div>
             </div>
         </div>
@@ -112,7 +138,7 @@
                         <div id="instructions" style="border-radius: 4px;" class=" bg-light p-3 m-0 mb-2">
                             <p class="mb-1 text-primary small"><strong>Upload mouthpack in 3 easy steps:</strong></p>
                             <ol class="text-primary small">
-                                <li>Add 12 images to the corresponding sounds</li>
+                                <li>Add 6 or 12 images to the corresponding sounds</li>
                                 <li>Fill in the title and select the category for the mouthpack</li>
                                 <li>Click upload</li>
                             </ol>
@@ -145,27 +171,27 @@
                                         <h4>f v</h4>
                                     </div>
                                     <div class="mouth-drop-target" id="div-qw">
-                                        <input type="file" name="qw" id="inp-qw" style="opacity: 0; position:absolute;" required>
+                                        <input type="file" name="qw" id="inp-qw" style="opacity: 0; position:absolute;" >
                                         <h4>q w</h4>
                                     </div>
                                     <div class="mouth-drop-target" id="div-th">
-                                        <input type="file" name="th" id="inp-th" style="opacity: 0; position:absolute;" required>
+                                        <input type="file" name="th" id="inp-th" style="opacity: 0; position:absolute;" >
                                         <h4>th</h4>
                                     </div>
                                     <div class="mouth-drop-target" id="div-bmp">
-                                        <input type="file" name="bmp" id="inp-bmp" style="opacity: 0; position:absolute;" required>
+                                        <input type="file" name="bmp" id="inp-bmp" style="opacity: 0; position:absolute;" >
                                         <h4>b m p</h4>
                                     </div>
                                     <div class="mouth-drop-target" id="div-u">
-                                        <input type="file" name="u" id="inp-u" style="opacity: 0; position:absolute;" required>
+                                        <input type="file" name="u" id="inp-u" style="opacity: 0; position:absolute;" >
                                         <h4>u</h4>
                                     </div>
                                     <div class="mouth-drop-target" id="div-ee">
-                                        <input type="file" name="ee" id="inp-ee" style="opacity: 0; position:absolute;" required>
+                                        <input type="file" name="ee" id="inp-ee" style="opacity: 0; position:absolute;" >
                                         <h4>ee</h4>
                                     </div>
                                     <div class="mouth-drop-target" id="div-chjsh">
-                                        <input type="file" name="chjsh" id="inp-chjsh" style="opacity: 0; position:absolute;" required>
+                                        <input type="file" name="chjsh" id="inp-chjsh" style="opacity: 0; position:absolute;" >
                                         <h4>ch j sh</h4>
                                     </div>
                                 </div>
@@ -181,10 +207,11 @@
                                             <label for="mouth-pack-title"><strong>Category:</strong></label>
                                             <select id="mouth-pack-category" class="form-control" required>
                                                 <option value="" selected disabled>Select the category</option>
-                                                <option value="cat1">Category One</option>
-                                                <option value="cat1">Category Two</option>
-                                                <option value="cat1">Category Three</option>
-                                                <option value="cat1">Category Four</option>
+                                                <option value="Monster">Monster</option>
+                                                <option value="Funny">Funny</option>
+                                                <option value="Random">Random</option>
+                                                <option value="Robots">Robots</option>
+                                                <option value="Animals">Animals</option>
                                             </select>
                                         </div>
                                     </div>
@@ -220,9 +247,10 @@
                 </div>
             </div>
         </div>
+        <span id="theme_toggler" class="theme-circle-div"><i class="fas fa-moon"></i></span>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.5/lib/darkmode-js.min.js"></script>
-    <script type="text/javascript" src="../js/DarkTheme.js"></script>
+
 
 </body>
+
 </html>
