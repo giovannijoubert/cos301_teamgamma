@@ -17,6 +17,7 @@ import 'core/viewmodels/profile_model.dart';
 GetIt locator = GetIt();
 
 void setupLocator() {
+  
   locator.registerLazySingleton(() => AuthenticationService());
   locator.registerLazySingleton(() => Api());
   locator.registerLazySingleton(() => SharingApi());
@@ -31,4 +32,6 @@ void setupLocator() {
   locator.registerFactory(() => CollectionModel());
   locator.registerFactory(() => MouthpackModel());
   locator.registerFactory(() => ProfileModel());
+
+  
 }
