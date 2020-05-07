@@ -74,3 +74,14 @@ Slack: https://app.slack.com/client/TUXPQA0NR/CUZKK2R71
 |**Interests** |Web Development, Android development|
 |**Skills**|C++, Java, Web Development: HTML, CSS, JavaScript, PHP, SQL |
 |**Project Tasks**| ... |
+
+
+|Team Member | Details | 
+| :---         | :---         |   
+|**Rashiidah Weira Wanda**|    **u17281017**   |
+|**Profile** |[Github](https://github.com/WandaWeira)|
+|**Overview**|I am a hard working and I am pasionate about myself. I am highy organised, disciplined and engaged. |
+|**Position** |Final year BSc Computer Science|
+|**Interests** |Web Development, Android development|
+|**Skills**|C++, Java, Web Development: HTML, CSS, JavaScript, PHP, SQL |
+|**Project Tasks**| SpecificMouth page: downloads and rating |
