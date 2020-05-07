@@ -23,7 +23,7 @@
 |**Position** |Final year BSc Computer Science|
 |**Interests** |Graphic Development, Gaming, Mountain Biking, General Computer Technological Developments|
 |**Skills**|C++, Java, Test Driven Development, 3DS Max, Web Development: HTML, CSS, AJAX, JSON, Mongo DB, Bootstrap, JavaScript, SQL|
-|**Project Tasks**| ... |
+|**Project Tasks**| Explore page. website design and intergration testing. |
 
 |Team Member | Details | 
 | :---         | :---         |  
