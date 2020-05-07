@@ -44,6 +44,7 @@ class HomeModel extends BaseModel {
   setNavVal() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool("navVal", true);
+    test = prefs.getBool("navVal");
   }  
 
   createCollection() async {
@@ -95,12 +96,11 @@ class HomeModel extends BaseModel {
   
 
   void setListeningModeColour(String colour) {
-    test = "colour set";
+    test = colour;
     listeningModeColour = colour;
   }
 
   String getListeningModeColour() {
-    test = "got colour";
     return listeningModeColour;
   }
 
