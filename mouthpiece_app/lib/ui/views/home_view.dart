@@ -37,7 +37,7 @@ class _HomeViewState extends State<HomeView> {
     // precacheImage(AssetImage("assets/bill.png"), context);
     BottomNavigation bottomNavigation = new BottomNavigation();
     bottomNavigation.setIndex(_currentTabIndex);
-    homeModel.setNavVal();
+    // homeModel.setNavVal(); 
     // homeModel.changeTheme(context);
     
     images = collectionModel.getImageList();
@@ -168,13 +168,10 @@ class _MouthSelectedBtnState extends State<MouthSelectedBtn> with TickerProvider
 
   AnimationController _controller;
   Animation _widthAnimation;
-  Timer timer;
 
   @override
   void initState() {
     super.initState();
-
-    
 
     _controller = AnimationController(
       vsync: this,

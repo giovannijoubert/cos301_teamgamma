@@ -5,6 +5,8 @@ import 'package:file/file.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mouthpiece/core/services/sharing_api.dart';
 import 'package:mouthpiece/ui/views/mouth_selection_view.dart';
 import 'package:mouthpiece/ui/views/mouthpack_view.dart';
 import 'package:path_provider/path_provider.dart';
@@ -12,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:mouthpiece/ui/shared/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/viewmodels/collection_model.dart';
+import '../../locator.dart';
 import 'base_view.dart';
 import '../widgets/bottom_navigation.dart';
 import 'dart:convert';
@@ -380,6 +383,7 @@ class _MouthCardState extends State<MouthCard> {
   @override
   Widget build(BuildContext context) {
     CollectionModel collectionModel = new CollectionModel();
+    SharingApi _sharingapi = locator<SharingApi>();
 
     var cardBgColour = int.parse(bgColour);
     if (imgSrc == null) {
@@ -390,7 +394,6 @@ class _MouthCardState extends State<MouthCard> {
     if (title.contains("Default")) {
       decodedImgSrc = base64.decode(imgSrc);
     } 
-    
 
     return Container(
       margin: const EdgeInsets.fromLTRB(15, 3, 10, 3),
@@ -472,12 +475,25 @@ class _MouthCardState extends State<MouthCard> {
                                 visible: !defaultMouthpack,
                                 child:  GestureDetector(
                                   onTap: () async {
-                                    for (int i = 0; i < totalImages; i++) {
-                                      // print(base64.decode(images[0]));
-                                      var index = i+1;
-                                      String url = await collectionModel.getCollectionURLAtIndex(mouthpackIndex, i);
-                                      await ImageDownloader.downloadImage(url,
-                                      destination: AndroidDestinationType.directoryDownloads..subDirectory('$title/mouth-$index.png')); 
+                                    bool connectivity = await _sharingapi.checkConnectivity();
+                                    if (connectivity) {
+                                      for (int i = 0; i < totalImages; i++) {
+                                        // print(base64.decode(images[0]));
+                                        var index = i+1;
+                                        String url = await collectionModel.getCollectionURLAtIndex(mouthpackIndex, i);
+                                        await ImageDownloader.downloadImage(url,
+                                        destination: AndroidDestinationType.directoryDownloads..subDirectory('$title/mouth-$index.png')); 
+                                      }
+                                    } else {
+                                      Fluttertoast.showToast(
+                                        msg: "Please check your internet connectivity",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 3,
+                                        backgroundColor: Color(0xff303030),
+                                        textColor: Colors.white,
+                                        fontSize: 16.0
+                                      );
                                     }
                                   },
                                   child: Icon(

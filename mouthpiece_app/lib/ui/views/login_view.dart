@@ -2,6 +2,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:mouthpiece/core/services/sharing_api.dart';
+import 'package:mouthpiece/core/viewmodels/collection_model.dart';
 import 'package:mouthpiece/locator.dart';
 import 'package:mouthpiece/ui/shared/theme.dart';
 import 'package:mouthpiece/ui/views/choose_mode_view.dart';
@@ -110,7 +111,7 @@ class _LoginViewState extends State<LoginView> {
   Future _loginCommand(model, theme) async{
     final prefs = await SharedPreferences.getInstance();
     bool connectivity = await _sharingapi.checkConnectivity();
-
+    CollectionModel collectionModel = new CollectionModel();
     if (connectivity) {
       var loginSuccess = await model.login("john123", "John123");
       // var loginSuccess = await model.login(_userName, _password);
@@ -119,6 +120,8 @@ class _LoginViewState extends State<LoginView> {
         if (themeVal == null)
           themeVal = lightTheme;
         await theme.setTheme(themeVal);
+        await prefs.setBool("navVal", true);
+        collectionModel.clearLists();
         Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
       } else {
         setState(() {

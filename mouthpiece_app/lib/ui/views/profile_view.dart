@@ -490,22 +490,23 @@ class SignOutButton extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(95, 0, 95, 0),
       child: RaisedButton(
         onPressed: () async {
-          CollectionModel collectionModel = new CollectionModel();
+          // CollectionModel collectionModel = new CollectionModel();
           prefs = await SharedPreferences.getInstance();
+          
           await prefs.remove('isVolSet');
           await prefs.remove('username');
           await prefs.remove('email');
           await prefs.remove('pass');
           await prefs.remove('profile_image');
           await prefs.remove('userInfo');
-          prefs.remove('jwt');
+          await prefs.remove('jwt');
           bottomNavigation.setIndex(0);
           await prefs.setInt('tabIndex', 0);
           await prefs.setBool('loggedIn', false);
           await prefs.setBool('navVal', false);
           await prefs.setString("theme", "Light");
           await _theme.setTheme(lightTheme);
-          await collectionModel.clearLists();
+          // await collectionModel.clearLists();
           modeModel.clearMode();
           Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => LoginView()), (Route<dynamic> route) => false);
         },

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mouthpiece/core/viewmodels/collection_model.dart';
 import 'package:mouthpiece/core/viewmodels/mouth_selection_model.dart';
 import 'package:mouthpiece/ui/views/home_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -86,8 +87,8 @@ Widget volumeButtonSection(BuildContext context, model) {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         new RawMaterialButton(
-          onPressed: ()  async{ //onPressed: ()  {
-            model.setVolumeBased();     
+          onPressed: ()  async { //onPressed: ()  {
+            model.setVolumeBased();
             SharedPreferences prefs = await SharedPreferences.getInstance(); 
             bool check = prefs.getBool('navVal') ?? false; 
             if (!check) {
@@ -180,6 +181,11 @@ Widget formantButtonSection(BuildContext context, model) {
             SharedPreferences prefs = await SharedPreferences.getInstance(); 
             bool check = prefs.getBool('navVal') ?? false; 
             if (!check) {
+              prefs.setBool("navVal", true);
+              if (prefs.getBool('loggedIn')) {
+                CollectionModel collectionModel = new CollectionModel();
+                collectionModel.clearLists();
+              }
               Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
             } else { 
               Navigator.pop(context);

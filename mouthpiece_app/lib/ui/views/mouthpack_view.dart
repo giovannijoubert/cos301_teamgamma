@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../core/viewmodels/mouthpack_model.dart';
 import 'base_view.dart';
@@ -183,7 +184,10 @@ class _ImageSectionState extends State<ImageSection> {
       shrinkWrap: true,
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       children: List.generate(this.images.length, (index) {
-        Uint8List decodedImgSrc = base64.decode(this.images[index]);
+        Uint8List decodedImgSrc;
+        if (!images[index].contains("http")) {
+          decodedImgSrc = base64.decode(this.images[index]);
+        } 
         return Center(
           child: Container(
             child: ClipRRect(
@@ -202,10 +206,16 @@ class _ImageSectionState extends State<ImageSection> {
                 ),
                 width: 80,
                 height: 80,
-                child: new Image.memory(
+                child: (this.images[index].contains("http")) ? 
+                CachedNetworkImage(
+                  imageUrl: this.images[index],
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ) :
+                Image.memory(
                   decodedImgSrc,
                   fit: BoxFit.contain,
-                ),
+                )
               ),
             ),
           ),

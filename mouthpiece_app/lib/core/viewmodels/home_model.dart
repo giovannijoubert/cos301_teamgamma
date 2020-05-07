@@ -19,7 +19,6 @@ class HomeModel extends BaseModel {
   CollectionModel collectionModel = new CollectionModel();
   static String listeningModeImg;
   static bool updateVal;
-  Timer timer;
 
   HomeModel() {
     if (collectionModel.getImageList().length == 0 || updateVal) {

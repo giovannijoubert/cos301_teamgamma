@@ -33,6 +33,7 @@ class CollectionModel extends BaseModel {
       // print(collection);
 
       // await encodeImages();
+      createDownloadList();
       await createImageList();
       await createColourList();
     } else {
@@ -122,6 +123,12 @@ class CollectionModel extends BaseModel {
           collection[i][0]["images"][j] = base64.encode(resp.bodyBytes);
         });
       }
+    }
+  }
+
+  createDownloadList() {
+    for (int i = 0; i < collection.length; i++) {
+      collectionURL.add(collection[i][0]["images"]);
     }
   }
 
