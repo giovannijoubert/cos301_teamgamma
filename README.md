@@ -12,4 +12,5 @@
 
 ## Link to Collaboration Tool
 
-https://app.clickup.com/2502552/v/b/f/8726467
+* Clickup: https://app.clickup.com/2502552/v/b/f/8726467
+* Slack: https://app.slack.com/client/TUXPQA0NR/CUXQ53QHK
