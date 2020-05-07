@@ -115,7 +115,7 @@ public class Training
             System.out.println("Enough data...");
             try
             {
-                return train(model, getTrainingDataSetIterator(pretrain, true), pretrain, true);
+                return train(model, getTrainingDataSetIterator(pretrain, tf), pretrain, tf);
             }
             catch(Exception e)
             {
