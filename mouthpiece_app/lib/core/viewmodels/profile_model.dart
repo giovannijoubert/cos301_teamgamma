@@ -15,7 +15,7 @@ class ProfileModel extends BaseModel {
 
   updateProfileImage(String convertedFile) async {
     prefs = await SharedPreferences.getInstance();
-    String url = 'http://teamgamma.ga/api/umtg/update';
+    String url = 'https://teamgamma.ga/api/umtg/update';
 
     Map map = {
       "option": "image",

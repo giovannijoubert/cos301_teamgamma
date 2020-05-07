@@ -34,7 +34,7 @@ class CollectionModel extends BaseModel {
       collection = await jsonDecode(mouthpacks.toString());
       // print(collection);
 
-      await encodeImages();
+      // await encodeImages();
       await createImageList();
       await createColourList();
     } else {
@@ -94,7 +94,7 @@ class CollectionModel extends BaseModel {
   Future<List> getProfileMouthpackIdList() async {
     prefs = await SharedPreferences.getInstance();
     var requestInfo = prefs.getString('userInfo');
-    var userInfo = jsonDecode(requestInfo);
+    var userInfo = await jsonDecode(requestInfo);
 
     List<String> idList = List<String>();
 
@@ -109,17 +109,12 @@ class CollectionModel extends BaseModel {
     List<String> mouthpackCollection = List<String>();
 
     for (int i = 0; i < idList.length; i++) {
-      // String mouthpack = await _sharingapi.getMouthpack(idList[i]);
-      // print(mouthpack);
       mouthpackCollection.add(await _sharingapi.getMouthpack(idList[i]));
-      // mouthpackCollection.add(mouthpack);
     }
 
     return mouthpackCollection;
   }
-
   Future<void> encodeImages() async {
-    // print(collection);
     for (int i = 0; i < collection.length; i++) {
       collectionURL.add(collection[i][0]["images"]);
       for (int j = 0; j < collection[i][0]["images"].length; j++) {
@@ -134,12 +129,11 @@ class CollectionModel extends BaseModel {
   }
 
   Future<String> getCollectionURLAtIndex(int row, int col) async{
-
     String url = collectionURL[row-defaultMouthpacks.length][col];
     // print(url);
-   return url;
+    return url;
   // 
-}
+  }
 
   String getColoursListAtIndex(int index) {
     test = index;
@@ -194,9 +188,9 @@ class CollectionModel extends BaseModel {
           "password": prefs.getString("pass"),
         };
 
-        String url = 'http://teamgamma.ga/api/umtg/login';
+        String url = 'https://teamgamma.ga/api/umtg/login';
         await _api.fetchUser(url, map, prefs.getString("username"));
-        homeModel.setUpdate(true);
+        homeModel.setUpdateVal(true);
       });
     }
   }
@@ -213,9 +207,9 @@ class CollectionModel extends BaseModel {
           "password": prefs.getString("pass"),
         };
 
-        String url = 'http://teamgamma.ga/api/umtg/login';
+        String url = 'https://teamgamma.ga/api/umtg/login';
         await _api.fetchUser(url, map, prefs.getString("username"));
-        homeModel.setUpdate(true);
+        homeModel.setUpdateVal(true);
         result = true;
       });
     } 

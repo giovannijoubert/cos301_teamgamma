@@ -21,6 +21,7 @@ import 'package:noise_meter/noise_meter.dart';
 import 'dart:async';
 import 'base_view.dart';
 import '../../core/services/Permissions/permissionRequest.dart';
+import 'dart:convert';
 
  
 class ListeningModeView extends StatefulWidget {
@@ -65,6 +66,7 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
   int test = homeModel.getIndex(); // Match below
   // String mouthIndex = homeModel.getListeningModeImg();
   // String mouthIndex = homeModel.getListeningModeImg();
+  // List<String> listeningModeImgList = homeModel.getListeningModeImgList();
   List<Uint8List> listeningModeImgList = homeModel.getListeningModeImgList();
 
   //"/data/user/0/com.example.mouthpiece_app/app_flutter/defaultMouthpacks/2-1.png";
@@ -197,27 +199,14 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
           
      
       }
-      /* Future<io.File> _getLocalFile(String path) async {
-        io.File f = new io.File(path);
-        return f; 
-      } */
-    //_update();
+
     colour = homeModel.getListeningModeColour();
-    //isVolSet = modeChosen.getIsVolSet();
-   // print("Volume is chosen = "+ isVolSet.toString()); // Test 
-    /* Widget mouthText = new Container(
-    child: Image.file(
-      io.File(mouthIndex),
-      width: 600, 
-        height: 600,
-        gaplessPlayback: true,
-      ),
-    ); */
 
     Widget mouthText = new Container(
     child: Image.memory(
-      listeningModeImgList[mouthImg],
-      width: 600, 
+        listeningModeImgList[mouthImg],
+        fit: BoxFit.contain,
+        width: 600, 
         height: 600,
         gaplessPlayback: true,
       ),
@@ -250,7 +239,7 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
 
     return Material(
       child: Hero(
-        tag: 'blackBox',
+        tag: DateTime.now().toIso8601String(),
         createRectTween: _createRectTween,
         child: Container(
           color: Color(int.parse(colour)),

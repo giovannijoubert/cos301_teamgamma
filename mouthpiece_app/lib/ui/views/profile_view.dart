@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:mouthpiece/core/viewmodels/choose_mode_model.dart';
 import 'package:mouthpiece/core/viewmodels/collection_model.dart';
 import 'package:mouthpiece/ui/shared/theme.dart';
 import 'package:mouthpiece/ui/views/choose_mode_view.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
+import '../../core/services/sharing_api.dart';
 
 Api _api = locator<Api>();
 SharedPreferences prefs;
@@ -33,6 +35,8 @@ bool editingBool = false;
 _ProfileViewState globalParent;
 var bytes;
 BottomNavigation bottomNavigation = new BottomNavigation();
+ChooseModeModel modeModel = new ChooseModeModel();
+SharingApi _sharingapi = locator<SharingApi>();
 
 class ProfileView extends StatefulWidget {
   @override
@@ -122,17 +126,19 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
   Widget text() {
     if(editingBool == false)
       return textField();
+      
     else
       return textInput();
   }
+  
 
   @override
   Widget build(BuildContext context) {
     
     return FutureBuilder<bool>(
         future: getLoggedIn(),
-        builder: (context, snapshot){
-          if(loggedIn == true){
+        builder: (context, snapshot) {
+          if(loggedIn == true) {
             return BaseView<ProfileModel>(
               builder: (context, model, child) => Scaffold(
                 body: ListView(
@@ -485,20 +491,22 @@ class SignOutButton extends StatelessWidget {
       child: RaisedButton(
         onPressed: () async {
           CollectionModel collectionModel = new CollectionModel();
-          // collectionModel.clearLists();
-          bottomNavigation.setIndex(0);
           prefs = await SharedPreferences.getInstance();
-          prefs.remove('username');
-          prefs.remove('email');
-          prefs.remove('theme');
-          prefs.remove('pass');
-          prefs.remove('profile_image');
-          prefs.remove('loggedIn');
-          prefs.remove('userInfo');
+          await prefs.remove('isVolSet');
+          await prefs.remove('username');
+          await prefs.remove('email');
+          await prefs.remove('pass');
+          await prefs.remove('profile_image');
+          await prefs.remove('userInfo');
           prefs.remove('jwt');
+          bottomNavigation.setIndex(0);
           await prefs.setInt('tabIndex', 0);
-          prefs.setBool('navVal', false);
-          // await _theme.setTheme(lightTheme);
+          await prefs.setBool('loggedIn', false);
+          await prefs.setBool('navVal', false);
+          await prefs.setString("theme", "Light");
+          await _theme.setTheme(lightTheme);
+          await collectionModel.clearLists();
+          modeModel.clearMode();
           Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => LoginView()), (Route<dynamic> route) => false);
         },
         // padding: EdgeInsets.all(15),
@@ -531,8 +539,14 @@ class SignOutButton2 extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(95, 0, 95, 0),
       child: RaisedButton(
         onPressed: () async {
+          prefs = await SharedPreferences.getInstance();
           bottomNavigation.setIndex(0);
-          prefs.setBool('navVal', false);
+          await prefs.setInt('tabIndex', 0);
+          await prefs.setBool('navVal', false);
+          await prefs.setString("theme", "Light");
+          await _theme.setTheme(lightTheme);
+          prefs.remove('isVolSet');
+          modeModel.clearMode();
           Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => RegisterView()), (Route<dynamic> route) => false);
         },
         // padding: EdgeInsets.all(15),
@@ -567,7 +581,7 @@ Future setTheme(String theme) async{
       "jwt" : authkey,
       "theme" : theme  
     };
-    String url = 'http://teamgamma.ga/api/umtg/update';
+    String url = 'https://teamgamma.ga/api/umtg/update';
     _api.updateTheme(url, map);
     prefs.setString('theme', theme);
 }
@@ -582,7 +596,7 @@ Future setImage(File _image) async{
     "jwt" : authkey,
     "image" : base
   };
-  String url = 'http://teamgamma.ga/api/umtg/update';
+  String url = 'https://teamgamma.ga/api/umtg/update';
   _api.updateImage(url,map);
 }
 
@@ -608,10 +622,10 @@ class _BuildEmailState extends State<BuildEmail> {
           border: OutlineInputBorder(), 
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.grey,
+              color: Colors.blue,
             )
           ),
-          focusColor: Colors.grey
+          focusColor: Colors.blue
         ),
         initialValue: email,
         validator: (String value) {
@@ -636,7 +650,7 @@ class _BuildEmailState extends State<BuildEmail> {
             "jwt" : authkey,
             "email" : value
           };
-          String url = 'http://teamgamma.ga/api/umtg/update';
+          String url = 'https://teamgamma.ga/api/umtg/update';
           await _api.updateMail(url, map).then((response) {
               if (response == false) {
                 Fluttertoast.showToast(

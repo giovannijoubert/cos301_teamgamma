@@ -9,7 +9,8 @@ final darkTheme = ThemeData(
   primaryColor: Colors.white,
   brightness: Brightness.dark,
   backgroundColor: const Color(0xFF303030),
-  accentColor: Color(0xFF303030),
+  // accentColor: Color(0xFF303030),
+  accentColor: Colors.blue,
   accentIconTheme: IconThemeData(color: Colors.black),
   dividerColor: Color(0xCCFFFFFF),
   iconTheme: IconThemeData(color: Colors.white),
@@ -17,7 +18,8 @@ final darkTheme = ThemeData(
   appBarTheme: AppBarTheme(color: Colors.white, iconTheme: IconThemeData(color: Colors.white), textTheme: TextTheme(display1: TextStyle(color: Colors.white))),
   bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
   textTheme: TextTheme(body1: TextStyle(color: Color(0xEFFFFFFF))),
-  buttonTheme: ButtonThemeData(buttonColor: Color(0xEFFFFFFF), textTheme: ButtonTextTheme.accent),
+  buttonTheme: ButtonThemeData(buttonColor: Color(0xEFFFFFFF), textTheme: ButtonTextTheme.primary),
+  
 );
   
 
@@ -26,7 +28,7 @@ final lightTheme = ThemeData(
   primaryColor: Color(0xFF303030),
   brightness: Brightness.light,
   backgroundColor: const Color(0xFFE5E5E5),
-  accentColor: Colors.black,
+  accentColor: Color(0xAA303030),
   accentIconTheme: IconThemeData(color: Colors.white),
   dividerColor: Color(0xFF303030),
   textTheme: TextTheme(body1: TextStyle(color: Color(0xFF303030))),
@@ -34,7 +36,8 @@ final lightTheme = ThemeData(
   inputDecorationTheme: InputDecorationTheme(
     focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(
-        color: Color(0xCC303030),
+        // color: Color(0xCC303030),
+        color: Colors.blue,
       )
     ),
   )
@@ -42,14 +45,14 @@ final lightTheme = ThemeData(
 
 class ThemeChanger with ChangeNotifier {
   ThemeData _themeData;
-  // final SharedPreferences prefs;
+  final SharedPreferences prefs;
 
-  ThemeChanger(this._themeData) {
-    // print("start_up");
-    // if(prefs.getKeys().contains('isVolSet'))
-    //   _themeData = prefs.getString("theme") == "Light" ? lightTheme : darkTheme;
-    // else 
-    //   _themeData = lightTheme;
+  ThemeChanger(this.prefs) {
+    print(prefs.getString("theme"));
+    if(prefs.getKeys().contains('theme'))
+      _themeData = prefs.getString("theme") == "Light" ? lightTheme : darkTheme;
+    else 
+      _themeData = lightTheme;
   }
 
   getTheme() => _themeData;

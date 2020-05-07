@@ -89,7 +89,7 @@ Widget volumeButtonSection(BuildContext context, model) {
           onPressed: ()  async{ //onPressed: ()  {
             model.setVolumeBased();     
             SharedPreferences prefs = await SharedPreferences.getInstance(); 
-            bool check = prefs.getBool('navVal'); 
+            bool check = prefs.getBool('navVal') ?? false; 
             if (!check) {
               Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
             } else { 
@@ -178,7 +178,7 @@ Widget formantButtonSection(BuildContext context, model) {
             model.setFormantBased();
         
             SharedPreferences prefs = await SharedPreferences.getInstance(); 
-            bool check = prefs.getBool('navVal'); 
+            bool check = prefs.getBool('navVal') ?? false; 
             if (!check) {
               Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
             } else { 

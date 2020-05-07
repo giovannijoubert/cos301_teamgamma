@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import '../viewmodels/collection_model.dart';
 
 import '../../ui/views/home_view.dart';
 import '../data/defaultmouthpacks.dart';
+import 'package:http/http.dart' as http;
 
 import 'base_model.dart';
 
@@ -17,15 +19,22 @@ class HomeModel extends BaseModel {
   CollectionModel collectionModel = new CollectionModel();
   static String listeningModeImg;
   static bool updateVal;
+  Timer timer;
 
   HomeModel() {
     if (collectionModel.getImageList().length == 0 || updateVal) {
       createCollection(); 
-      updateVal = false;
+    //   updateVal = false;
+      // if (collectionModel.getImageList().length == 0 || getUpdateVal()) {
+        // timer = Timer.periodic(Duration(seconds: 20), (Timer t) { if (state == ViewState.Busy) { createCollection(); }}); 
+        setUpdateVal(false);
+      // }
     }
   }
 
-  setUpdate(bool val) {
+ 
+
+  setUpdateVal(bool val) {
     updateVal = val;
   }
 
@@ -44,25 +53,32 @@ class HomeModel extends BaseModel {
     setState(ViewState.Idle);
   }
 
+  // static List<String> listeningModeImgList = List<String>();
   static List<Uint8List> listeningModeImgList = List<Uint8List>();
   static String listeningModeColour;
   static int index = 0;
 
-  void createListeningModeImgList() {
+  Future<void> createListeningModeImgList() async {
     listeningModeImgList.clear();
     int length = defaultMouthpacks[0]["images"].length;
     for (int i = 0; i < length; i++) {
       if (getIndex() < defaultMouthpacks.length)
+        // listeningModeImgList.add(defaultMouthpacks[getIndex()]["images"][i]); 
         listeningModeImgList.add(base64.decode(defaultMouthpacks[getIndex()]["images"][i])); 
       else {
         int index = getIndex() - defaultMouthpacks.length;
-        listeningModeImgList.add(base64.decode(collectionModel.getCollection()[index][0]["images"][i]));  
+        await http.get(
+          collectionModel.getCollection()[index][0]["images"][i]
+        ).then((resp) {
+          listeningModeImgList.add(base64.decode(base64.encode(resp.bodyBytes)));
+        });
       }
     }
 
     test = "got image";
   }
 
+  // List<String> getListeningModeImgList() {
   List<Uint8List> getListeningModeImgList() {
     test = "got image list";
     return listeningModeImgList;
