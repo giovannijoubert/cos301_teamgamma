@@ -1,0 +1,705 @@
+{
+	"info": {
+		"_postman_id": "1161f387-e619-49bf-bf79-fddc6e55f9a5",
+		"name": "Mouthpack tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CorrectFilter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cc816f4e-43a5-48db-aada-6de1d4343f69",
+						"exec": [
+							"pm.test(\"Get mouthpack - successful\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Vampire\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"requestType\": \"getAllMouthpacks\",\n\t\"filter\":{\n\t\t\"criteria\": \"mouthpack_name\",\n\t\t\"like\": \"Vampire\"\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://teamgamma.ga/api/sharingapi.php",
+					"protocol": "https",
+					"host": [
+						"teamgamma",
+						"ga"
+					],
+					"path": [
+						"api",
+						"sharingapi.php"
+					]
+				},
+				"description": "Filter all Vampire packs"
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllPacks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "670dfb55-e723-4ad8-8753-d99137825bd7",
+						"exec": [
+							"pm.test(\"Get mouthpacks - successful\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"requestType\": \"getAllMouthpacks\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				},
+				"description": "Gets all mouthpacks"
+			},
+			"response": []
+		},
+		{
+			"name": "CorrectID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e7b0444c-b657-4d37-9319-ae1a8f3ab518",
+						"exec": [
+							"pm.test(\"Get mouthpack - successful\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\t\"requestType\": \"getMouthPack\",\n\t\"id\": \"71087647\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				},
+				"description": "Get mouthpack by ID"
+			},
+			"response": []
+		},
+		{
+			"name": "IncorrectID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a4d617b8-155f-42eb-b2f8-32d6872f78f4",
+						"exec": [
+							"pm.test(\"Incorrect mouthpack ID\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\t\"requestType\": \"getMouthPack\",\n\t\"id\": \"1233\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				},
+				"description": "Example of wrong ID"
+			},
+			"response": []
+		},
+		{
+			"name": "PasswordRecovery",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4756dd48-442e-41d8-9d73-2bc776a583e1",
+						"exec": [
+							"pm.test(\"Password recovery - successful\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\t\"email\": \"zoe.schnetler@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://teamgamma.ga/api/umtg/recover",
+					"protocol": "https",
+					"host": [
+						"teamgamma",
+						"ga"
+					],
+					"path": [
+						"api",
+						"umtg",
+						"recover"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "IncorrectFilter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "588a6fd2-3b60-4347-bf0e-6821d8910759",
+						"exec": [
+							"pm.test(\"Unknown filter\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"requestType\": \"getAllMouthpacks\",\n\t\"filter\":{\n\t\t\"criteria\": \"mouthpack_name\",\n\t\t\"like\": \"1234\"\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "85071501-d11c-4ef2-821e-9a9c0b05c09f",
+						"exec": [
+							"pm.test(\"Test that user is successfully added\", function () {",
+							"    pm.response.to.have.status(409);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3e3f5673-865d-492d-a548-d09a3acace06",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"test2\",\r\n\t\"f_name\": \"Ryan1\",\r\n\t\"l_name\": \"John1\",\r\n\t\"password\": \"pass123\",\r\n\t\"email\": \"email@test.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://teamgamma.ga/api/umtg/register",
+					"protocol": "http",
+					"host": [
+						"teamgamma",
+						"ga"
+					],
+					"path": [
+						"api",
+						"umtg",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cc0e07f4-5d4e-4de6-85fd-3200bdcd8d48",
+						"exec": [
+							"pm.test(\"Successful user login\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"test2\",\n    \"password\": \"pass123\"\n}"
+				},
+				"url": {
+					"raw": "http://teamgamma.ga/api/umtg/login",
+					"protocol": "http",
+					"host": [
+						"teamgamma",
+						"ga"
+					],
+					"path": [
+						"api",
+						"umtg",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login/Fail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3ea6b29e-c53f-49d8-88b9-d65a11eb4bb3",
+						"exec": [
+							"pm.test(\"With incorrect password for user name, test must fail\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"test2\",\n    \"password\": \"pass12546853\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://teamgamma.ga/api/umtg/login",
+					"protocol": "http",
+					"host": [
+						"teamgamma",
+						"ga"
+					],
+					"path": [
+						"api",
+						"umtg",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegisterWOutData",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "35768300-fb75-41c8-8399-cb07a76bd690",
+						"exec": [
+							"pm.test(\"Test should fail when not all data fields are filled correctly\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"test123412342\",\r\n\t\"f_name\": \"Ryan1\",\r\n\t\"l_name\": \"John1\",\r\n\t\"password\": \"pass123\",\r\n\t\"email\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://teamgamma.ga/api/umtg/register",
+					"protocol": "http",
+					"host": [
+						"teamgamma",
+						"ga"
+					],
+					"path": [
+						"api",
+						"umtg",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegisterDuplicate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "70059822-a2fc-40e0-a062-16f76ff4cd37",
+						"exec": [
+							"pm.test(\"Cannot register a user if the user already exists\", function () {",
+							"    pm.response.to.have.status(409);",
+							"}); ",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"test2\",\r\n\t\"f_name\": \"Ryan1\",\r\n\t\"l_name\": \"John1\",\r\n\t\"password\": \"pass123\",\r\n\t\"email\": \"email@test.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://teamgamma.ga/api/umtg/register",
+					"protocol": "http",
+					"host": [
+						"teamgamma",
+						"ga"
+					],
+					"path": [
+						"api",
+						"umtg",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LoginNotValidUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "699b9851-8137-4a6c-b43b-e00d59e7ca90",
+						"exec": [
+							"pm.test(\"Trying to sign in with a user who isn't registered should fail\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"asfasgksldglka\",\n    \"password\": \"pass123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://teamgamma.ga/api/umtg/login",
+					"protocol": "http",
+					"host": [
+						"teamgamma",
+						"ga"
+					],
+					"path": [
+						"api",
+						"umtg",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ResetPassword",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "52742927-e9e4-483d-b6ea-15125ec223a7",
+						"exec": [
+							"pm.test(\"Resetting password for existing user should pass\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"test2\",\n    \"password\": \"pass123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://teamgamma.ga/api/umtg/reset",
+					"protocol": "http",
+					"host": [
+						"teamgamma",
+						"ga"
+					],
+					"path": [
+						"api",
+						"umtg",
+						"reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ResetPassFail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "41f5b942-a4b8-41c3-ba1e-c73a497e2595",
+						"exec": [
+							"pm.test(\"Resetting password for non-existant user should fail\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"test2sdasf\",\r\n\t\"password\": \"pass1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://teamgamma.ga/api/umtg/reset",
+					"protocol": "http",
+					"host": [
+						"teamgamma",
+						"ga"
+					],
+					"path": [
+						"api",
+						"umtg",
+						"reset"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
