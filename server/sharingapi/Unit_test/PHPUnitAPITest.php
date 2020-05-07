@@ -79,6 +79,19 @@
 			$this->assertEquals(200, $response->getStatusCode());
 			//uncomment to view result
 			//echo $response->getBody();
+			
+		//Test to upload a rating
+			$response = $client->request('POST', 'http://teamgamma.ga/api/sharingapi.php', ['json' => 
+				[
+					'requestType' => 'rate',
+					'value' => '3',
+					'userID' => '9999',
+					'mouthpackID' => '777501182'
+				]			
+			]);
+			$this->assertEquals(200, $response->getStatusCode());
+			//uncomment to view result
+			//echo $response->getBody();
 		}
 	}
 ?>
