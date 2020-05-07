@@ -12,6 +12,8 @@ import 'home_model.dart';
 HomeModel homeModel = new HomeModel();
 
 class CollectionModel extends BaseModel {
+  var test;
+
   SharingApi _sharingapi = locator<SharingApi>();
   Api _api = locator<Api>();
   SharedPreferences prefs;
@@ -59,6 +61,7 @@ class CollectionModel extends BaseModel {
   }
 
   clearLists() {
+    test = "clear";
     colourList.clear();
     imageList.clear();
   }
@@ -140,6 +143,7 @@ class CollectionModel extends BaseModel {
   }
 
   String getColoursListAtIndex(int index) {
+    test = index;
     return colourList[index];
   }
 
@@ -157,14 +161,17 @@ class CollectionModel extends BaseModel {
   }
 
   getImageList()  {
+    test = true;
     return imageList;
   }
 
   getCollection() {
+    test = true;
     return collection;
   }
 
   getColourList()  {
+    test = true;
     return colourList;
   }
 

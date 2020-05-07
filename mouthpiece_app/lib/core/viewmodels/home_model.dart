@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:mouthpiece/core/enums/viewstate.dart';
+import '../enums/viewstate.dart';
 import 'package:mouthpiece/ui/shared/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -79,6 +79,7 @@ class HomeModel extends BaseModel {
 
   // List<String> getListeningModeImgList() {
   List<Uint8List> getListeningModeImgList() {
+    test = "got image list";
     return listeningModeImgList;
   }
 
@@ -88,7 +89,7 @@ class HomeModel extends BaseModel {
   }
 
   void setListeningModeImg(String img) {
-    test = "image set";
+    test = img;
     listeningModeImg = img;
   }
   

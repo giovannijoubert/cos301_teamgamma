@@ -7,13 +7,13 @@ import '../viewmodels/base_model.dart';
 import 'package:flutter/material.dart';
 import '../../locator.dart';
 
-
 class ChooseModeModel extends BaseModel  {
-  var test;
   //bool isSet= getisVolSet();
   static Color volumeMode = Colors.black;
   static Color formantMode = Colors.black;
   Api _api = locator<Api>();
+
+  var test;
 
   void setIsVolSet(bool value) async{
     SharedPreferences sp = await SharedPreferences.getInstance();
