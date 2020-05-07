@@ -91,8 +91,8 @@ function sendNetworkNotification($deviceID = "", $message = "",$subject)
         )
     );
     //Integration's Firebase key
-    $api_key = "AAAAPDuMMk8:APA91bEGTm5df7sn0shq88tGMWcUOkWidRlNE13m7YI1McSZfBJTcT2whSwH3WbUec9vdsWBgBQVnFn44N7I6snccPOOi4eymJZuDyjk4pEV_P1wGxyY1E7b4azBbnUrCFCbLCxTs_U7";
-    //$api_key = "AAAAPDuMMk8:APA91bH-Cu39_4NCIeENsvHdo6ANeyVKLNapcXOjRec_-X8GIZ0rpST736yWTaEhtLSdjAbGB5qRziseBWyzFYDW1sZ1KRP3EYHk7VgEhYQQFc29KEysTUyp46NLb74N8l0c62bSTmuG";
+    //$api_key = "AAAAPDuMMk8:APA91bEGTm5df7sn0shq88tGMWcUOkWidRlNE13m7YI1McSZfBJTcT2whSwH3WbUec9vdsWBgBQVnFn44N7I6snccPOOi4eymJZuDyjk4pEV_P1wGxyY1E7b4azBbnUrCFCbLCxTs_U7";
+    $api_key = "AAAAPDuMMk8:APA91bH-Cu39_4NCIeENsvHdo6ANeyVKLNapcXOjRec_-X8GIZ0rpST736yWTaEhtLSdjAbGB5qRziseBWyzFYDW1sZ1KRP3EYHk7VgEhYQQFc29KEysTUyp46NLb74N8l0c62bSTmuG";
     //Notification Team firebase key
     //$api_key = "AAAALQ1KC18:APA91bGg7iuimXlkzx90JtVrLHLyIbbMuWGRaBcYoG8IpiK-hqQKVhvoj3KafCQfvNDnQ7sK9blEBWz3GPXkX86Fe-tjXf2fsNHHjw3gaY9Z59iViVuZcSPmB_AP1KsuQv11cP6p0JFA";
     // "BETr3AbYVksWTs_JIoHuuNnp9lfp3q9f1E9fBebkV6MQNMYuLWWWyOepQ9rEFUYWIYnb02XKcddQp7_9D2XCrr0";
