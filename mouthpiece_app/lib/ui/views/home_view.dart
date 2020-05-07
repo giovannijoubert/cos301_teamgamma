@@ -33,8 +33,6 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    // collectionModel.createCollection();
-    // precacheImage(AssetImage("assets/bill.png"), context);
     BottomNavigation bottomNavigation = new BottomNavigation();
     bottomNavigation.setIndex(_currentTabIndex);
     // homeModel.setNavVal(); 
@@ -45,7 +43,7 @@ class _HomeViewState extends State<HomeView> {
 
     
     // return FutureBuilder (
-    //   future: changeTheme(context),
+    //   future: homeModel.checkUpdates(),
     //   builder: (context, snapshot) {
         return BaseView<HomeModel>(
           builder: (context, model, child) => Scaffold(
@@ -54,9 +52,9 @@ class _HomeViewState extends State<HomeView> {
               child: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue)))) : Home(),
             bottomNavigationBar: BottomNavigation(),
           ),
-      //   );
-      // }
-    );
+        );
+    //   }
+    // );
   }
 }
 
@@ -253,7 +251,8 @@ class _MouthSelectedBtnState extends State<MouthSelectedBtn> with TickerProvider
               ClipOval (
                 child: CachedNetworkImage(
                   imageUrl: images[homeModel.getIndex()],
-                  placeholder: (context, url) => CircularProgressIndicator(),
+                  progressIndicatorBuilder: (context, url, downloadProgress) => 
+                    CircularProgressIndicator(value: downloadProgress.progress),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                   fit: BoxFit.contain, width: double.infinity, height: double.infinity,
                 ),

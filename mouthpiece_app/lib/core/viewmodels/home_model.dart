@@ -21,17 +21,19 @@ class HomeModel extends BaseModel {
   static bool updateVal;
 
   HomeModel() {
+    checkUpdates();
     if (collectionModel.getImageList().length == 0 || updateVal) {
       createCollection(); 
-    //   updateVal = false;
-      // if (collectionModel.getImageList().length == 0 || getUpdateVal()) {
-        // timer = Timer.periodic(Duration(seconds: 20), (Timer t) { if (state == ViewState.Busy) { createCollection(); }}); 
-        setUpdateVal(false);
-      // }
+      setUpdateVal(false);
     }
   }
 
- 
+  checkUpdates() async {
+    bool newMouthpackAdded = await collectionModel.checkCollection();
+    if (newMouthpackAdded) {
+      createCollection(); 
+    }
+  }
 
   setUpdateVal(bool val) {
     updateVal = val;

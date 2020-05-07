@@ -9,29 +9,29 @@ import '../widgets/bottom_navigation.dart';
 
 class MouthpackView extends StatefulWidget {
   final String title;
-  final String description;
+  final String category;
   final String date;
   final int totalImages;
   final String rating;
   final String bgColour;
   final List<dynamic> images;
 
-  MouthpackView(this.title, this.description, this.date, this.totalImages, this.rating, this.bgColour, this.images);
+  MouthpackView(this.title, this.category, this.date, this.totalImages, this.rating, this.bgColour, this.images);
 
   @override
-  _MouthpackState createState() => _MouthpackState(this.title, this.description, this.date, this.totalImages, this.rating, this.bgColour, this.images);
+  _MouthpackState createState() => _MouthpackState(this.title, this.category, this.date, this.totalImages, this.rating, this.bgColour, this.images);
 }
 
 class _MouthpackState extends State<MouthpackView> {
   final String title;
-  final String description;
+  final String category;
   final String date;
   final int totalImages;
   final String rating;
   final String bgColour;
   final List<dynamic> images;
 
-  _MouthpackState(this.title, this.description, this.date, this.totalImages, this.rating, this.bgColour, this.images);
+  _MouthpackState(this.title, this.category, this.date, this.totalImages, this.rating, this.bgColour, this.images);
 
   @override
    Widget build(BuildContext context) { return BaseView<MouthpackModel>(
@@ -39,7 +39,7 @@ class _MouthpackState extends State<MouthpackView> {
         body: ListView(
         children: <Widget>[
           BackNavigator(),
-          TitleSection(title, description, date, rating),
+          TitleSection(title, category, date, rating),
           ImageTitle(totalImages.toString()),
           ImageSection(images, bgColour),
         ],

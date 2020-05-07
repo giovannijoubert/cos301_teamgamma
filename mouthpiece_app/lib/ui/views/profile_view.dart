@@ -641,8 +641,8 @@ class _BuildEmailState extends State<BuildEmail> {
         onChanged: (value) {
           setState(() {
             email = value;
-            setEmail(value);
-            widget.updateState();
+            // setEmail(value);
+            // widget.updateState();
           });
         },
         onSaved: (String value) async {

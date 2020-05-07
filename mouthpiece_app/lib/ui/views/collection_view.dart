@@ -137,7 +137,7 @@ class _MouthNavigationBarState extends State<MouthNavigationBar>  {
 class SearchItem {  
   final String imgSrc;
   final String title;
-  final String description;
+  final String category;
   final String date;
   final int totalImages;
   final String rating;
@@ -146,7 +146,7 @@ class SearchItem {
   final bool defaultMouthpack;
   final int mouthpackIndex;
 
-  SearchItem(this.imgSrc, this.title, this.description, this.date, this.totalImages, this.rating, this.bgColour, this.images, this.defaultMouthpack, this.mouthpackIndex);
+  SearchItem(this.imgSrc, this.title, this.category, this.date, this.totalImages, this.rating, this.bgColour, this.images, this.defaultMouthpack, this.mouthpackIndex);
 }
 
 class CollectionSearchBar extends StatefulWidget {
@@ -193,7 +193,7 @@ class _CollectionSearchBarState extends State<CollectionSearchBar> {
     int mouthpackIndex = 0;
       
     for (int i = 0; i < defaultMouthpacks.length; i++) {
-      packs.add(MouthCard(defaultMouthpacks[i]["images"][0], (defaultMouthpacks[i]["name"] + "*"), defaultMouthpacks[i]["description"], defaultMouthpacks[i]["date"], defaultMouthpacks[i]["images"].length, "4/5", bgColour[bgColourindex], defaultMouthpacks[i]["images"], true, mouthpackIndex, parent));
+      packs.add(MouthCard(defaultMouthpacks[i]["images"][0], (defaultMouthpacks[i]["name"] + "*"), defaultMouthpacks[i]["categories"][0], defaultMouthpacks[i]["date"], defaultMouthpacks[i]["images"].length, "4/5", bgColour[bgColourindex], defaultMouthpacks[i]["images"], true, mouthpackIndex, parent));
       bgColourindex++;
       mouthpackIndex++;
     }
@@ -209,7 +209,7 @@ class _CollectionSearchBarState extends State<CollectionSearchBar> {
         }
 
         setState(() {
-          packs.add(MouthCard(collection[i][0]["images"][0], collection[i][0]["name"], collection[i][0]["description"], collection[i][0]["date"], collection[i][0]["images"].length, rating, bgColour[bgColourindex], collection[i][0]["images"], false, mouthpackIndex, parent));
+          packs.add(MouthCard(collection[i][0]["images"][0], collection[i][0]["name"], collection[i][0]["categories"][0], collection[i][0]["date"], collection[i][0]["images"].length, rating, bgColour[bgColourindex], collection[i][0]["images"], false, mouthpackIndex, parent));
         });
         bgColourindex++;
         mouthpackIndex++;
@@ -224,16 +224,16 @@ class _CollectionSearchBarState extends State<CollectionSearchBar> {
     print(text);
     for(int i = 0; i < packs.length ; i++){      
       if((packs[i].getTitle().toLowerCase()).contains(text)){
-        searchItems.add(SearchItem(packs[i].getImgSrc(), packs[i].getTitle(),  packs[i].getdescription(),  packs[i].getDate(),  packs[i].getImages(),  packs[i].getRating(), packs[i].getBgColour(), packs[i].getImageList(), packs[i].getIsDefaultMouthpack(), packs[i].getMouthpackIndex()));
+        searchItems.add(SearchItem(packs[i].getImgSrc(), packs[i].getTitle(),  packs[i].getcategory(),  packs[i].getDate(),  packs[i].getImages(),  packs[i].getRating(), packs[i].getBgColour(), packs[i].getImageList(), packs[i].getIsDefaultMouthpack(), packs[i].getMouthpackIndex()));
       }
-      else if((packs[i].getdescription().toLowerCase()).contains(text)){
-          searchItems.add(SearchItem(packs[i].getImgSrc(), packs[i].getTitle(),  packs[i].getdescription(),  packs[i].getDate(),  packs[i].getImages(),  packs[i].getRating(), packs[i].getBgColour(), packs[i].getImageList(), packs[i].getIsDefaultMouthpack(), packs[i].getMouthpackIndex()));
+      else if((packs[i].getcategory().toLowerCase()).contains(text)){
+          searchItems.add(SearchItem(packs[i].getImgSrc(), packs[i].getTitle(),  packs[i].getcategory(),  packs[i].getDate(),  packs[i].getImages(),  packs[i].getRating(), packs[i].getBgColour(), packs[i].getImageList(), packs[i].getIsDefaultMouthpack(), packs[i].getMouthpackIndex()));
       }
       else if(packs[i].getDate().contains(text)){
-        searchItems.add(SearchItem(packs[i].getImgSrc(), packs[i].getTitle(),  packs[i].getdescription(),  packs[i].getDate(),  packs[i].getImages(),  packs[i].getRating(), packs[i].getBgColour(), packs[i].getImageList(), packs[i].getIsDefaultMouthpack(), packs[i].getMouthpackIndex()));
+        searchItems.add(SearchItem(packs[i].getImgSrc(), packs[i].getTitle(),  packs[i].getcategory(),  packs[i].getDate(),  packs[i].getImages(),  packs[i].getRating(), packs[i].getBgColour(), packs[i].getImageList(), packs[i].getIsDefaultMouthpack(), packs[i].getMouthpackIndex()));
       }
       else if((packs[i].getRating().toLowerCase()).contains(text)){
-        searchItems.add(SearchItem(packs[i].getImgSrc(), packs[i].getTitle(),  packs[i].getdescription(),  packs[i].getDate(),  packs[i].getImages(),  packs[i].getRating(), packs[i].getBgColour(), packs[i].getImageList(), packs[i].getIsDefaultMouthpack(), packs[i].getMouthpackIndex()));
+        searchItems.add(SearchItem(packs[i].getImgSrc(), packs[i].getTitle(),  packs[i].getcategory(),  packs[i].getDate(),  packs[i].getImages(),  packs[i].getRating(), packs[i].getBgColour(), packs[i].getImageList(), packs[i].getIsDefaultMouthpack(), packs[i].getMouthpackIndex()));
       } 
     }
     return searchItems;
@@ -298,7 +298,7 @@ class _CollectionSearchBarState extends State<CollectionSearchBar> {
           crossAxisSpacing: 0,
           crossAxisCount: 1,
           onItemFound: (SearchItem searchItem, int index) {
-            return MouthCard(searchItem.imgSrc, searchItem.title, searchItem.description, searchItem.date, searchItem.totalImages, searchItem.rating, searchItem.bgColour, searchItem.images, searchItem.defaultMouthpack, searchItem.mouthpackIndex, parent);
+            return MouthCard(searchItem.imgSrc, searchItem.title, searchItem.category, searchItem.date, searchItem.totalImages, searchItem.rating, searchItem.bgColour, searchItem.images, searchItem.defaultMouthpack, searchItem.mouthpackIndex, parent);
           },
         ),
       ),
@@ -309,7 +309,7 @@ class _CollectionSearchBarState extends State<CollectionSearchBar> {
 class MouthCard extends StatefulWidget {
   final String imgSrc;
   final String title;
-  final String description;
+  final String category;
   final String date;
   final int totalImages;
   final String rating;
@@ -320,7 +320,7 @@ class MouthCard extends StatefulWidget {
   _CollectionSearchBarState parent;
   _CollectionState stateParent;
 
-  MouthCard(this.imgSrc, this.title, this.description, this.date, this.totalImages, this.rating, this.bgColour, this.images, this.defaultMouthpack, this.mouthpackIndex, this.stateParent);
+  MouthCard(this.imgSrc, this.title, this.category, this.date, this.totalImages, this.rating, this.bgColour, this.images, this.defaultMouthpack, this.mouthpackIndex, this.stateParent);
 
   void setParent(_CollectionSearchBarState par){
     this.parent = par;
@@ -330,8 +330,8 @@ class MouthCard extends StatefulWidget {
     return title;
   }
 
-  String getdescription(){
-    return description;
+  String getcategory(){
+    return category;
   }
 
   String getDate(){
@@ -368,13 +368,13 @@ class MouthCard extends StatefulWidget {
   
   
   @override
-  _MouthCardState createState() => _MouthCardState(this.imgSrc, this.title, this.description, this.date, this.totalImages, this.rating, this.bgColour, this.images, this.defaultMouthpack, this.mouthpackIndex, this.parent, this.stateParent);
+  _MouthCardState createState() => _MouthCardState(this.imgSrc, this.title, this.category, this.date, this.totalImages, this.rating, this.bgColour, this.images, this.defaultMouthpack, this.mouthpackIndex, this.parent, this.stateParent);
 }
 
 class _MouthCardState extends State<MouthCard> {
   String imgSrc;
   final String title;
-  final String description;
+  final String category;
   final String date;
   final int totalImages;
   final String rating;
@@ -384,7 +384,7 @@ class _MouthCardState extends State<MouthCard> {
   final int mouthpackIndex;
   final _CollectionSearchBarState parent;
   _CollectionState stateParent;
-  _MouthCardState(this.imgSrc, this.title, this.description, this.date, this.totalImages, this.rating, this.bgColour, this.images, this.defaultMouthpack, this.mouthpackIndex, this.parent, this.stateParent);
+  _MouthCardState(this.imgSrc, this.title, this.category, this.date, this.totalImages, this.rating, this.bgColour, this.images, this.defaultMouthpack, this.mouthpackIndex, this.parent, this.stateParent);
 
   @override
   Widget build(BuildContext context) {
@@ -409,7 +409,7 @@ class _MouthCardState extends State<MouthCard> {
           print('pressed card');
           print('length: ${imgSrc.substring(0,3)}');
           Navigator.push(context, PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) => MouthpackView(title, description, date, totalImages, rating, bgColour, images),
+            pageBuilder: (context, animation1, animation2) => MouthpackView(title, category, date, totalImages, rating, bgColour, images),
           ),);
         },
         child: Row(
@@ -468,7 +468,7 @@ class _MouthCardState extends State<MouthCard> {
                                       ),
                                     ),
                                     Text(
-                                      description,
+                                      category,
                                       style: TextStyle(
                                         color: Color(0xFF303030),
                                         fontSize: 12,

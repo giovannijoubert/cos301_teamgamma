@@ -216,7 +216,7 @@ class ActivateListeningModeState extends State<ActivateListeningMode> {
       child: Container (
         margin: EdgeInsets.only(top: 30, left: 20),
         child: GestureDetector(
-          child: Icon(Icons.close, size: 35.0, color: (colour == '0xFFFFFFFF') ? Colors.black : Colors.white),
+          child: Icon(Icons.close, size: 35.0, color: Colors.red),
           onTap: () { 
            // print("About to exit Listening mode");
             _isVisible = false;

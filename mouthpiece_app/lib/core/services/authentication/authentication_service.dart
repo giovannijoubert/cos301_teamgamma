@@ -19,7 +19,7 @@ class AuthenticationService {
     print(pass);
 
     String url = 'https://teamgamma.ga/api/umtg/login';
-    bool userExists = await _api.fetchUser(url, map, userName);
+    bool userExists = await _api.fetchUser(url, map, userName, true);
     // await collectionModel.createCollection();
 
     return userExists;

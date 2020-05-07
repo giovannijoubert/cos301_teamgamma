@@ -12,7 +12,7 @@ import 'package:http_client/http_client.dart';
 
 /// The service responsible for networking requests
 class Api {
-  Future<bool> fetchUser(String url,Map map, String user) async {
+  Future<bool> fetchUser(String url,Map map, String user, bool populateAll) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     var body = jsonEncode(map);
@@ -25,10 +25,13 @@ class Api {
     if (response.statusCode == 200) {
       var body = json.decode(response.body);
       // print("++++++++++++++++++++++++++++++++++++++++++++++");
-      prefs.setString('pass', map["password"]);
+      
       var userInfo = jsonEncode(body);
       prefs.setString("userInfo", userInfo);
-      await setPref(body['username'], body['email'], body['JWT'], body['theme'], body['listening_mode'], body['profile_image']);
+      if (populateAll) {
+        prefs.setString('pass', map["password"]);
+        await setPref(body['username'], body['email'], body['JWT'], body['theme'], body['listening_mode'], body['profile_image']);
+      }
       return true;
     }
     else {
@@ -54,7 +57,7 @@ class Api {
 
       String url = 'http://teamgamma.ga/api/umtg/login';
       await prefs.setBool("register", true);
-      await fetchUser(url, map, map["username"]);
+      await fetchUser(url, map, map["username"], true);
 
       User userVar = new User();
       return userVar;

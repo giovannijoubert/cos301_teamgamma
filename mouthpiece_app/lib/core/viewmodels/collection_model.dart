@@ -1,3 +1,6 @@
+import 'package:mouthpiece/core/services/db.dart';
+import 'package:mysql1/mysql1.dart';
+
 import '../viewmodels/base_model.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -95,6 +98,7 @@ class CollectionModel extends BaseModel {
   Future<List> getProfileMouthpackIdList() async {
     prefs = await SharedPreferences.getInstance();
     var requestInfo = prefs.getString('userInfo');
+    // print(requestInfo);
     var userInfo = await jsonDecode(requestInfo);
 
     List<String> idList = List<String>();
@@ -183,6 +187,33 @@ class CollectionModel extends BaseModel {
     }
   }
 
+  Future<bool> checkCollection() async {
+    var conn = await MySqlConnection.connect(userManagementDb);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var username = prefs.getString("username");
+    int count = 0;
+    var user = await conn.query('select user_id from Users where username = "$username"');
+    for (var id in user) {
+      var mouthpacks = await conn.query('select mouthpack_id from UserMouthpack where user_id = "${id[0]}"');
+      for (var mouthpackID in mouthpacks) {
+        count++;
+      }
+    }
+
+    if (idList.length != null && (idList.length != count)) {
+      Map map = {
+        "username": prefs.getString("username"),
+        "password": prefs.getString("pass"),
+      };
+
+      String url = 'https://teamgamma.ga/api/umtg/login';
+      await _api.fetchUser(url, map, username, false);
+      return true;
+    }
+    else
+      return false;
+  }
+
   updateMouthpackBgColour(int index, String bgColour) async {
     prefs = await SharedPreferences.getInstance();
     if (index < defaultMouthpacks.length) {
@@ -196,7 +227,7 @@ class CollectionModel extends BaseModel {
         };
 
         String url = 'https://teamgamma.ga/api/umtg/login';
-        await _api.fetchUser(url, map, prefs.getString("username"));
+        await _api.fetchUser(url, map, prefs.getString("username"), false);
         homeModel.setUpdateVal(true);
       });
     }
@@ -215,7 +246,7 @@ class CollectionModel extends BaseModel {
         };
 
         String url = 'https://teamgamma.ga/api/umtg/login';
-        await _api.fetchUser(url, map, prefs.getString("username"));
+        await _api.fetchUser(url, map, prefs.getString("username"), false);
         homeModel.setUpdateVal(true);
         result = true;
       });
