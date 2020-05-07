@@ -5,10 +5,14 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import '../lib/locator.dart';
+
+import '../lib/core/data/defaultmouthpacks.dart';
 
 import '../lib/core/viewmodels/login_model.dart';
 import '../lib/core/viewmodels/register_model.dart';
@@ -33,7 +37,7 @@ void main() {
       /*LoginModel test = new LoginModel();    
       Future future = test.login(null, null);
       expect(future, completion(equals(false)));*/
-      
+
     });
 
     test('testing string', () async {
@@ -67,12 +71,12 @@ void main() {
   });
 
   group('Register', () {
-    test('testing empty string', () {
+    test('testing empty string', () async {
       final test = RegisterModel();
 
-      test.register(null,null,null);
+      await test.register(null,null,null);
 
-      expect(test.test, null);
+      expect(test.test, false);
     });
 
     test('testing string', () async {
@@ -97,6 +101,23 @@ void main() {
       test.createListeningModeImgList();
 
       expect(test.test, "got image");
+    });
+
+    test('setting and getting update value', () {
+      final test = HomeModel();
+
+      test.setUpdateVal(true);
+
+      expect(test.getUpdateVal(), true);
+    });
+
+    test('setting nav value', () async {
+      final test = HomeModel();
+
+      await test.setNavVal();
+
+      expect(test.test, true);
+
     });
 
     test('getting listening mode image list', () {
@@ -128,15 +149,16 @@ void main() {
 
       test.setListeningModeColour("Red");
 
-      expect(test.test, "colour set");
+      expect(test.test, "Red");
     });
 
     test('getting listening mode colour', () {
       final test = HomeModel();
 
+      test.setListeningModeColour("Red");
       test.getListeningModeColour();
 
-      expect(test.test, "got colour");
+      expect(test.test, "Red");
 
     });
 
@@ -327,28 +349,53 @@ void main() {
       expect(test.createCollection(), completes);
     });
 
-    test('create collection test', () async {
-      CollectionModel test = CollectionModel();
-      await test.createCollection();
-      List<String> list = test.getImageList();
-      //print(list[1]);
-      //expect(test.getImageList(), list);
-    });
-
     test('create image list', () async {
+      SharedPreferences.setMockInitialValues({
+        'loggedIn': false,
+      });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
       CollectionModel test = CollectionModel();
-      expect(test.createImageList(), completes);
+      //expect(await test.createImageList(), completes);
+
+      List<dynamic> collection;
+      List<String> imageList = List<String>();
+
+      await test.createCollection();
+
+      imageList.clear();
+      for (int i = 0; i < defaultMouthpacks.length; i++) {
+        imageList.add(defaultMouthpacks[i]["images"][i]);
+      }
+      
+      if (prefs.getBool("loggedIn") ?? false) {
+        for (int i = 0; i < collection.length; i++) {
+          imageList.add(collection[i][0]["images"][0]);
+        }
+      }
+
+      expect(await test.createImageList(), imageList);
     });
 
     test('clear list', () async {
       final test = CollectionModel();
+
+      await test.createCollection();
+
       test.clearLists();
       expect(test.test, "clear");
+
+      List<String> colourList = List<String>();
+      List<String> imageList = List<String>();
+
+      expect(await test.getImageList(), imageList);
+      expect(await test.getColourList(), colourList);
     });
 
     test('create colour list', () async {
       CollectionModel test = CollectionModel();
       expect(test.createColourList(), completes);
+      expect(await test.createColourList(), ['0xFF303030', '0xFF303030', '0xFF303030']);
     });
 
     test('get colour at index', () async {
@@ -374,6 +421,8 @@ void main() {
       test.getColourList();
       expect(test.test, true);
     });
+
+    
 
     test('update mouthpack bg colour', () async {
       CollectionModel test = CollectionModel();
