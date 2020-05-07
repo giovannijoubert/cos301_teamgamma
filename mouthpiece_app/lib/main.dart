@@ -31,7 +31,6 @@ void main() async {
 }
 
 Future<void> initDeviceId() async {
-  String _deviceid = 'Unknown';
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String deviceid;
 
@@ -53,31 +52,31 @@ class MouthPiece extends StatefulWidget {
 class _MouthPieceState extends State<MouthPiece> {
 
   Future<void> createDir() async {  // Creates default directory for mouthpacks as well as prepopulates from assets
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isLogSet = prefs.getKeys().contains('loggedIn');
-  if(!isLogSet)
-    prefs.setBool('loggedIn', false);
-          
-  await requestPermission(); // get All permissions required from now
-  // final String path = await _localPath;
-  // final Directory dir = await Directory('$path/defaultMouthpacks').create(recursive: true);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLogSet = prefs.getKeys().contains('loggedIn');
+    if(!isLogSet)
+      prefs.setBool('loggedIn', false);
+            
+    await requestPermission(); // get All permissions required from now
+    // final String path = await _localPath;
+    // final Directory dir = await Directory('$path/defaultMouthpacks').create(recursive: true);
 
 
 
-    // print(dir.path+"/2-1.png");
-    // Directory created now copy files over 2-1.png 2-6.png
-    /* for(int j=1;j<5;j++){   // For whole pack
-      for(int i=1;i<7;i++){   // For individuals
-        if (FileSystemEntity.typeSync(dir.path+"/"+j.toString()+"-"+i.toString()+".png") == FileSystemEntityType.notFound) {
-          print("Copying mouth "+j.toString()+"-"+i.toString()+" to defaultMouthpacks/j-"+i.toString());
-          ByteData data = await rootBundle.load("assets/images/copyme/"+j.toString()+"-"+i.toString()+".png"); // Do similar for all files
-          print("bundled loadade");
-          List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-          await File(dir.path+"/"+j.toString()+"-"+i.toString()+".png").writeAsBytes(bytes);
-          print("Copied "+j.toString()+"-"+i.toString()+" over.");
+      // print(dir.path+"/2-1.png");
+      // Directory created now copy files over 2-1.png 2-6.png
+      /* for(int j=1;j<5;j++){   // For whole pack
+        for(int i=1;i<7;i++){   // For individuals
+          if (FileSystemEntity.typeSync(dir.path+"/"+j.toString()+"-"+i.toString()+".png") == FileSystemEntityType.notFound) {
+            print("Copying mouth "+j.toString()+"-"+i.toString()+" to defaultMouthpacks/j-"+i.toString());
+            ByteData data = await rootBundle.load("assets/images/copyme/"+j.toString()+"-"+i.toString()+".png"); // Do similar for all files
+            print("bundled loadade");
+            List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+            await File(dir.path+"/"+j.toString()+"-"+i.toString()+".png").writeAsBytes(bytes);
+            print("Copied "+j.toString()+"-"+i.toString()+" over.");
+          }
         }
-      }
-    } */
+      } */
   }
 
   /* Future<String> get _localPath async{
@@ -129,20 +128,18 @@ class _MouthPieceState extends State<MouthPiece> {
         }
         if(snapshot.hasData){
           return StreamProvider<User>(
-              initialData: User.initial(),
-              builder: (context) => locator<AuthenticationService>().userController,
-              child: MaterialApp(
-                title: 'Mouthpiece',
-                theme: theme.getTheme(),
-                initialRoute: snapshot.data ? '/' : 'login',
-                onGenerateRoute: Router.generateRoute,
-             ),
+            initialData: User.initial(),
+            builder: (context) => locator<AuthenticationService>().userController,
+            child: MaterialApp(
+              title: 'Mouthpiece',
+              theme: theme.getTheme(),
+              initialRoute: snapshot.data ? '/' : 'login',
+              onGenerateRoute: Router.generateRoute,
+            ),
           ); 
         } else {
-          return new Center(
-            child: new CircularProgressIndicator()
-          );
-        }    
+          return Container();
+        }
       },
     );
   }
@@ -151,7 +148,7 @@ class _MouthPieceState extends State<MouthPiece> {
 Future<bool> getLoggedIn() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   ChooseModeModel modeModel = new ChooseModeModel();
-  bool loggedIn = prefs.getBool('navVal');
+  bool loggedIn = prefs.getBool('navVal') ?? false;
   // bool loggedIn = false;
   
   bool isModeSet = prefs.getKeys().contains('isVolSet');

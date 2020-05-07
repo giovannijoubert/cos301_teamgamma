@@ -48,7 +48,6 @@ class ThemeChanger with ChangeNotifier {
   final SharedPreferences prefs;
 
   ThemeChanger(this.prefs) {
-    print(prefs.getString("theme"));
     if(prefs.getKeys().contains('theme'))
       _themeData = prefs.getString("theme") == "Light" ? lightTheme : darkTheme;
     else 

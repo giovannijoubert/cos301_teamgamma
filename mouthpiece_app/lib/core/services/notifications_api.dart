@@ -38,14 +38,14 @@ class NotificationsApi {
 
   Future resetPassword(String email) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String deviceId = prefs.getString("device-id");
+    // String deviceId = prefs.getString("device-id");
     String _generatedPassword = generatePassword(true, true, true, false, 8);
 
     var map = new Map<String, dynamic>();
     map['key'] = '3e30630d-239b-488d-8938-b9305dff3e54';
     map['type'] = 'email';
     map['email'] = email;
-    map['deviceID'] = deviceId;
+    map['deviceID'] = '0000';
     map['msg'] = 'Your password has been reset: Your new password is $_generatedPassword.';
     map['heading'] = 'Reset Password';
 
@@ -56,19 +56,15 @@ class NotificationsApi {
       body: map,
     );
 
-    // String username;
-    var conn = await MySqlConnection.connect(userManagementDb);
-    var result = await conn.query('select username from Users where email = "$email"');
-    for (var row in result) {
-      Map updatePassMap = {
-        "username": row[0],
-        "password": _generatedPassword,
-        "secretkey": "E#*NqknMYTcy1BYu4ffufjL3BWO23#"
-      };
+    
+    Map updatePassMap = {
+      "email": email,
+      "password": _generatedPassword,
+      "secretkey": "E#*NqknMYTcy1BYu4ffufjL3BWO23#"
+    };
 
-      String passURL = 'https://teamgamma.ga/api/umtg/reset';
-      await _api.resetPassword(updatePassMap, passURL);
-    }    
+    String passURL = 'https://teamgamma.ga/api/umtg/reset';
+    await _api.resetPassword(updatePassMap, passURL);
   }  
 }
 
