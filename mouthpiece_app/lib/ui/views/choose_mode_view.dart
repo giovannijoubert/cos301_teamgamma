@@ -92,6 +92,11 @@ Widget volumeButtonSection(BuildContext context, model) {
             SharedPreferences prefs = await SharedPreferences.getInstance(); 
             bool check = prefs.getBool('navVal') ?? false; 
             if (!check) {
+              prefs.setBool("navVal", true);
+              if (prefs.getBool('loggedIn')) {
+                CollectionModel collectionModel = new CollectionModel();
+                collectionModel.clearLists();
+              }
               Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
             } else { 
               Navigator.pop(context);
