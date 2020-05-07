@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="EBIT life Cycle.">
-    <link rel="icon" href="favicon.JPG" type="image/gif" sizes="10x10">
+    <link rel="shortcut icon" href="https://teamgamma.ga/webfrontend/images/favicon.png" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <!-- toastify -->
     <link rel="stylesheet" href="../css/lib/toastify.css">

@@ -8,26 +8,12 @@ h5,
 h6 {
     transition: all 1s;
 }
-#image-inp{
-    height: 50px;
-}
 
 #main-content {
     padding-top: 50px;
     padding-bottom: 100px;
 }
 
-.profilepictureholder{
-    height: 80px;
-    width: 80px;
-    border-radius: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.card-category{
-    text-align: center;
-}
 
 /* Uploads page */
 
@@ -436,12 +422,6 @@ a {
     list-style: none;
     padding: 0px;
     color: aliceblue;
-    cursor: pointer;
-}
-
-.comma-list li:hover {
-   text-decoration: none;
-   color:  #007bff;
 }
 
 .comma-list li {

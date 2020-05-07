@@ -55,6 +55,27 @@ $(document).ready(function() {
 
             //set aBox image download attribute
             $("#abox" + i + " a").attr("download", mouthpack[0].name + (i + 1));
+
+            //set mouthpack rating
+            ratingAvg = 0;
+            for(r = 1; r < mouthpack[0].ratings.length; r++){
+                if(mouthpack[0].ratings[r].value)
+                    ratingAvg = ratingAvg + mouthpack[0].ratings[r].value;
+
+            }
+
+            ratingAvg = ratingAvg / (mouthpack[0].ratings.length-1);  
+
+            ratingAvg= Math.round(ratingAvg);
+
+            console.log(ratingAvg);
+
+            for(k = 1; k <= 5; k++){
+                if(ratingAvg >= k)
+                    $("[rating="+k+"]").removeClass("unchecked").addClass("checked");
+                else
+                   $("[rating="+k+"]").removeClass("checked").addClass("unchecked");
+            }
         }
 
         //set mouthpack name

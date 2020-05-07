@@ -26,13 +26,17 @@ $('#bottomnextup4').click(function () {
             /////////////////////////////API NEEDED ,UNDERCONSTUCTION//////////////////////////////////
             //////////////////////////////////////////////////////////////////////////////////////////
             /////////////////////////////////////////////////////////////////////////////////////
-            ErrorHandler3.output = "An email has been send to " + email + " with a temporaly pasword";
+            ErrorHandler3.output = "An email has been sent to " + email + " with a temporary password";
             document.getElementById('username').style.borderColor = 'black';
             document.getElementById('Error3').style.color = 'black';
+            var sub = document.getElementById('bottomnextup4');
+            var div = document.getElementById('emailbox');
+            div.parentNode.removeChild(div);
+            sub.parentNode.removeChild(sub);
         }
         else
         {
-            ErrorHandler3.output = "Please a valid email address";
+            ErrorHandler3.output = "Please enter a valid email address";
             document.getElementById("username").style.borderColor = 'red';
             document.getElementById('Error3').style.color = 'red';
         }

@@ -3,6 +3,7 @@
 
 <head>
     <title>Explore</title>
+    <link rel="shortcut icon" href="https://teamgamma.ga/webfrontend/images/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -13,7 +14,6 @@
     <link rel="stylesheet" href="../css/lib/toastify.css">
     <script src="../js/lib/toastify.js"></script>
     <!-- toastify -->
-    <script src ="../js/validation.js"></script>
 
     <script type="text/javascript" src="../js/Profile.js"></script>
     <script type="text/javascript" src="../js/DarkTheme.js"></script>
@@ -39,7 +39,7 @@
 
 </head>
 
-<body onload="user()">
+<body>
 
 
     <nav class="navbar navbar-expand-sm navbar-light bg-light" id="navbar">
@@ -80,8 +80,8 @@
                 <div class="text-muted user-prefs-header pb-1">Account Preferences</div>
 
                 <div class="preference-option m-2">
-                    <div class="img">
-                        <img class="ui medium rounded image" src="avatar" style="width: 150px">
+                    <div class="profilepictureholder img">
+                       
                     </div>
                      <div>
                         <button data-toggle="modal" data-target="#update-user-prefs" id="updateProfilePicBtn" class="btn btn-outline-secondary bg-white text-dark">Change</button>
@@ -146,12 +146,13 @@
         </div>
         <br>
         <p class="p1"> Popular: </p>
-        <ul class="comma-list">
-            <li><a href="#">#Monster</a></li>
-            <li><a href="#">#Funny</a></li>
-            <li><a href="#">#Random</a></li>
-            <li><a href="#">#Robot</a></li>
-            <li><a href="#">#Aanimal</a></li>
+        <ul class="category_search comma-list">
+            <li><a href="">#All</a></li>
+            <li><a >#Monster</a></li>
+            <li><a >#Funny</a></li>
+            <li><a >#Random</a></li>
+            <li><a >#Robots</a></li>
+            <li><a >#Animals</a></li>
         </ul>
     </div>
 
@@ -162,10 +163,11 @@
             Sort
         </span>
             <span class="no-results">No Results Found</span>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#" id="pop">Popular</a>
-                <a class="dropdown-item" href="#">New</a>
-                <a class="dropdown-item" href="#">Top Rated</a>
+            <div class="sort_dropdown dropdown-menu">
+                <a value="new" class="sortMethod dropdown-item" >Newest</a>
+                <a value="old" class="sortMethod dropdown-item" >Oldest</a>
+                <a value="rateHigh" class="sortMethod dropdown-item" >Top Rated</a>
+                <a value="rateLow" class="sortMethod dropdown-item" >Lowest Rated</a>
             </div>
         </div>
     </div>
@@ -195,7 +197,9 @@
                     <button type="button" class="btns download-btn" style="width: 80%"> <i class="fa fa-download"></i> Download</button>
                     <button type="button" class="btns collection-btn" style="width: 80%"> <i class="fa fa-plus"></i> Collection</button>
                     <div class="card-body">
+                        <p class="card-category"><i class="fa fa-list-alt"></i> By John Doe</p>
                         <h5 class="card-title">By John Doe</h5>
+              
                     </div>
                 </div>
             </div>

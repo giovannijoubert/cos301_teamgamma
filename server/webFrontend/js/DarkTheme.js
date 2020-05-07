@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+    if(profile == null)
+        $("#theme_toggler").hide();
+
+
     //prevent caching
     version = Math.random();
 
@@ -16,7 +20,8 @@ $(document).ready(function() {
                 $('.fa-sun').addClass('fa-moon').removeClass('fa-sun').fadeIn();
             });
 
-            setTheme("Light");
+            if(profile != null)
+                setTheme("Light");
         } else {
 
             $('head').append($('<link rel="stylesheet" type="text/css" />').attr('href', '../css/Dark-Theme.css?ver=' + version));
@@ -24,7 +29,8 @@ $(document).ready(function() {
                 $('.fa-moon').addClass('fa-sun').removeClass('fa-moon').fadeIn();
             });
 
-            setTheme("Dark");
+            if(profile != null)
+                setTheme("Dark");
 
         }
 

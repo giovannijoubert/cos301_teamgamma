@@ -3,6 +3,7 @@
 
 <head>
     <title>Collections</title>
+    <link rel="shortcut icon" href="https://teamgamma.ga/webfrontend/images/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -18,6 +19,7 @@
     <link rel="stylesheet" href="../css/Light-Theme.css">
     <script type="text/javascript" src="../js/Collections.js"></script>
     <script type="text/javascript" src="../js/DarkTheme.js"></script>
+    
 
     <?php 
         //dark theme
@@ -67,6 +69,14 @@
             </div>
             <div class="col-12 flex-row">
                 <div class="text-muted user-prefs-header pb-1">Account Preferences</div>
+                <div class="preference-option m-2">
+                    <div class="profilepictureholder img">
+                       
+                    </div>
+                     <div>
+                        <button data-toggle="modal" data-target="#update-user-prefs" id="updateProfilePicBtn" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+                      </div>
+                 </div>
                 <div class="preference-option m-2">
                     <div>
                         <h5 class="mb-0">Username</h5>

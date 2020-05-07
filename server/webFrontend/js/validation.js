@@ -1,22 +1,6 @@
 let userTocken;
 let userId;
 let AuthenticateHeader = "";
-function user()
-{
-    const xhttp = new XMLHttpRequest()
-    const url = "https://teamgamma.ga/api/umtg/update";
-    xhttp.open("POST", url, true);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.onreadystatechange = function () {
-        if (xhttp.readyState === 4) {
-            console.log(JSON.parse(xhttp.responseText).image)
-            document.getElementsByClassName("ui medium rounded image")[0].src = 'data:image/png;base64,'+JSON.parse(xhttp.responseText).image;
-        }
-    }
-    let data = JSON.stringify({"option":"download","username":JSON.parse(localStorage.getItem("userProfile")).username,"jwt" : JSON.parse(localStorage.getItem("userProfile")).JWT,"location":JSON.parse(localStorage.getItem("userProfile")).profile_image});
-    xhttp.send(data);
-}
-
 $(document).ready(function() {
 
     // ErrorHandler  = new Vue({el:"#Error1", data:{message:""}});
@@ -115,6 +99,63 @@ $(document).ready(function() {
 
     });
 
+    function makeid(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+           result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+     }
+
+    //reset password
+    $("#bottomnextup4").click(function(){
+        var npass = makeid(10);
+        var email = $("#email").val();
+
+        var postData = {
+            "email" : email,
+            "password" :  npass,
+            "secretkey" : "E#*NqknMYTcy1BYu4ffufjL3BWO23#"
+        }
+        $.ajax({
+            url: 'https://teamgamma.ga/api/umtg/reset',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function(data) {
+                //password reset 
+              
+                passwordResetEmail(email, npass);
+                var passwordResetSuccess = Toastify({
+                    text: "A new password has been sent to your email.",
+                    gravity: "bottom",
+                    backgroundColor: "linear-gradient(135deg, #56ab2f, #56ab2f)",
+                    duration: 4000
+                });
+                passwordResetSuccess.showToast();
+            },
+            error: function(data) {
+                console.log(data);
+                //Toast message: Register Failed
+                var failedRegister = Toastify({
+                    close: true,
+                    gravity: "bottom",
+                    text: "Password Reset Failed: " + data.responseJSON.message,
+                    backgroundColor: "linear-gradient(135deg, #9E1A1A, #9E1A1A)",
+                    duration: 5000
+                });
+
+                failedRegister.showToast();
+            },
+            data: JSON.stringify(postData)
+        });
+        email
+
+    });
+
+
     function register(profile) {
 
         $.ajax({
@@ -128,6 +169,7 @@ $(document).ready(function() {
                     password: profile.password
                 };
                 //login after successful registration
+                regSuccessEmail(profile.email, profile.username);
                 login(loginDetail);
             },
             error: function(data) {
@@ -199,6 +241,47 @@ $(document).ready(function() {
                 alert("API FAIL: getProfile");
             },
             data: JSON.stringify(profile)
+        });
+    }
+
+
+    function passwordResetEmail(email, npass){
+        var fd = new FormData();    
+        fd.append( 'email', email);
+        fd.append( 'key',  "3e30630d-239b-488d-8938-b9305dff3e54");
+        fd.append( 'type',  "email");
+        fd.append( 'msg',  'Hey here is your new password for Mouthpiece: ' + npass);
+        fd.append( 'heading',  "Mouthpiece Password Reset");
+
+        $.ajax({
+        url: 'https://teamgamma.ga/notification/notificationAPI.php',
+        data: fd,
+        processData: false,
+        contentType: false,
+        type: 'POST',
+        success: function(data){
+            console.log(data);
+        }
+        });
+    }
+
+    function regSuccessEmail(email, username){
+        var fd = new FormData();    
+        fd.append( 'key',  "3e30630d-239b-488d-8938-b9305dff3e54");
+        fd.append( 'type',  "email");
+        fd.append( 'email', email);
+        fd.append( 'msg',  'Hey ' + username + ' Congratulations for signing up on MouthPiece.');
+        fd.append( 'heading',  "Mouthpiece Profile Registration: " + username);
+
+        $.ajax({
+        url: 'https://teamgamma.ga/notification/notificationAPI.php',
+        data: fd,
+        processData: false,
+        contentType: false,
+        type: 'POST',
+        success: function(data){
+         console.log(alert(data));
+        }
         });
     }
 

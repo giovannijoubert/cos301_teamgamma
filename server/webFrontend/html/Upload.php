@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../css/Light-Theme.css">
     <!-- toastify -->
     <link rel="stylesheet" href="../css/lib/toastify.css">
+    <link rel="shortcut icon" href="https://teamgamma.ga/webfrontend/images/favicon.png" />
     <script src="../js/lib/toastify.js"></script>
     <script src="../vendor/jquery/jquery.min.js" defer></script>
     <script src="../vendor/bootstrap/js/bootstrap.min.js" defer></script>
@@ -66,6 +67,14 @@
             </div>
             <div class="col-12 flex-row">
                 <div class="text-muted user-prefs-header pb-1">Account Preferences</div>
+                <div class="preference-option m-2">
+                    <div class="profilepictureholder img">
+                       
+                    </div>
+                     <div>
+                        <button data-toggle="modal" data-target="#update-user-prefs" id="updateProfilePicBtn" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+                      </div>
+                 </div>
                 <div class="preference-option m-2">
                     <div>
                         <h5 class="mb-0">Username</h5>
@@ -129,7 +138,7 @@
                         <div id="instructions" style="border-radius: 4px;" class=" bg-light p-3 m-0 mb-2">
                             <p class="mb-1 text-primary small"><strong>Upload mouthpack in 3 easy steps:</strong></p>
                             <ol class="text-primary small">
-                                <li>Add 12 images to the corresponding sounds</li>
+                                <li>Add 6 or 12 images to the corresponding sounds</li>
                                 <li>Fill in the title and select the category for the mouthpack</li>
                                 <li>Click upload</li>
                             </ol>
@@ -162,27 +171,27 @@
                                         <h4>f v</h4>
                                     </div>
                                     <div class="mouth-drop-target" id="div-qw">
-                                        <input type="file" name="qw" id="inp-qw" style="opacity: 0; position:absolute;" required>
+                                        <input type="file" name="qw" id="inp-qw" style="opacity: 0; position:absolute;" >
                                         <h4>q w</h4>
                                     </div>
                                     <div class="mouth-drop-target" id="div-th">
-                                        <input type="file" name="th" id="inp-th" style="opacity: 0; position:absolute;" required>
+                                        <input type="file" name="th" id="inp-th" style="opacity: 0; position:absolute;" >
                                         <h4>th</h4>
                                     </div>
                                     <div class="mouth-drop-target" id="div-bmp">
-                                        <input type="file" name="bmp" id="inp-bmp" style="opacity: 0; position:absolute;" required>
+                                        <input type="file" name="bmp" id="inp-bmp" style="opacity: 0; position:absolute;" >
                                         <h4>b m p</h4>
                                     </div>
                                     <div class="mouth-drop-target" id="div-u">
-                                        <input type="file" name="u" id="inp-u" style="opacity: 0; position:absolute;" required>
+                                        <input type="file" name="u" id="inp-u" style="opacity: 0; position:absolute;" >
                                         <h4>u</h4>
                                     </div>
                                     <div class="mouth-drop-target" id="div-ee">
-                                        <input type="file" name="ee" id="inp-ee" style="opacity: 0; position:absolute;" required>
+                                        <input type="file" name="ee" id="inp-ee" style="opacity: 0; position:absolute;" >
                                         <h4>ee</h4>
                                     </div>
                                     <div class="mouth-drop-target" id="div-chjsh">
-                                        <input type="file" name="chjsh" id="inp-chjsh" style="opacity: 0; position:absolute;" required>
+                                        <input type="file" name="chjsh" id="inp-chjsh" style="opacity: 0; position:absolute;" >
                                         <h4>ch j sh</h4>
                                     </div>
                                 </div>
@@ -201,8 +210,8 @@
                                                 <option value="Monster">Monster</option>
                                                 <option value="Funny">Funny</option>
                                                 <option value="Random">Random</option>
-                                                <option value="Robot">Robot</option>
-                                                <option value="Animal">Animal</option>
+                                                <option value="Robots">Robots</option>
+                                                <option value="Animals">Animals</option>
                                             </select>
                                         </div>
                                     </div>

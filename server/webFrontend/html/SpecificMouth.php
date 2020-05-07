@@ -10,6 +10,7 @@
         <!-- toastify -->
         <link rel="stylesheet" href="../css/lib/toastify.css">
     <script src="../js/lib/toastify.js"></script>
+    <link rel="shortcut icon" href="https://teamgamma.ga/webfrontend/images/favicon.png" />
     <!-- toastify -->
     <script type="text/javascript" src="../js/lib/jszip.min.js"></script>
     <script type="text/javascript" src="../js/lib/jszip-utils.min.js"></script>
@@ -70,6 +71,14 @@
             <div class="col-12 flex-row">
                 <div class="text-muted user-prefs-header pb-1">Account Preferences</div>
                 <div class="preference-option m-2">
+                    <div class="profilepictureholder img">
+                       
+                    </div>
+                     <div>
+                        <button data-toggle="modal" data-target="#update-user-prefs" id="updateProfilePicBtn" class="btn btn-outline-secondary bg-white text-dark">Change</button>
+                      </div>
+                 </div>
+                <div class="preference-option m-2">
                     <div>
                         <h5 class="mb-0">Username</h5>
                         <p class="small text-muted username_display">Username</p>
@@ -122,11 +131,11 @@
 
     <h3 style="text-align:center; margin-top:10px;" class="mpName">Mouthpack Name</h3>
     <div class="main">
-        <i class="fa fa-star unchecked" id="one"></i>
-        <i class="fa fa-star unchecked" id="two"></i>
-        <i class="fa fa-star unchecked" id="three"></i>
-        <i class="fa fa-star unchecked" id="four"></i>
-        <i class="fa fa-star unchecked" id="five"></i>
+        <i rating="1" class="fa fa-star unchecked" id="one"></i>
+        <i rating="2"  class="fa fa-star unchecked" id="two"></i>
+        <i rating="3"  class="fa fa-star unchecked" id="three"></i>
+        <i rating="4"  class="fa fa-star unchecked" id="four"></i>
+        <i rating="5"  class="fa fa-star unchecked" id="five"></i>
     </div>
 
     <div class="container">

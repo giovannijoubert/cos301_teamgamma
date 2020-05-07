@@ -1,16 +1,89 @@
 
 $(document).ready(function() {
     //auto run code
-    loadLatestMouthpacks();
+    loadLatestMouthpacks(showLatestMouthpacks);
 
     profile = JSON.parse(localStorage.getItem("userProfile"));
 
 
+    //bind search button
     $("#search-btn").click(function() { searchMouthpacks($("#search-field").val()); })
 
-    //auto run code
+    //bind category button
+    $(".category_search").click(function() { searchByCategory(); })
 
-    //Display 12 Latest Mouthpacks
+    //bind sort button
+    $(".sortMethod").click(function() { searchBySort(); })
+
+    //search by category
+
+
+    function searchBySort(){
+       // loadLatestMouthpacks(sortMouthpacks, $(event.target).text());
+       sortMouthpacks(JSON.parse(localStorage.getItem("mouthpacks")),$(event.target).text());
+    }
+
+    function sortMouthpacks(mouthpacks, method){
+
+        if(method == "Top Rated"){ //sort by rating
+
+            mouthpacks.sort(function(a, b) {
+                var c = $("[mp_id="+a.id+"]").attr("mp_rating");
+                var d = $("[mp_id="+b.id+"]").attr("mp_rating");
+                return d-c;
+            });
+            
+        }
+
+        if(method == "Lowest Rated"){ //sort by rating
+
+            mouthpacks.sort(function(a, b) {
+                var c = $("[mp_id="+a.id+"]").attr("mp_rating");
+                var d = $("[mp_id="+b.id+"]").attr("mp_rating");
+                return c-d;
+            });
+            
+        }
+
+        if(method == "Newest"){ //sort by date
+            mouthpacks.sort(function(a, b) {
+                var c = new Date(a.date);
+                var d = new Date(b.date);
+                return d-c;
+            });
+        }
+
+        if(method == "Oldest"){ //sort by date
+            mouthpacks.sort(function(a, b) {
+                var c = new Date(a.date);
+                var d = new Date(b.date);
+                return c-d;
+            });
+        }
+
+        showLatestMouthpacks(mouthpacks);
+        
+    }
+
+    function searchByCategory(){
+        loadLatestMouthpacks(filterByCategory, $(event.target).text().substring(1));
+    }
+
+    function filterByCategory(mouthpacks, cat){
+    //   console.log(mouthpacks);
+        var filteredMouthpacks = [];
+
+        for(i = 0; i < mouthpacks.length; i++){
+         //   console.log(mouthpacks[i].categories[0] );
+            if(mouthpacks[i].categories[0] == cat)
+                filteredMouthpacks.push(mouthpacks[i]);
+        }
+
+        showLatestMouthpacks(filteredMouthpacks);
+        
+    }
+
+    //Display 24 Latest Mouthpacks
     function showLatestMouthpacks(mouthpacks) {
         $(".box_container").fadeTo("slow", 0, function() {
             boxes = $(".box_container").children();
@@ -21,14 +94,14 @@ $(document).ready(function() {
             counter = 0;
             i = 0;
 
-            console.log(mouthpacks);
+          //  console.log(mouthpacks);
 
-            while (counter < 12 && i < mouthpacks.length && mouthpacks[0].message != "0 results found") {
+            while (counter < 100 && i < mouthpacks.length && mouthpacks[0].message != "0 results found") {
                 if (mouthpacks[i].images.length == 0) {
                     i++;
                     continue; //skip to next mouthpack with image
                 }
-                console.log(mouthpacks[i])
+            //    console.log(mouthpacks[i])
                     //create box
                 if (counter != 0)
                     $("#box0").clone().attr("id", "box" + counter).appendTo(".box_container");
@@ -50,7 +123,9 @@ $(document).ready(function() {
                 //set mouthpack image
                 $("#box" + counter + " .card .card-body .card-title").text(new Date(mouthpacks[i].date).toDateString());
 
+                //add to collection button
                 $("#box" + counter + " .card .collection-btn").click(function() { addMPtoCollection(profile) });
+
 
                 //save mouthpacks in local storage
                 localStorage.setItem("mouthpacks", JSON.stringify(mouthpacks));
@@ -58,13 +133,36 @@ $(document).ready(function() {
                 //set Download button function
                 $("#box" + counter + " .download-btn").click(function() { downloadMP(); });
 
-                $("#box" + counter + " .card .ratingStars").click(function() { rateMP(); })
+                if(profile != null)
+                    $("#box" + counter + " .card .ratingStars").click(function() { rateMP(); })
 
                 $("#box" + counter).show(); //incase it was hidden at 0 results
 
+                //set mouthpack category
+                $("#box" + counter + " .card-category").html('<i class="fa fa-list-alt"></i> '+mouthpacks[i].categories[0]);
 
+                //set mouthpack rating
+                ratingAvg = 0;
+                for(r = 1; r < mouthpacks[i].ratings.length; r++){
+                    if(mouthpacks[i].ratings[r].value)
+                        ratingAvg = ratingAvg + mouthpacks[i].ratings[r].value;
 
+                }
 
+                ratingAvg = ratingAvg / (mouthpacks[i].ratings.length-1);  
+
+                ratingAvg= Math.round(ratingAvg);
+
+                
+                $("#box" + counter).attr("mp_rating", ratingAvg);
+
+                for(k = 1; k <= 5; k++){
+                    if(ratingAvg >= k)
+                        $("#box" + counter + " [rating="+k+"]").addClass("checked");
+                    else
+                       $("#box" + counter + " [rating="+k+"]").removeClass("checked");
+                }
+                
                 i++;
                 counter++;
 
@@ -87,6 +185,12 @@ $(document).ready(function() {
             } else {
                 $(".box_container").fadeTo("slow", 1.0);
             }
+
+            console.log(profile);
+            if(profile == null){
+                $(".btns.collection-btn").remove();
+            }
+                
 
 
         });
@@ -152,7 +256,7 @@ $(document).ready(function() {
 
 
     //API Call to Load 12 Newest Mouthpacks
-    function loadLatestMouthpacks() {
+    function loadLatestMouthpacks(callme, cat) {
         var postData = {
             requestType: "getAllMouthpacks",
             sort_by: "date",
@@ -164,7 +268,7 @@ $(document).ready(function() {
             dataType: 'json',
             contentType: 'application/json',
             success: function(data) {
-                showLatestMouthpacks(data);
+                callme(data, cat);
             },
             error: function(data) {
                 console.log(data);
@@ -199,13 +303,23 @@ $(document).ready(function() {
     }
 
 
+
+        //Toast message: Update Success
+        var rateSuccess = Toastify({
+            text: "Rating Submitted Successfully",
+            gravity: "bottom",
+            backgroundColor: "linear-gradient(135deg, #56ab2f, #56ab2f)",
+            duration: 4000
+        });
+
     //rate a mouthpack
     function rateMP() {
         rating = $(event.target).attr("rating");
-        console.log(rating);
-        card = $(event.target).parent().parent();
-        console.log(card);
+        //console.log(rating);
+        card = $(event.target).parent().parent().parent();
+        //  console.log(card);
 
+       //     console.log($(card).attr("mp_id"));
         var postData = {
             requestType: "rate",
             value: rating,
@@ -218,7 +332,8 @@ $(document).ready(function() {
             dataType: 'json',
             contentType: 'application/json',
             success: function(data) {
-                console.log(data);
+
+                rateSuccess.showToast();
             },
             error: function(data) {
                 console.log(data);

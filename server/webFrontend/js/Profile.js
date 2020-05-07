@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
 
     profile = JSON.parse(localStorage.getItem("userProfile"));
@@ -20,6 +19,7 @@ $(document).ready(function() {
             $(".nav_login_btn").fadeOut();
             $("#user-prefs-2").fadeIn();
 
+            getProfilePicture();
 
             //update user-preferences-section
             $(".username_display").text(profile.username);
@@ -40,6 +40,26 @@ $(document).ready(function() {
         }
     }
 
+    //API Call to populate profile picture
+    function getProfilePicture()
+    {
+        const xhttp = new XMLHttpRequest()
+        const url = "https://teamgamma.ga/api/umtg/update";
+        xhttp.open("POST", url, true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState === 4) {
+            // console.log(JSON.parse(xhttp.responseText).image)
+                document.getElementsByClassName("profilepictureholder")[0].style.backgroundImage = "url('data:image/png;base64,"+JSON.parse(xhttp.responseText).image+"')";
+            }
+        }
+        let data = JSON.stringify({"option":"download","username":JSON.parse(localStorage.getItem("userProfile")).username,"jwt" : JSON.parse(localStorage.getItem("userProfile")).JWT,"location":JSON.parse(localStorage.getItem("userProfile")).profile_image});
+        xhttp.send(data);
+    }
+
+
+
+
     //Api call to update email adress
     function apiUpdateEmail(email) {
         profile = JSON.parse(localStorage.getItem("userProfile"));
@@ -57,7 +77,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             success: function(data) {
                 profile = getProfile(profile.username, data.JWT);
-                $(".preference-option:nth-child(3)>div>p")[0].innerHTML = email;
+                $(".email_display")[0].innerHTML = email;
                 $('.modal').modal('hide');
                 successfullUpdate.showToast();
             },
@@ -94,6 +114,8 @@ $(document).ready(function() {
             contentType: 'application/json',
             success: function(data) {
                 $('.modal').modal('hide');
+                console.log(data);
+                
                 successfullUpdate.showToast();
             },
             error: function(data) {
@@ -127,12 +149,14 @@ $(document).ready(function() {
             dataType: 'json',
             contentType: 'application/json',
             success: function(data) {
+                console.log(data);
                 $('.modal').modal('hide');
                 successfullUpdate.showToast();
                 getProfile2(profile.username,profile.JWT);
-                user();
+                getProfilePicture();
             },
             error: function(data) {
+                console.log(data);
                 //Toast message: Register Failed
                 var failedUpdate = Toastify({
                     close: true,
@@ -147,21 +171,7 @@ $(document).ready(function() {
         });
     }
 
-    function user()
-    {
-        const xhttp = new XMLHttpRequest()
-        const url = "https://teamgamma.ga/api/umtg/update";
-        xhttp.open("POST", url, true);
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.onreadystatechange = function () {
-            if (xhttp.readyState === 4) {
-                console.log(JSON.parse(xhttp.responseText).image)
-                document.getElementsByClassName("ui medium rounded image")[0].src = 'data:image/png;base64,'+JSON.parse(xhttp.responseText).image;
-            }
-        }
-        let data = JSON.stringify({"option":"download","username":JSON.parse(localStorage.getItem("userProfile")).username,"jwt" : JSON.parse(localStorage.getItem("userProfile")).JWT,"location":JSON.parse(localStorage.getItem("userProfile")).profile_image});
-        xhttp.send(data);
-    }
+    
 
     //Api call to update username
     function apiUpdateUsername(username) {
@@ -179,7 +189,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             success: function(data) {
                 profile = getProfile(username, data.JWT);
-                $(".preference-option:nth-child(2)>div>p")[0].innerHTML = username;
+                $(".username_display")[0].innerHTML = username;
                 $('.modal').modal('hide');
                 successfullUpdate.showToast();
             },
@@ -437,10 +447,13 @@ $(document).ready(function() {
     }
 
     function encodeImageFileAsURL(element) {
+        console.log(element.files[0]);
         var file = element.files[0];
         var reader = new FileReader();
         reader.onloadend = function() {
-            apiUpdateProfilePic(reader.result.replace("data:image/jpeg;base64,",""));
+            imgBase64=reader.result.replace("data:image/jpeg;base64,","");
+            imgBase64=imgBase64.replace("data:image/png;base64,","");
+            apiUpdateProfilePic(imgBase64);
         }
         reader.readAsDataURL(file);
     }

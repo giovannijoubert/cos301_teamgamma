@@ -57,11 +57,12 @@ function uplaodMouthPack(evt) {
     });
     Uploading.showToast();
     $.ajax({
-        url: 'http://teamgamma.ga/api/sharingapi.php',
+        url: 'https://teamgamma.ga/api/sharingapi.php',
         type: 'post',
         dataType: 'json',
         contentType: 'application/json',
         complete: function(data) {
+            console.log(data);
             rs = JSON.parse(data.responseText);
             //currently only checks if first image uploaded successfully
             if (rs[0].status == "200 Ok") {
@@ -73,6 +74,8 @@ function uplaodMouthPack(evt) {
                     backgroundColor: "linear-gradient(135deg, #56ab2f, #56ab2f)",
                     duration: 5000
                 });
+                if(profile != null) // if profile is not null, add mouthpack to collection
+                    addMPtoCollection(profile, data.responseJSON[data.responseJSON.length-1]);
                 successUpload.showToast();
             } else {
                 //Toast message: Upload failed
@@ -89,6 +92,40 @@ function uplaodMouthPack(evt) {
         },
         data: JSON.stringify(formData)
     });
+}
+
+
+function addMPtoCollection(profile, mpID) {
+
+    var postData = {
+        option: "add-mouthpack",
+        username: profile.username,
+        jwt: profile.JWT,
+        mouthpack_id: mpID,
+        usertype: "Creator" 
+    }
+    console.log(postData);
+    $.ajax({
+        url: 'https://teamgamma.ga/api/umtg/update',
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function(data) {
+            //Toast message: add to Collection Success
+            var addMPtoCollectionSuccess = Toastify({
+                text: "Mouthpack added to Collection",
+                gravity: "bottom",
+                backgroundColor: "linear-gradient(135deg, #56ab2f, #56ab2f)",
+                duration: 4000
+            });
+            addMPtoCollectionSuccess.showToast();
+            //TODO: Mark card as added to collection
+        },
+        error: function(data) {
+            console.log(data);
+        },
+        data: JSON.stringify(postData)
+    }); 
 }
 
 function resetUpload() {

@@ -60,6 +60,27 @@ $(document).ready(function() {
         //set Download button function
         $("#box" + counter + " .download-btn").click(function() { downloadMP(); });
 
+              //set mouthpack rating
+              ratingAvg = 0;
+              for(r = 1; r < mouthpack.ratings.length; r++){
+                  if(mouthpack.ratings[r].value)
+                      ratingAvg = ratingAvg + mouthpack.ratings[r].value;
+
+              }
+
+              ratingAvg = ratingAvg / (mouthpack.ratings.length-1);  
+
+              ratingAvg= Math.round(ratingAvg);
+
+              console.log(ratingAvg);
+
+              for(k = 1; k <= 5; k++){
+                  if(ratingAvg >= k)
+                      $("#box" + counter + " [rating="+k+"]").addClass("checked");
+                  else
+                     $("#box" + counter + " [rating="+k+"]").removeClass("checked");
+              }
+
         $("#box" + counter).show(); //incase it was hidden at 0 results
         counter++;
     }
