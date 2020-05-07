@@ -70,7 +70,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       if (result == ConnectivityResult.none) {
         Fluttertoast.showToast(
           msg: "Please check your internet connectivity",
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 2,
           backgroundColor: Color(0xff303030),
@@ -97,7 +97,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         await model.resetPasswordNotification(_email);
         Fluttertoast.showToast(
           msg: "Email sent",
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 3,
           backgroundColor: Color(0xff303030),
@@ -114,7 +114,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
         Fluttertoast.showToast(
           msg: "There is no user registered with this email.",
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 3,
           backgroundColor: Color(0xff303030),
@@ -129,7 +129,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
       Fluttertoast.showToast(
         msg: "Please check your internet connectivity",
-        toastLength: Toast.LENGTH_SHORT,
+        toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 3,
         backgroundColor: Color(0xff303030),
@@ -242,9 +242,8 @@ class TextInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10),
-      child: TextField(
+      child: TextFormField(
           style: new TextStyle(color: Color(0xff303030)),
-          obscureText: obscureText,
           decoration: new InputDecoration(
             hintText: hintText,
             hintStyle: hintStyle,
@@ -257,6 +256,7 @@ class TextInputField extends StatelessWidget {
               borderSide: BorderSide(color: Color(0xff303030)),
             ),  
           ),
+          initialValue: "",
           controller: controller,
       ),
     );

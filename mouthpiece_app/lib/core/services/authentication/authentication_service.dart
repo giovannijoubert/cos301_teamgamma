@@ -28,8 +28,8 @@ class AuthenticationService {
   Future<bool> register(String userName, String email , String password) async {
     Map map = {
       "username": userName,
-      "f_name": "test",
-      "l_name": "test",
+      "f_name": "n/a",
+      "l_name": "n/a",
       "email": email,
       "password": password
     };

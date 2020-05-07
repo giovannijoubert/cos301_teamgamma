@@ -92,16 +92,13 @@ class _VoiceTrainingState extends State<VoiceTrainingView> {
                               onPressed:(){ 
                                 if(model.isRecording == false) {
                                   setState(() {
-                                    model.wordColour=Colors.green;
+                                    model.wordColour = Colors.green;
                                     ins = "when you are done";
                                   });
                                   model.startNativeRec();
                                   //model.recordAudio();
-                                 
-
                                 } else {
                                   setState(() {
-                                    
                                     ins = "when you are done";
                                   });
                                 } 
@@ -221,7 +218,7 @@ Widget navigationSection(BuildContext context) {
                         ),);
                       },  
                       child: Text(
-                        'Skip',
+                        'Next',
                         style: TextStyle(
                           fontSize: 16,
                           color: Color(0xffb1b4e5),

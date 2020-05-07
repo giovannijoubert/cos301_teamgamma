@@ -2,6 +2,7 @@
 
 import 'package:file/record_replay.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mouthpiece/ui/views/home_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../enums/viewstate.dart';
@@ -17,18 +18,18 @@ import '../../ui/views/voice_training_view.dart';
 
 class VoiceTrainingModel extends BaseModel {
 
-  static const platformMethodChannel =const MethodChannel('voiceTrainer');
+  static const platformMethodChannel = const MethodChannel('voiceTrainer');
 
   Future<String> startNativeRec()async{
     String msg;
     isRecording=true;
     try{
-      final String result= await platformMethodChannel.invokeMethod('startRecording');
-      msg=result;
+      final String result = await platformMethodChannel.invokeMethod('startRecording');
+      msg = result;
 
     } on PlatformException catch (e)
     {
-      msg= "cant run native code ... ${e.message}.";
+      msg = "cant run native code ... ${e.message}.";
     }
     print(msg);
    return msg;
@@ -39,7 +40,7 @@ Future<String> stopNativeRec()async{
     isRecording=false;
     try{
       final String result= await platformMethodChannel.invokeMethod('stopRecording');
-      msg=result;
+      msg = result;
 
     } on PlatformException catch (e)
     {
@@ -69,27 +70,27 @@ String getWord(){
   test = examples[index];
   return examples[index];
 }
-  String changeToNextWord(){
-    String word = examples[index];
-    index++;
+String changeToNextWord(){
+  String word = examples[index];
+  index++;
 
-    if (index > examples.length-1) {
-      index = 0;
-      // TODO: Completed voice training -> do not restart rather move onto next app page
-      // and in sharedPreference update that voiceTraining was completed
-      
-    }
-    return word;
+  if (index > examples.length-1) {
+    index = 0;
+    // TODO: Completed voice training -> do not restart rather move onto next app page
+    // and in sharedPreference update that voiceTraining was completed
+    Fluttertoast.showToast(
+      msg: "Voice Training Complete",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Color(0xff303030),
+      textColor: Colors.white,
+      fontSize: 16.0
+    );
   }
+  return word;
+}
   
-
- 
-
-
  final PermissionHandler _permissionHandler = PermissionHandler();
-
-
-    // Template code to access permissions
     Future<bool> _requestPermission(PermissionGroup permission) async {
     var result = await _permissionHandler.requestPermissions([permission]);
     if (result[permission] == PermissionStatus.granted) {
@@ -130,12 +131,8 @@ String getWord(){
     return hasPermission(PermissionGroup.storage);
   }
 
-
-
-
   bool isRecording = false;
  
-
   void recordAudio() async{
   print("Entered RecordAudio . . .");
       isRecording=true;
@@ -143,47 +140,40 @@ String getWord(){
     startNativeRec();
   }
 
-
   void stopRecordingAudio(){
-    
     print("Entered StopRecord . . .");
     isRecording=false;
   //  stopRecorder();
     stopNativeRec();
   }
 
+  var sounds = [
+    "Ah", "Eh", "I",
+    "El",
+    "Oh",
+    "Ceh", "Deh", "Geh", "Keh", "Neh", "Sss", "Teh", "X", "Yeh", "Zee",
+    "Fff", "Vvv",
+    "Q(cue)", "Weh",
+    "Beh", "Meh", "Peh",
+    "Uh",
+    "Ee",
+    "Reh",
+    "Th",
+    "Ch", "Jeh", "Sh"
+  ];
 
-        var sounds = [
-            "Ah", "Eh", "I",
-            "El",
-            "Oh",
-            "Ceh", "Deh", "Geh", "Keh", "Neh", "Sss", "Teh", "X", "Yeh", "Zee",
-            "Fff", "Vvv",
-            "Q(cue)", "Weh",
-            "Beh", "Meh", "Peh",
-            "Uh",
-            "Ee",
-            "Reh",
-            "Th",
-            "Ch", "Jeh", "Sh"];
-
-        var examples = [
-            "Apple", "Everyone", "I",
-            "Light",
-            "Orange",
-            "Candle", "Delta", "Get", "Candle", "Night", "Snake", "Terminal", "X-ray", "Yes", "Zebra",
-            "Free", "Very",
-            "Queue", "Win",
-            "Boy", "Maybe", "Pepper",
-            "Update",
-            "Tree",
-            "Red",
-            "This",
-            "Cheese", "Jam", "Shell"];
-        
-
-
-
-
-
+  var examples = [
+    "Apple", "Everyone", "I",
+    "Light",
+    "Orange",
+    "Candle", "Delta", "Get", "Candle", "Night", "Snake", "Terminal", "X-ray", "Yes", "Zebra",
+    "Free", "Very",
+    "Queue", "Win",
+    "Boy", "Maybe", "Pepper",
+    "Update",
+    "Tree",
+    "Red",
+    "This",
+    "Cheese", "Jam", "Shell"
+  ];
 }

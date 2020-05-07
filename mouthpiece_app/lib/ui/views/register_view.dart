@@ -1,5 +1,6 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:mouthpiece/core/viewmodels/collection_model.dart';
 import 'package:mouthpiece/locator.dart';
 //import 'package:email_validator/email_validator.dart';
 import 'package:mouthpiece/ui/views/login_view.dart';
@@ -98,7 +99,7 @@ class _RegisterViewState extends State<RegisterView> {
       if (result == ConnectivityResult.none) {
         Fluttertoast.showToast(
           msg: "Please check your internet connectivity",
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 3,
           backgroundColor: Color(0xff303030),
@@ -112,8 +113,8 @@ class _RegisterViewState extends State<RegisterView> {
   Future _registerCommand(model) async{
     bool connectivity = await _sharingapi.checkConnectivity();
     if (connectivity) {
-      bool loginSuccess = await model.register(_userName,_email,_password);
-      if(loginSuccess){
+      bool registerSuccessful = await model.register(_userName,_email,_password);
+      if(registerSuccessful){
         SharedPreferences prefs = await SharedPreferences.getInstance(); 
         await model.sendSuccessfulRegisterNotification(_email);
         if (prefs.getBool('loggedIn'))
@@ -130,8 +131,8 @@ class _RegisterViewState extends State<RegisterView> {
         ),);  
 
         Fluttertoast.showToast(
-          msg: "Registration Failed",
-          toastLength: Toast.LENGTH_SHORT,
+          msg: "Username or email already exists",
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 2,
           backgroundColor: Colors.white,
@@ -142,7 +143,7 @@ class _RegisterViewState extends State<RegisterView> {
     } else {
       Fluttertoast.showToast(
         msg: "Please check your internet connectivity",
-        toastLength: Toast.LENGTH_SHORT,
+        toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 3,
         backgroundColor: Color(0xff303030),
@@ -339,6 +340,7 @@ class TextInputField extends StatelessWidget {
 }
 
 class SkipLink extends StatelessWidget {
+  CollectionModel collectionModel = new CollectionModel();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -356,9 +358,10 @@ class SkipLink extends StatelessWidget {
                   decoration: TextDecoration.underline,
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
+                await collectionModel.clearLists();
                 Navigator.push(context, PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => ChooseModeView(),
+                  pageBuilder: (context, animation1, animation2) => ChooseModeView(),
                 ),);
               },
             )
@@ -374,10 +377,10 @@ class SignUpAccountLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      onPressed: (){
-        Navigator.push(context, PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) => LoginView(),
-        ),);
+      onPressed: () {
+      Navigator.push(context, PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => LoginView(),
+      ),);
       },textColor: Color(0xffB1B4E5),
       child: Align(
         alignment: Alignment.bottomCenter,

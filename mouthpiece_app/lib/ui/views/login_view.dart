@@ -90,7 +90,7 @@ class _LoginViewState extends State<LoginView> {
       if (result == ConnectivityResult.none) {
         Fluttertoast.showToast(
           msg: "Please check your internet connectivity",
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 2,
           backgroundColor: Color(0xff303030),
@@ -110,7 +110,7 @@ class _LoginViewState extends State<LoginView> {
   }
 
   Future _loginCommand(model, theme) async{
-    final prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     bool connectivity = await _sharingapi.checkConnectivity();
     // CollectionModel collectionModel = new CollectionModel();
     if (connectivity) {
@@ -131,7 +131,7 @@ class _LoginViewState extends State<LoginView> {
 
         Fluttertoast.showToast(
           msg: "Incorrect username or password.",
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 3,
           backgroundColor: Color(0xff303030),
@@ -146,7 +146,7 @@ class _LoginViewState extends State<LoginView> {
 
       Fluttertoast.showToast(
         msg: "Please check your internet connectivity",
-        toastLength: Toast.LENGTH_SHORT,
+        toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 3,
         backgroundColor: Color(0xff303030),
@@ -336,7 +336,8 @@ class SkipLink extends StatelessWidget {
                   decoration: TextDecoration.underline,
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
+                await collectionModel.clearLists();
                 Navigator.push(context, PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) => ChooseModeView(),
                 ),);

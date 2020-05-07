@@ -286,6 +286,12 @@ class _CollectionSearchBarState extends State<CollectionSearchBar> {
               );
             }
           ),
+          onCancelled: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
           emptyWidget: Text("No results"),
           // indexedScaledTileBuilder: (int index) => ScaledTile.count(1, index.isEven ? 2 : 1),
           mainAxisSpacing: 0,
@@ -487,7 +493,7 @@ class _MouthCardState extends State<MouthCard> {
                                     } else {
                                       Fluttertoast.showToast(
                                         msg: "Please check your internet connectivity",
-                                        toastLength: Toast.LENGTH_SHORT,
+                                        toastLength: Toast.LENGTH_LONG,
                                         gravity: ToastGravity.BOTTOM,
                                         timeInSecForIosWeb: 3,
                                         backgroundColor: Color(0xff303030),

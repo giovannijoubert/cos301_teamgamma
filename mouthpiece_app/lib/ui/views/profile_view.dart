@@ -653,20 +653,22 @@ class _BuildEmailState extends State<BuildEmail> {
             "email" : value
           };
           String url = 'https://teamgamma.ga/api/umtg/update';
+          ProfileModel profileModel = new ProfileModel();
           await _api.updateMail(url, map).then((response) {
               if (response == false) {
                 Fluttertoast.showToast(
                   msg: "The email you've entered already exists ",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.CENTER,
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.TOP,
                   timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.white60,
-                  textColor: Colors.black,
+                  backgroundColor: Colors.black,
+                  textColor: Colors.white,
                   fontSize: 16.0
                 );
               } else {
                 email = value;
                 setEmail(value);
+                profileModel.updateEmailNotification(email);
               }
           });
         },
