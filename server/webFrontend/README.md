@@ -7,8 +7,8 @@
 * See documentaion folder in master branch
 
 **Project Managment Tools**
-Clickup: https://app.clickup.com/2502552/v/l/6-15286536-1
-Slack: https://app.slack.com/client/TUXPQA0NR/CUZKK2R71
+*Clickup: https://app.clickup.com/2502552/v/l/6-15286536-1
+*Slack: https://app.slack.com/client/TUXPQA0NR/CUZKK2R71
 
 **Requirement Overview**
 * We are required to design and implement the frontend website for the mouthpiece application. The website needs to be easy to navigate as well as being visually appealing. The website will interact thorugh API calls with the user manangement module, to validate that users exist as well as confirm the relevant security information. 
@@ -52,7 +52,7 @@ Slack: https://app.slack.com/client/TUXPQA0NR/CUZKK2R71
 |**Position** |Final year BSc Computer Science|
 |**Interests** |Web Development, UX/UI (Web Design), Reading|
 |**Skills**|C++, Java, Web Development: HTML, CSS, Bootstrap, VueJS, JavaScript, PHP, SQL, Mongo DB|
-|**Project Tasks**| ... |
+|**Project Tasks**| Upload mouthpack page. User interface for user preferences/profile. |
 
 |Team Member | Details | 
 | :---         | :---         |   
