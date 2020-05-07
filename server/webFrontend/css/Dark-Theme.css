@@ -1,0 +1,77 @@
+body {
+    background: #111;
+    transition: all 1s;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    transition: all 1s;
+    color: #fff!important;
+}
+
+.card-body,
+.card,
+.card .img-fluid {
+    background: #303030!important;
+    background-color: #303030!important;
+    transition: all 1s;
+}
+
+.btns {
+    color: #fff;
+    border-color: #fff;
+}
+
+.navbar {
+    background-color: #303030!important;
+    color: #fff!important;
+    transition: all 1s;
+}
+
+#navbar a {
+    color: #fff!important;
+}
+
+.mp_logo {
+    color: #fff;
+    transition: all 1s;
+}
+
+#user-preferences-section {
+    background-color: #111;
+    transition: all 1s;
+}
+
+#instructions {
+    color: #fff!important;
+    background-color: #303030!important;
+    transition: all 1s;
+}
+
+#instructions ol,
+#instructions p {
+    color: #fff!important;
+}
+
+.mouth-drop-target h4 {
+    background: #111;
+}
+
+label {
+    color: #fff;
+    transition: all 1s;
+}
+
+.modal-content {
+    background-color: #303030;
+    transition: all 1s;
+}
+
+.close {
+    color: #fff;
+}

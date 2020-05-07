@@ -1,124 +1,74 @@
+$(document).ready(function() {
 
-// (function($) {
-//   "use strict";
-//   // Back to top button
-//   $(window).scroll(function() {
-//     if ($(this).scrollTop() > 100) {
-//       $('.back-to-top').fadeIn('slow');
-//     } else {
-//       $('.back-to-top').fadeOut('slow');
-//     }
-//   });
-//   $('.back-to-top').click(function() {
-//     $('html, body').animate({
-//       scrollTop: 0
-//     }, 1500, 'easeInOutExpo');
-//     return false;
-//   });
-//   var siteMenuClone = function() {
-//     $('.js-clone-nav').each(function() {
-//       var $this = $(this);
-//       $this.clone().attr('class', 'site-nav-wrap').appendTo('.site-mobile-menu-body');
-//     });
-//     setTimeout(function() {
-//       var counter = 0;
-//       $('.site-mobile-menu .has-children').each(function() {
-//         var $this = $(this);
-//         $this.prepend('<span class="arrow-collapse collapsed">');
-//         $this.find('.arrow-collapse').attr({
-//           'data-toggle': 'collapse',
-//           'data-target': '#collapseItem' + counter,
-//         });
-//         $this.find('> ul').attr({
-//           'class': 'collapse',
-//           'id': 'collapseItem' + counter,
-//         });
-//         counter++;
-//       });
-//     }, 1000);
-//     $('body').on('click', '.arrow-collapse', function(e) {
-//       var $this = $(this);
-//       if ($this.closest('li').find('.collapse').hasClass('show')) {
-//         $this.removeClass('active');
-//       } else {
-//         $this.addClass('active');
-//       }
-//       e.preventDefault();
-//     });
-//     $(window).resize(function() {
-//       var $this = $(this),
-//         w = $this.width();
-//       if (w > 768) {
-//         if ($('body').hasClass('offcanvas-menu')) {
-//           $('body').removeClass('offcanvas-menu');
-//         }
-//       }
-//     })
-//     $('body').on('click', '.js-menu-toggle', function(e) {
-//       var $this = $(this);
-//       e.preventDefault();
-//       if ($('body').hasClass('offcanvas-menu')) {
-//         $('body').removeClass('offcanvas-menu');
-//         $('body').find('.js-menu-toggle').removeClass('active');
-//       } else {
-//         $('body').addClass('offcanvas-menu');
-//         $('body').find('.js-menu-toggle').addClass('active');
-//       }
-//     })
-//     // click outisde offcanvas
-//     $(document).mouseup(function(e) {
-//       var container = $(".site-mobile-menu");
-//       if (!container.is(e.target) && container.has(e.target).length === 0) {
-//         if ($('body').hasClass('offcanvas-menu')) {
-//           $('body').removeClass('offcanvas-menu');
-//           $('body').find('.js-menu-toggle').removeClass('active');
-//         }
-//       }
-//     });
-//   };
-//   siteMenuClone();
-//   var siteScroll = function() {
-//     $(window).scroll(function() {
-//       var st = $(this).scrollTop();
-//       if (st > 100) {
-//         $('.js-sticky-header').addClass('shrink');
-//       } else {
-//         $('.js-sticky-header').removeClass('shrink');
-//       }
-//     })
-//   };
-//   siteScroll();
-//   var siteSticky = function() {
-//     $(".js-sticky-header").sticky({
-//       topSpacing: 0
-//     });
-//   };
-//   siteSticky();
-//   var siteOwlCarousel = function() {
-//     $('.testimonial-carousel').owlCarousel({
-//       center: true,
-//       items: 1,
-//       loop: true,
-//       margin: 0,
-//       autoplay: true,
-//       smartSpeed: 1000,
-//     });
-//   };
-//   siteOwlCarousel();
-// })(jQuery);
+    if (!getUrlVars()["mpID"])
+        window.location.href = "Explore";
 
-var list=['one','two','three','four','five'];
-list.forEach(function(element) {
-  document.getElementById(element).addEventListener("click", function(){
-    var cls=document.getElementById(element).className;
-    if(cls.includes("unchecked"))
-       {
-   document.getElementById(element).classList.remove("unchecked");
-  document.getElementById(element).classList.add("checked");
-      }
-    else
-      {
-  document.getElementById(element).classList.remove("checked");     document.getElementById(element).classList.add("unchecked");
-      }
-});
+    loadMouthpack(getUrlVars()["mpID"]);
+
+    //Download entire mouthpack 
+    $("#downloadButton").click(function() {
+        var zip = new JSZip();
+        aBoxes = $("[id^='abox']");
+        for (i = 1; i < aBoxes.length; i++) {
+            child = $(aBoxes[i]).children()[0];
+            zip.file($(".mpName").text() + i + ".png", urlToPromise($(child).attr("href")), { binary: true });
+
+        }
+        zip.generateAsync({ type: "blob" })
+            .then(function callback(blob) {
+                saveAs(blob, $(".mpName").text());
+            });
+    })
+
+    //API Call to Load Specific Mouthpack
+    function loadMouthpack(mp_id) {
+        var postData = {
+            requestType: "getMouthPack",
+            id: mp_id
+        }
+        $.ajax({
+            url: 'https://teamgamma.ga/api/sharingapi.php',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function(data) {
+                showMouthPack(data);
+            },
+            error: function(data) {
+                console.log(data);
+            },
+            data: JSON.stringify(postData)
+        });
+    }
+
+    function showMouthPack(mouthpack) {
+
+        for (i = 0; i < mouthpack[0].images.length; i++) {
+            if (i != 0)
+                $("#abox0").clone().attr("id", "abox" + i).appendTo("#aboxContainer");
+
+            //set aBox image
+            $("#abox" + i + " img").attr("src", mouthpack[0].images[i]);
+
+            //set aBox image download
+            $("#abox" + i + " a").attr("href", mouthpack[0].images[i]);
+
+            //set aBox image download attribute
+            $("#abox" + i + " a").attr("download", mouthpack[0].name + (i + 1));
+        }
+
+        //set mouthpack name
+        $(".mpName").text(mouthpack[0].name);
+
+        $("#aboxContainer").fadeTo("slow", 1.0);
+    }
+
+    function getUrlVars() {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+
 });

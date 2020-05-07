@@ -1,33 +1,31 @@
 @font-face {
     font-family: 'arciform_sansregular';
-    src: url('arciform-webfont.woff2') format('woff2'),
-         url('arciform-webfont.woff') format('woff');
+    src: url('arciform-webfont.woff2') format('woff2'), url('arciform-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
 }
 
-.mouthImage {
-  margin-left: 160px;
-  margin-top: 200px;
-  max-width: 600px;
-
-
+.mp_logo {
+    color: #303030;
+    font-size: 30px;
+    transition: all 1s;
+    text-align: center;
+    font-size: 60px;
+    margin: 0;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
 }
 
-#images {
-  max-width: 700px !important;
-  border-style : hidden;
-  height: 450px;
-  float: left;
+html {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
 }
 
-.mouth {
-    width:100px !important;
-    margin-left: 10px;
-    height:80px;
-   
-    
+body {
+    font-family: 'arciform_sansregular'!important;
 }
 
 body {
@@ -36,9 +34,8 @@ body {
 
 .logo {
     background-repeat: no-repeat;
-    margin-left:200px;
+    margin-left: 200px;
     max-width: 400px;
-
 }
 
 ul {
@@ -49,122 +46,135 @@ ul {
     background-color: white;
     font-family: 'arciform_sansregular';
     font-size: 20px;
-    
-  }
-  
-  li {
+}
+
+li {
     float: left;
-  }
-  
-  li a {
+}
+
+li a {
     display: block;
-    color:lightgrey;
+    color: lightgrey;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-   
-  }
+}
 
-  #bottomnextup3,#bottomnextup4 {
-    font: 15px/1.3 times verdana,helvetica,arial,sans-serif ;
-    background-color:white;
+#bottomnextup3,
+#bottomnextup4 {
+    background-color: white;
     padding: 5px 19px;
     font-weight: 700;
     text-decoration: none;
     border-radius: 10px;
     border-style: solid;
     border-width: 1px;
-    background-color:#61a3ee;
-    color:white;
-   
-   }
+    background-color: #61a3ee;
+    color: white;
+    width: 80%;
+    margin-top: 20px;
+}
 
-
-
-    #back {
-    font: 15px/1.3 times verdana,helvetica,arial,sans-serif ;
-    background-color:white;
+#back {
+    font: 15px/1.3 times verdana, helvetica, arial, sans-serif;
+    background-color: white;
     padding: 5px 19px;
     font-weight: 700;
     text-decoration: none;
     border-radius: 10px;
     border-style: solid;
     border-width: 1px;
-    background-color:#61a3ee;
-    color:white;
-   
-   }
-  
-  .active {
+    background-color: #61a3ee;
+    color: white;
+}
+
+.active {
     text-decoration: underline;
     text-decoration-color: #F2929c;
     color: #303030;
-  }
+}
 
-  .loginPage {
-      margin-top: 80px;
-      width: 1300px;
-      max-height: 370px !important;
-      border-style: hidden;
-  }
+.loginContainer label {
+    margin: 10px;
+    font-size: 18px;
+    font-weight: 400;
+}
 
-
-  .loginContainer {
- 
-      box-shadow: 5px 5px 5px grey;
-      background-color: white;
-      color: #303030;
-      width:400px;
-      height:370px;
-      margin-right:150px;
-      margin-top:20px;
-      float: right;
-      border-style: solid;
-      border-radius: 10px;
-      border-color: grey;
-      padding: 10px;
-      font-family: Arial, Helvetica, sans-serif;
-  
-
-  }
-  li a:hover {
-    background-color:silver;
+.loginContainer {
+    text-align: center;
+    -webkit-box-shadow: 10px 10px 93px -29px rgba(0, 0, 0, 0.46);
+    -moz-box-shadow: 10px 10px 93px -29px rgba(0, 0, 0, 0.46);
+    box-shadow: 10px 10px 93px -29px rgba(0, 0, 0, 0.46);
+    background-color: white;
     color: #303030;
-    text-decoration: none;
-  }
+    margin: 0 auto;
+    min-width: 400px;
+    max-height: 370px;
+    border-radius: 10px;
+    border: solid 2px #d4d4d4;
+    padding: 10px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
 
-  #username {
-    margin-top: 10px;
-    margin-bottom: 5px;
-    width: 370px;
-    height: 30px;
+input {
+    padding: 10px!important;
+}
+
+#email {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    height: fit-content;
+    padding: 20px!important;
     border-radius: 15px;
-  }
+    border: solid 2px #d4d4d4;
+    font-size: 16px;
+}
 
-  #password {
-    margin-top: 10px;
-    padding-top: 5px;
-    width: 370px;
-    height: 30px;
+#password {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    height: fit-content;
+    padding: 20px!important;
+    border: solid 2px #d4d4d4;
     border-radius: 15px;
-  }
+    font-size: 26px;
+}
 
-  #input {
+#input {
     margin-top: 10px;
-      text-align: center;
-  }
+    text-align: center;
+}
 
-  body {
+body {
     background-image: url('../images/wave.svg');
     background-repeat: no-repeat;
-    background-position: center ;
-    
-  }
+    background-attachment: fixed;
+    background-position: center;
+    background-size: contain;
+}
 
-  .desc{
+.desc {
     font-size: small;
-    max-width: 470px !important; 
-    float:left;
+    max-width: 470px !important;
+    float: left;
     font-family: Arial, Helvetica, sans-serif;
-    
-  }
+}
+
+@media only screen and (max-height: 740px) {
+    .mp_logo {
+        top: 10%;
+    }
+}
+
+@media only screen and (max-width: 740px) {
+    .loginContainer {
+        min-width: 340px;
+    }
+}

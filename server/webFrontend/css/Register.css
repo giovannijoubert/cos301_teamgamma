@@ -1,47 +1,60 @@
 @font-face {
     font-family: 'arciform_sansregular';
-    src: url('arciform-webfont.woff2') format('woff2'),
-         url('arciform-webfont.woff') format('woff');
+    src: url('arciform-webfont.woff2') format('woff2'), url('arciform-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
 }
 
-.mouthImage {
-  margin-left: 160px;
-  margin-top: 200px;
-  max-width: 600px;
+.mp_logo {
+    color: #303030;
+    font-size: 30px;
+    transition: all 1s;
+    text-align: center;
+    font-size: 60px;
+    margin: 0;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
 
+input {
+    padding: 10px!important;
+}
 
-
+.loginContainer label {
+    margin: 10px;
+    font-size: 18px;
+    font-weight: 400;
 }
 
 body {
+    font-family: 'arciform_sansregular'!important;
     background-image: url('../images/wave.svg');
     background-repeat: no-repeat;
-    background-position: center ;
-    
-  }
+    background-attachment: fixed;
+    background-position: center;
+    background-size: contain;
+}
 
 #images {
-  width: 700px !important;
-  border-style : hidden;
-  height: 450px;
-  float: left;
+    width: 700px !important;
+    border-style: hidden;
+    height: 450px;
+    float: left;
 }
 
 .mouth {
-    width:100px;
-    height:80px;
+    width: 100px;
+    height: 80px;
     margin-left: 10px;
 }
 
-
 .logo {
     background-repeat: no-repeat;
-    margin-left:200px;
+    margin-left: 200px;
     max-width: 400px;
-
 }
 
 ul {
@@ -52,111 +65,121 @@ ul {
     background-color: white;
     font-family: 'arciform_sansregular';
     font-size: 20px;
-    
-  }
-  
-  li {
+}
+
+li {
     float: left;
-  }
-  
-  li a {
+}
+
+li a {
     display: block;
-    color:lightgrey;
+    color: lightgrey;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-   
-  }
+}
 
-
-  
-  .active {
+.active {
     text-decoration: underline;
     text-decoration-color: #F2929c;
     color: #303030;
-  }
-
-  .loginPage {
-      margin-top:80px;
-      width: 1300px;
-      height: 400px;
-      border-style: hidden;
-  }
-
-
-  .loginContainer {
-
-      box-shadow: 5px 5px 5px grey;
-      background-color: white;
-      color: #303030;
-      width: 400px;
-      height:370px;
-      margin-right:150px;
-      margin-top: 20px;
-      float: right;
-      border-style: solid;
-      border-radius: 10px;
-      border-color: grey;
-      padding: 10px;
-      font-family:Arial, Helvetica, sans-serif;
-  
-
-  }
-
- li a:hover {
-  background-color:silver;
-  color: #303030;
-  text-decoration: none;
 }
 
-  #R_username {
-    margin-top: 10px;
-    margin-bottom: 5px;
-    width: 370px;
-    height: 30px;
-    border-radius: 15px;
-  }
+.loginPage {
+    margin-top: 80px;
+    width: 1300px;
+    height: 400px;
+    border-style: hidden;
+}
 
-  #R_password {
-    margin-top: 10px;
-    margin-bottom: 5px;
-    width: 370px;
-    height: 30px;
-    border-radius: 15px;
-  }
+.loginContainer {
+    text-align: center;
+    -webkit-box-shadow: 10px 10px 93px -29px rgba(0, 0, 0, 0.46);
+    -moz-box-shadow: 10px 10px 93px -29px rgba(0, 0, 0, 0.46);
+    box-shadow: 10px 10px 93px -29px rgba(0, 0, 0, 0.46);
+    background-color: white;
+    color: #303030;
+    margin: 0 auto;
+    min-width: 400px;
+    max-height: 570px;
+    border-radius: 10px;
+    border: solid 2px #d4d4d4;
+    padding: 10px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
 
-  #R_email {
-    margin-top: 10px;
-    margin-bottom: 5px;
-    width: 370px;
-    height: 30px;
+#R_username {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    height: fit-content;
+    padding: 20px!important;
     border-radius: 15px;
-  }
+    border: solid 2px #d4d4d4;
+    font-size: 16px;
+}
 
-  
- 
-  #input{
+#R_password {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    height: fit-content;
+    padding: 20px!important;
+    border-radius: 15px;
+    border: solid 2px #d4d4d4;
+    font-size: 16px;
+}
+
+#R_email {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    height: fit-content;
+    padding: 20px!important;
+    border-radius: 15px;
+    border: solid 2px #d4d4d4;
+    font-size: 16px;
+}
+
+#input {
     text-align: center;
     margin-top: 10px;
-  }
+}
 
-  #R_bottomnextup3 {
-    font: 15px/1.3 times verdana,helvetica,arial,sans-serif ;
-    background-color:white;
+#R_bottomnextup3 {
+    background-color: white;
     padding: 5px 19px;
     font-weight: 700;
     text-decoration: none;
     border-radius: 10px;
     border-style: solid;
     border-width: 1px;
-    background-color:#61a3ee;
-    color:white;
-   
-   }
-   .desc{
+    background-color: #61a3ee;
+    color: white;
+    margin: 20px;
+    width: 80%;
+}
+
+.desc {
     font-size: small;
-    max-width: 470px !important; 
-    float:left;
+    max-width: 470px !important;
+    float: left;
     font-family: Arial, Helvetica, sans-serif;
-    
-  }
+}
+
+@media only screen and (max-height: 840px) {
+    .mp_logo {
+        top: 10%;
+    }
+}
+
+@media only screen and (max-width: 740px) {
+    .loginContainer {
+        min-width: 340px;
+    }
+}
