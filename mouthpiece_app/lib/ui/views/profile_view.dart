@@ -427,12 +427,13 @@ class PreferencesSection2 extends StatelessWidget {
           divider,
           InkWell(
             onTap: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance(); 
               if (_theme == darkTheme){
                 _themeChanger.setTheme(lightTheme);
-                setTheme('Light');
+                prefs.setString("theme", "Light");
               } else {
                 _themeChanger.setTheme(darkTheme);
-                setTheme('Dark');
+                prefs.setString("theme", "Dark");
               }
             },
             child: Row(

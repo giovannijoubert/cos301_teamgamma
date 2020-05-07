@@ -135,7 +135,7 @@ class CollectionModel extends BaseModel {
     }
   }
 
-  Future<String> getCollectionURLAtIndex(int row, int col) async{
+  Future<String> getCollectionURLAtIndex(int row, int col) async {
     String url = collectionURL[row-defaultMouthpacks.length][col];
     // print(url);
     return url;

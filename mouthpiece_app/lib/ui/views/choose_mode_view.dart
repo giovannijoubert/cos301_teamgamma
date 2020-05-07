@@ -95,7 +95,7 @@ Widget volumeButtonSection(BuildContext context, model) {
               prefs.setBool("navVal", true);
               if (prefs.getBool('loggedIn')) {
                 CollectionModel collectionModel = new CollectionModel();
-                collectionModel.clearLists();
+                await collectionModel.clearLists();
               }
               Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
             } else { 
@@ -189,7 +189,7 @@ Widget formantButtonSection(BuildContext context, model) {
               prefs.setBool("navVal", true);
               if (prefs.getBool('loggedIn')) {
                 CollectionModel collectionModel = new CollectionModel();
-                collectionModel.clearLists();
+                await collectionModel.clearLists();
               }
               Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
             } else { 

@@ -87,8 +87,8 @@ class BottomNavigationState extends State<BottomNavigation> {
         unselectedItemColor: (theme.getTheme() == lightTheme) ? Color(0xFF303030) : Colors.white,
         onTap: _onTap,
         currentIndex: _currentTabIndex,
-        backgroundColor: (theme.getTheme() == darkTheme) ? Color(0x11FFFFFF) : Color(0x00FFFFFF),
-        elevation: (theme.getTheme() == darkTheme) ? 3 : 0,
+        backgroundColor: (theme.getTheme() == darkTheme) ? Color(0x11FFFFFF) : Color(0xFFFFFFFF),
+        elevation: 3,
       ),
     );
   }

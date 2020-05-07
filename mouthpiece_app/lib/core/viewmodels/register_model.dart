@@ -30,11 +30,7 @@ class RegisterModel extends BaseModel {
       }
   }
 
-  Future sendSuccessfulRegisterNotification() async {
-    prefs = await SharedPreferences.getInstance();
-    String email = prefs.getString("email");
-
-    // await notificationsApi.successfulRegistration(username, "ivas238@gmail.com", deviceId); // Do not add email now!!! Change our emails first
-    await notificationsApi.successfulRegistration("cadongernandt@gmail.com"); // Do not add email now!!! Change our emails first
+  Future sendSuccessfulRegisterNotification(String email) async {
+    await notificationsApi.successfulRegistration(email); 
   }
 }

@@ -151,7 +151,7 @@ class _MouthPieceState extends State<MouthPiece> {
 Future<bool> getLoggedIn() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   ChooseModeModel modeModel = new ChooseModeModel();
-  bool loggedIn = prefs.getBool('loggedIn');
+  bool loggedIn = prefs.getBool('navVal');
   // bool loggedIn = false;
   
   bool isModeSet = prefs.getKeys().contains('isVolSet');

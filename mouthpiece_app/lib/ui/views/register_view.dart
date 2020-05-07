@@ -35,7 +35,7 @@ class _RegisterViewState extends State<RegisterView> {
           return 'Username is Required';
         }
         if(value.length < 4){
-            return 'Username must exceed 4 characters.';
+          return 'Username must exceed 4 characters.';
         }
 
         return null;
@@ -115,7 +115,7 @@ class _RegisterViewState extends State<RegisterView> {
       bool loginSuccess = await model.register(_userName,_email,_password);
       if(loginSuccess){
         SharedPreferences prefs = await SharedPreferences.getInstance(); 
-        await model.sendSuccessfulRegisterNotification();
+        await model.sendSuccessfulRegisterNotification(_email);
         if (prefs.getBool('loggedIn'))
           Navigator.push(context, PageRouteBuilder(
               pageBuilder: (context, animation1, animation2) => VoiceTrainingView(),
@@ -175,7 +175,7 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                   ),
                   model.state == ViewState.Busy ? 
-                  Center(child: CircularProgressIndicator()) :  
+                  Center(child: Container(margin: EdgeInsets.only(top: 5), child: CircularProgressIndicator())) : 
                   Container(
                     height: 50,
                     width: 325,

@@ -14,6 +14,8 @@ import 'core/viewmodels/listening_mode_model.dart';
 import 'core/viewmodels/collection_model.dart';
 import 'core/viewmodels/mouthpack_model.dart';
 import 'core/viewmodels/profile_model.dart';
+import 'core/viewmodels/forgot_password_model.dart';
+
 
 GetIt locator = GetIt();
 
@@ -26,6 +28,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => PushNotificationService());
 
   locator.registerFactory(() => LoginModel());
+  locator.registerFactory(() => ForgotPasswordModel());
   locator.registerFactory(() => RegisterModel());
   locator.registerFactory(() => VoiceTrainingModel());
   locator.registerFactory(() => ChooseModeModel());

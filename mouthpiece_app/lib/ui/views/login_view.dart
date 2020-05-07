@@ -6,6 +6,7 @@ import 'package:mouthpiece/core/viewmodels/collection_model.dart';
 import 'package:mouthpiece/locator.dart';
 import 'package:mouthpiece/ui/shared/theme.dart';
 import 'package:mouthpiece/ui/views/choose_mode_view.dart';
+import 'package:mouthpiece/ui/views/forgot_password_view.dart';
 import 'package:mouthpiece/ui/views/home_view.dart';
 import 'package:mouthpiece/ui/views/register_view.dart';
 import 'package:mouthpiece/ui/views/voice_training_view.dart';
@@ -37,12 +38,12 @@ class _LoginViewState extends State<LoginView> {
       decoration: InputDecoration(labelText: 'Username'),
       // maxLength: 10,
       validator: (String value) {
-        /* if (value.isEmpty) {
+        if (value.isEmpty) {
           setState(() {
             circularDisplay = false;
           });
           return 'Username is Required';
-        } */
+        }
         return null;
       }, 
       onSaved: (String value) {
@@ -57,7 +58,7 @@ class _LoginViewState extends State<LoginView> {
         keyboardType: TextInputType.visiblePassword,
         obscureText: true,
         validator: (String value) {
-          /* if (value.isEmpty) {
+          if (value.isEmpty) {
             setState(() {
               circularDisplay = false;
             });
@@ -68,7 +69,7 @@ class _LoginViewState extends State<LoginView> {
               circularDisplay = false;
             });
             return 'Password is too short';
-          } */
+          }
           
           return null;
         }, 
@@ -111,17 +112,17 @@ class _LoginViewState extends State<LoginView> {
   Future _loginCommand(model, theme) async{
     final prefs = await SharedPreferences.getInstance();
     bool connectivity = await _sharingapi.checkConnectivity();
-    CollectionModel collectionModel = new CollectionModel();
+    // CollectionModel collectionModel = new CollectionModel();
     if (connectivity) {
-      var loginSuccess = await model.login("john123", "John123");
-      // var loginSuccess = await model.login(_userName, _password);
+      // var loginSuccess = await model.login("peter123", "Peter123&");
+      var loginSuccess = await model.login(_userName, _password);
       if(loginSuccess) {
         ThemeData themeVal = prefs.getString("theme") == "Light" ? lightTheme : darkTheme;
         if (themeVal == null)
           themeVal = lightTheme;
         await theme.setTheme(themeVal);
         await prefs.setBool("navVal", true);
-        collectionModel.clearLists();
+        await collectionModel.clearLists();
         Navigator.of(context).pushAndRemoveUntil(PageRouteBuilder(pageBuilder: (context, animation1, animation2) => HomeView()), (Route<dynamic> route) => false);
       } else {
         setState(() {
@@ -303,8 +304,10 @@ class ForgotPassword extends StatelessWidget {
                   decoration: TextDecoration.underline,
                 ),
               ),
-              onPressed: () async {
-                await loginModel.resetPasswordNotification();
+              onPressed: () {
+                Navigator.push(context, PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) => ForgotPasswordView(),
+                ),); 
               },
             )
           ],

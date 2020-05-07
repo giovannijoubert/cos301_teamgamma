@@ -48,7 +48,7 @@ class HomeModel extends BaseModel {
 
   createCollection() async {
     setState(ViewState.Busy);
-    await collectionModel.createCollection(); 
+    await collectionModel.createCollection();
     setState(ViewState.Idle);
   }
 

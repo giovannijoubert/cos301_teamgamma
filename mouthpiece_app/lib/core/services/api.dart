@@ -174,6 +174,16 @@ class Api {
     }
   }
 
+  Future<bool> getUserWithEmail(String email) async {
+    var conn = await MySqlConnection.connect(userManagementDb);
+    var userId = await conn.query('select user_id from Users where email = "$email"');
+    
+    if(userId.isNotEmpty)
+      return Future.value(true);
+
+    return Future.value(false);
+  }
+
   Future getImage(String url, Map map) async {  
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var body = jsonEncode(map);
@@ -231,6 +241,21 @@ class Api {
     var result;
     for (var row in userId) {
       result = await conn.query('delete from UserMouthpack where mouthpack_id = $id and user_id = ${row[0]}');
+    }
+  }
+
+  Future resetPassword(Map map, String url) async {
+    var body = jsonEncode(map);
+    final http.Response response = await http.post(
+      url,
+      headers:{'Content-Type': 'application/json'},
+      body: body
+    );
+
+    if (response.statusCode == 200) {
+      print("Password updated successfully");
+    } else {
+      print("Password not updated");
     }
   }
 }
