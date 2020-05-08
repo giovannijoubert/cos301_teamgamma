@@ -44,7 +44,7 @@ and the coordination of all the teams to enure that the correct sub-systems were
 |**Position** | BSc Information and Knowledge Systems with a major in Data Science |
 |**Interests** | Videography, Tennis & Squash, Jogging, Hacking things |
 |**Skills**| Adobe CC, Web Stack (CSS3, JavaScript, JQuery, PHP etc), NodeJS, Python, Java, Android Native, C++| 
-|**Project Tasks**| Connecting API interfaces (SharingAPI and UserManagement), Integrating Website (SharingAPI, UserManagement & Notifications), Bug fixes to APIs, Styling Website to be coherent with Flutter App |
+|**Project Tasks**| Setting up and managing hosting for APIs, databases and WebFrontend, Connecting API interfaces (SharingAPI and UserManagement), Integrating Website (SharingAPI, UserManagement & Notifications), Bug fixes to APIs, Styling Website to be coherent with Flutter App |
 
 |Team Member | Details | 
 | :---         | :---         |   
