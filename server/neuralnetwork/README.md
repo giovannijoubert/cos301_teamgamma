@@ -22,6 +22,6 @@
 
 * :trollface: [Pavlo Andrianatos (17173389)](https://pavlo-andrianatos.github.io/resume/)
 
-* :trollface: [Aaron Facoline](https://github.com/AaronFacoline)
+* :trollface: [Aaron Facoline (13283881)](https://github.com/AaronFacoline)
 
 * :trollface: [Yuval](https://www.google.com)
