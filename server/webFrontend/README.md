@@ -62,7 +62,7 @@
 |**Position** |Final year BSc Computer Science|
 |**Interests** |Web Development, Android development|
 |**Skills**|C++, Java, Web Development: HTML, CSS, JavaScript, PHP, SQL |
-|**Project Tasks**| ... |
+|**Project Tasks**|Login, Register,Password Recovery, Register and Login Validation,unit testing.|
 
 
 |Team Member | Details | 
