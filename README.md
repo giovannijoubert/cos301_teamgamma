@@ -48,13 +48,13 @@ and the coordination of all the teams to enure that the correct sub-systems were
 
 |Team Member | Details | 
 | :---         | :---         |   
-|****|    ****   |
-|**Profile** |[Github]()|
-|**Overview**| |
-|**Position** ||
-|**Interests** ||
-|**Skills**||
-|**Project Tasks**| |
+|**Cadon Gernandt**|    **u17102678**   |
+|**Profile** |[Github](https://cadongernandt.github.io/)|
+|**Overview**|I am|
+|**Position** |BIS Multimedia|
+|**Interests**|Reading, Design, Drawing, Music Composition|
+|**Skills**|UI/UX Design, Adobe CC, Game, Web, and Application Development|
+|**Project Tasks**| Design of the mobile app and website, creating Flutter views, integration of app with API interfaces, implemented push and network notifications, Caching of data, Download and Delete Functionality|
 
 |Team Member | Details | 
 | :---         | :---         |   
