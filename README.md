@@ -62,7 +62,7 @@ and the coordination of all the teams to enure that the correct sub-systems were
 |**Profile** |[Github](https://IvaKStefanova.github.io/)|
 |**Overview**| I am a dedicated, hard-working and methodical individual. I have very good interpersonal skills and work well in a team environment. |
 |**Position** | BSc Information and Knowledge Systems |
-|**Interests** | Reading, Photography, Sports, Design |
+|**Interests** | Reading, Photography, Design |
 |**Skills**| CSS3, Javascript, JQuery, PHP, C++, Java, Adobe CC, Database development |
 |**Project Tasks**| Creating Flutter views, integration of app with API Interfaces, synchronisation of data with website and app, implemention of offline mode, mouthpack customisation and dark mode.  |
 
