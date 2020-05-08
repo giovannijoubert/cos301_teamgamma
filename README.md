@@ -69,11 +69,11 @@ and the coordination of all the teams to enure that the correct sub-systems were
 
 |Team Member | Details | 
 | :---         | :---         |   
-|****|    ****   |
-|**Profile** |[Github]()|
-|**Overview**| |
-|**Position** ||
-|**Interests** ||
-|**Skills**| |
-|**Project Tasks**|  |
+|**Abubakar Darki**|    **u16091486**   |
+|**Profile** |[Github](https://Abu-22.github.io)|
+|**Overview**| I am a hard-working and committed individual, always willing to learn new technologies and adopt new ideas and methodologies to further improve my skills.   |
+|**Position** |Bsc Computer Science 3rd year student|
+|**Interests** |Computer hardware, Technology, Gaming, Reading|
+|**Skills**|Java, C++, Assembly, Android native, Flutter(Dart)|
+|**Project Tasks**|Integration of voice training, Integration of volume based conversion. UI additions for voice training view, choose mode view.  |
 
