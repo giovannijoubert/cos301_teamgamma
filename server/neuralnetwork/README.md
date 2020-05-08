@@ -14,7 +14,7 @@
 
 > [Dylan Krajnc](https://dylan-krajnc.github.io/awesome-cv/)
 
-> [Brad Zietsman](https://github.com/Bradford-700)
+> [Brad Zietsman](https://bradford-700.github.io/online-cv/)
 
 > [Pavlo Andrianatos](https://github.com/Pavlo-Andrianatos)
 
