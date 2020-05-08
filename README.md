@@ -50,7 +50,7 @@ and the coordination of all the teams to enure that the correct sub-systems were
 | :---         | :---         |   
 |**Cadon Gernandt**|    **u17102678**   |
 |**Profile** |[Github](https://cadongernandt.github.io/)|
-|**Overview**|I am|
+|**Overview**|I am highly driven, entrepreneurial individual who enjoys designing and implementing Multimedia systems.|
 |**Position** |BIS Multimedia|
 |**Interests**|Reading, Design, Drawing, Music Composition|
 |**Skills**|UI/UX Design, Adobe CC, Game, Web, and Application Development|
