@@ -8,15 +8,15 @@
 
 ## Group Members
 
-> [Rudo Janse van Rensburg](https://rudo-janse-van-rensburg.github.io/online-cv/)
+> [Rudo Janse van Rensburg - 17296928](https://rudo-janse-van-rensburg.github.io/online-cv/)
 
-> [Nigel Mpofu](https://nigelmpofu.me)
+> [Nigel Mpofu - 15015557](https://nigelmpofu.me)
 
 > [Dylan Krajnc](https://dylan-krajnc.github.io/awesome-cv/)
 
 > [Brad Zietsman](https://bradford-700.github.io/online-cv/)
 
-> [Pavlo Andrianatos](https://github.com/Pavlo-Andrianatos)
+> [Pavlo Andrianatos](https://pavlo-andrianatos.github.io/resume/)
 
 > [Aaron Facoline](https://github.com/AaronFacoline)
 
