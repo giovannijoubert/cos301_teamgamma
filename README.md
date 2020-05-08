@@ -12,7 +12,7 @@
 * Demo video: https://discord.gg/trPCYzE
 
 **Requirement Overview**
-*We as Integration were in charge of developing the android application, integration of sub-systems of the app from the relevant teams, 
+We as Integration were in charge of developing the android application, integration of sub-systems of the app from the relevant teams, 
 and the coordination of all the teams to enure that the correct sub-systems were developed properly, at a good quality.
 ## **Team Members**
 
