@@ -38,12 +38,13 @@ and the coordination of all the teams to enure that the correct sub-systems were
 
 |Team Member | Details | 
 | :---         | :---         |  
-|****|    ****   |
-|**Profile** ||
-|**Overview**||
-|**Interests** ||
-|**Skills**||
-|**Project Tasks**| |
+|**Giovanni Joubert**|    **u18009035**   |
+|**Profile** |[Github](https://gjcsup.github.io/)|
+|**Overview**| I am a problem-solving, reliable, enthusiastic and creative team player. I am willing to learn, lead and can adapt quickly to new situations. |
+|**Position** | BSc Information and Knowledge Systems with a major in Data Science |
+|**Interests** | Videography, Tennis & Squash, Jogging, Hacking things |
+|**Skills**| Adobe CC, Web Stack (CSS3, JavaScript, JQuery, PHP etc), NodeJS, Python, Java, Android Native, C++| 
+|**Project Tasks**| Connecting API interfaces (SharingAPI and UserManagement), Integrating Website, Bug fixes to APIs, Styling Website to be coherent with Flutter App |
 
 |Team Member | Details | 
 | :---         | :---         |   
