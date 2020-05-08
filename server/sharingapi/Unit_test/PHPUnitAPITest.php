@@ -48,7 +48,7 @@
 					'requestType' => 'rate',
 					'value' => '3',
 					'userID' => '9999',
-					'mouthpackID' => '777501182'
+					'mouthpackID' => '1735762197'
 				]			
 			]);
 			$this->assertEquals(200, $response->getStatusCode());
