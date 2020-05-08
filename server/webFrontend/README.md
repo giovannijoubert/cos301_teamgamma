@@ -57,7 +57,7 @@
 |Team Member | Details | 
 | :---         | :---         |   
 |**Premodial Zhou**|    **u18169814**   |
-|**Profile** |[Github](https://github.com/lamboughs)|
+|**Profile** |[Github](https://github.com/Premodial)|
 |**Overview**|I am a self motivated and hardworking computer science student with a longtime passion for technology. |
 |**Position** |Final year BSc Computer Science|
 |**Interests** |Web Development, Android development|
