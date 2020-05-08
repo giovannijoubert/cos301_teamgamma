@@ -28,13 +28,13 @@ and the coordination of all the teams to enure that the correct sub-systems were
 
 |Team Member | Details | 
 | :---         | :---         |  
-|****|    ****   |
-|**Profile** |[Github]()|
-|**Overview**|   |
-|**Position** ||
-|**Interests** ||
-|**Skills**|
-|**Project Tasks**||
+|**Lap Ren Ivan Zhang**|    **17013072**   |
+|**Profile** |[Github](https://lirenivanzhang.github.io/)|
+|**Overview**| I am motivated, enthusiatic, flexible, and always willing to learn to further improve myself. |
+|**Position** | BIS Multimedia |
+|**Interests** | Drawing, 3D modelling, Video games |
+|**Skills**| HTML5, CSS3, JavaScript, JQuery, ES6, Bootstrap, JSON, PHP, Java, C++| 
+|**Project Tasks**| Creating Flutter views and unit testing |
 
 |Team Member | Details | 
 | :---         | :---         |  
