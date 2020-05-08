@@ -38,7 +38,7 @@ public class NeuralNetworksApplication
 
         System.out.println("Lenet Model");
         Training t = new Training();
-        t.train(pretrain, (new NeuralNetwork()).lenetModel(true), true);
+        //t.train(pretrain, (new NeuralNetwork()).lenetModel(true), true);
         t.train(pretrain, (new NeuralNetwork()).lenetModel(false), false);
 
         //System.out.println("Alexnet Model");
