@@ -1,12 +1,89 @@
 <!DOCTYPE HTML>
 <html>
-    <body>
-        Testing notification login
+    <head>
+        <meta charset="UTF-8">
+        <title>Notifications Sender</title>
+
+        <link rel="stylesheet" href="css/notificationPage.css">
+        <script src="js/jsMethods.js"></script>
+    </head>
+    <body onload="loadTemplates()">
+       <!-- Testing notification login
         Feel free to delete this file
         <button onclick="">Test</button>
-        <?php 
-            echo "ADFGH";
-            ?>
+-->
+    <table>
+        <th colspan="2">Send a Notification</th>
+        <tr>
+            <td>
+                <span>Please select the type of notification you would like to send
+                    <a class="required">*</a>
+                </span>
+            </td>
+            <td>
+                <select id="notificationType" onchange="typeSelector()">
+                    <option value="0" >Please choose a notification type</option>
+                    <option value="1">Email Notification</option>
+                    <option value="2">Push Notification</option>
+                    <option value="3">Email and Push Notification</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>Please select a notification heading
+                    <a class="required">*</a>
+                </span>
+
+            </td>
+            <td id="headingCell">
+                <select id="headings" onchange="headSelector()">
+                    <option value="0">Please select a heading</option>
+                    <option value="Custom">Custom</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>Please select a notification message
+                    <a class="required">*</a>
+                </span>
+            </td>
+            <td id="messageCell">
+                <select id="message" onchange="msgSelector()">
+                    <option value="0">Please select a message</option>
+                    <option value="Custom">Custom</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>Enter the email address</span>
+            </td>
+            <td>
+                <input name="email" id="email" type="email">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>Enter the user's Device ID</span>
+            </td>
+            <td>
+                <input name="deviceID" id="deviceID" type="text">
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <div class="buttons">
+                    <button type="submit" onclick="sendData()">Submit</button>
+                    <button type="reset" onclick="clearFields()">Clear/Reset</button>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+
     </body>
 
 

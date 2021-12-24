@@ -1,0 +1,62 @@
+th{
+  font-size: 200%;
+  border-bottom-color: limegreen; 
+  border-bottom-style: outset;
+  color: darkorange;
+  padding-bottom: 15px;
+  
+}
+
+body{
+  background: #121222;
+  /*text-align: center;*/
+}
+table{
+  border-color:seagreen;
+  border-style: outset;
+  border-width: 4px;
+  padding: 25px;
+  display:inline-block;
+  position: absolute;
+  left: 20%;
+}
+
+td{
+  margin: 10px;
+  padding: 10px;
+  font-size: 110%;
+  height: 70px;
+  border-bottom-color: limegreen; 
+  border-bottom-style: outset;
+  width:350px;
+}
+
+.required{
+ font-weight: bolder;
+  color: darkred;
+}
+span{
+  color: cyan;
+  text-align: right;
+  display: block;
+  right: 0px;
+}
+.buttons{
+  text-align: center;
+  
+}
+button{
+  font-size: 105%;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+select,input,textarea{
+  width: 300px;
+  max-width: 300px;
+}
+
+.inputBox{
+  margin-top: 10px;
+  height:50px;
+}
